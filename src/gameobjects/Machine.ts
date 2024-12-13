@@ -56,32 +56,13 @@ export default class Machine extends Phaser.GameObjects.Container {
 
         this.addDropZoneListeners();
 
-        this.slot_coords = [
-            {
-                x: this.x - (this.taskManager.getTaskDims().width * 0.6),
-                y: this.y - this.displayHeight * 0.15,
-            },
-            {
-                x: this.x + (this.taskManager.getTaskDims().width * 0.6),
-                y: this.y - this.displayHeight * 0.15,
-            },
-            {
-                x: this.x - (this.taskManager.getTaskDims().width * 0.6),
-                y: this.y + this.displayHeight * 0.075,
-            },
-            {
-                x: this.x + (this.taskManager.getTaskDims().width * 0.6),
-                y: this.y + this.displayHeight * 0.075,
-            },
-            {
-                x: this.x - (this.taskManager.getTaskDims().width * 0.6),
-                y: this.y + this.displayHeight * 0.3,
-            },
-            {
-                x: this.x + (this.taskManager.getTaskDims().width * 0.6),
-                y: this.y + this.displayHeight * 0.3,
-            },
-        ];
+        this.slot_coords = [];
+        for (let i = 0; i < this.capacity; i++) {
+            this.slot_coords.push({
+                x: this.x,
+                y: this.y - this.displayHeight * 0.2 + i * this.taskManager.getTaskSmallDims().height * 1.25,
+            });
+        }
 
         // Add the sprite to the scene
         this.scene.add.existing(this);
@@ -218,8 +199,8 @@ export default class Machine extends Phaser.GameObjects.Container {
         this.highlighted_slot = this.scene.add.rectangle(
             coord.x,
             coord.y,
-            this.taskManager.getTaskDims().width,
-            this.taskManager.getTaskDims().height,
+            this.taskManager.getTaskSmallDims().width,
+            this.taskManager.getTaskSmallDims().height,
             0xe5e5e5,
             0.5
         );

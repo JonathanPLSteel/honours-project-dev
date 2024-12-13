@@ -26,11 +26,11 @@ export default class TaskBar extends Phaser.GameObjects.Container {
 
         this.slot_coords = [
             {
-                x: this.x - (this.taskManager.getTaskDims().width * 1.2),
+                x: this.x - (this.taskManager.getTaskMedDims().width * 1.2),
                 y: this.y,
             },
             {
-                x: this.x - (this.taskManager.getTaskDims().width * 2.4),
+                x: this.x - (this.taskManager.getTaskMedDims().width * 2.4),
                 y: this.y,
             },
             {
@@ -38,11 +38,11 @@ export default class TaskBar extends Phaser.GameObjects.Container {
                 y: this.y,
             },
             {
-                x: this.x + this.taskManager.getTaskDims().width * 1.2,
+                x: this.x + this.taskManager.getTaskMedDims().width * 1.2,
                 y: this.y,
             },
             {
-                x: this.x + this.taskManager.getTaskDims().width * 2.4,
+                x: this.x + this.taskManager.getTaskMedDims().width * 2.4,
                 y: this.y,
             }
         ];

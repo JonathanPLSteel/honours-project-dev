@@ -3,6 +3,10 @@ export default class Task extends Phaser.GameObjects.Sprite {
     name: string;
     id: number;
     duration: number;
+    med_width: number;
+    med_height: number;
+    small_width: number;
+    small_height: number;
 
     private nameText!: Phaser.GameObjects.Text;
     private durationText!: Phaser.GameObjects.Text;
@@ -18,8 +22,10 @@ export default class Task extends Phaser.GameObjects.Sprite {
         name: string,
         x: number,
         y: number,
-        width: number,
-        height: number,
+        med_width: number,
+        med_height: number,
+        small_width: number,
+        small_height: number,
         id: number,
         duration: number,
         icon_key: string
@@ -28,6 +34,10 @@ export default class Task extends Phaser.GameObjects.Sprite {
 
         this.scene = scene;
         this.name = name;
+        this.med_width = med_width;
+        this.med_height = med_height;
+        this.small_width = small_width;
+        this.small_height = small_height;
         this.id = id;
         this.duration = duration;
         this.icon_key = icon_key;
@@ -39,7 +49,7 @@ export default class Task extends Phaser.GameObjects.Sprite {
 
         // Configure the sprite
         this.setOrigin(0.5, 0.5);
-        this.setDisplaySize(width, height);
+        this.setDisplaySize(this.med_width, this.med_height);
         this.setInteractive();
 
         // Adding additional components
@@ -129,11 +139,32 @@ export default class Task extends Phaser.GameObjects.Sprite {
     }
 
     public update() {
-        this.nameText.setPosition(this.x, this.y - this.displayHeight * 0.3);
-        this.icon.setPosition(this.x, this.y);
-        this.durationText.setPosition(
-            this.x,
-            this.y + this.displayHeight * 0.3
-        );
+        if (this.isAttached()) {
+            this.setDisplaySize(this.small_width, this.small_height);
+            this.icon.setPosition(this.x - this.displayWidth * 0.4, this.y);
+
+            this.nameText.setOrigin(0, 0.5);
+            this.nameText.setPosition(this.icon.x + this.icon.displayWidth * 0.75, this.y);
+
+            this.durationText.setText(`${this.duration}`);
+            this.durationText.setOrigin(1, 0.5);
+            this.durationText.setPosition(
+                this.x + this.displayWidth * 0.45,
+                this.y
+            );
+        }
+        else {
+            this.setDisplaySize(this.med_width, this.med_height);
+            this.nameText.setOrigin(0.5, 0.5);
+            this.nameText.setPosition(this.x, this.y - this.displayHeight * 0.3);
+            this.icon.setPosition(this.x, this.y);
+
+            this.durationText.setText(`${this.duration} minutes`);
+            this.durationText.setOrigin(0.5, 0.5);
+            this.durationText.setPosition(
+                this.x,
+                this.y + this.displayHeight * 0.3
+            );
+        }
     }
 }

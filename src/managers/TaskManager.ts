@@ -31,10 +31,12 @@ export default class TaskManager {
         { key: "green-beans", name: "Green Beans", duration: 25 },
     ];
 
-    private task_dims = {
+    private task_med_dims = {
         width: 150,
         height: 100,
     };
+
+    private task_small_dims: { width: number; height: number };
 
     private maxNumTasks = 5;
 
@@ -72,14 +74,14 @@ export default class TaskManager {
                     height: this.scene.scale.height * 0.75,
                     x: this.scene.scale.width * 0.25,
                     y: this.scene.scale.height * 0.4,
-                    capacity: 6,
+                    capacity: 7,
                 },
                 1: {
                     width: this.scene.scale.width * 0.45,
                     height: this.scene.scale.height * 0.75,
                     x: this.scene.scale.width * 0.75,
                     y: this.scene.scale.height * 0.4,
-                    capacity: 6,
+                    capacity: 7,
                 },
             },
             3: {
@@ -88,23 +90,28 @@ export default class TaskManager {
                     height: this.scene.scale.height * 0.75,
                     x: this.scene.scale.width * 0.175,
                     y: this.scene.scale.height * 0.4,
-                    capacity: 6,
+                    capacity: 7,
                 },
                 1: {
                     width: this.scene.scale.width * 0.3,
                     height: this.scene.scale.height * 0.75,
                     x: this.scene.scale.width * 0.5,
                     y: this.scene.scale.height * 0.4,
-                    capacity: 6,
+                    capacity: 7,
                 },
                 2: {
                     width: this.scene.scale.width * 0.3,
                     height: this.scene.scale.height * 0.75,
                     x: this.scene.scale.width * 0.825,
                     y: this.scene.scale.height * 0.4,
-                    capacity: 6,
+                    capacity: 7,
                 },
             },
+        };
+
+        this.task_small_dims = {
+            width: this.machine_dims[this.numMachines][0].width * 0.9,
+            height: 40,
         };
 
         this.task_bar = new TaskBar(
@@ -112,9 +119,9 @@ export default class TaskManager {
             this,
             "Task Bar",
             this.scene.scale.width / 2,
-            this.scene.scale.height - this.task_dims.height * 0.6,
+            this.scene.scale.height - this.task_med_dims.height * 0.6,
             this.scene.scale.width,
-            this.task_dims.height * 1.2,
+            this.task_med_dims.height * 1.2,
             0
         );
 
@@ -128,8 +135,10 @@ export default class TaskManager {
                     )!.name,
                     this.task_bar.getSlotCoords()[i].x,
                     this.task_bar.getSlotCoords()[i].y,
-                    this.task_dims.width,
-                    this.task_dims.height,
+                    this.task_med_dims.width,
+                    this.task_med_dims.height,
+                    this.task_small_dims.width,
+                    this.task_small_dims.height,
                     this.tasks.length,
                     this.task_types.find(
                         (task) => task.key === task_keys[i]
@@ -214,8 +223,12 @@ export default class TaskManager {
         this.task_bar.visible = true;
     }
 
-    getTaskDims() {
-        return this.task_dims;
+    getTaskMedDims() {
+        return this.task_med_dims;
+    }
+
+    getTaskSmallDims() {
+        return this.task_small_dims;
     }
 
     getTotalDuration() {
