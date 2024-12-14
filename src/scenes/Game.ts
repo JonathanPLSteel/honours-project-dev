@@ -1,25 +1,22 @@
 import { Scene } from "phaser";
 import TaskManager from "../managers/TaskManager";
-import LevelManager, { Level } from "../managers/LevelManager";
+import { Level } from "../managers/LevelManager";
 import DialogueManager, { Dialogue } from "../managers/DialogueManager";
 
 export class Game extends Scene {
     private task_manager: TaskManager;
-    private level_manager: LevelManager;
     private dialogue_manager: DialogueManager;
     private current_level: Level;
-    private current_level_id: number;
 
     constructor() {
         super("Game");
     }
 
-    create(data: { level_id: number }) {
+    create(data: { level: Level }) {
         this.events.once("shutdown", this.onShutdown, this);
 
-        this.current_level_id = data.level_id;
+        this.current_level = data.level;
 
-        this.level_manager = new LevelManager();
         this.dialogue_manager = new DialogueManager(this);
 
         this.launchLevel();
@@ -27,10 +24,6 @@ export class Game extends Scene {
 
     private launchLevel() {
         this.events.once("submit", this.onSubmit, this);
-
-        this.current_level = this.level_manager.loadLevel(
-            this.current_level_id
-        );
 
         // Clean up old TaskManager if it exists
         if (this.task_manager) {
@@ -57,7 +50,6 @@ export class Game extends Scene {
     }
 
     private onShutdown() {
-        console.log("Shutting down Game scene, cleaning up resources");
 
         if (this.task_manager) {
             this.task_manager.destroy();
@@ -75,7 +67,7 @@ export class Game extends Scene {
         }
 
         this.scene.start("SubmitScreen", {
-            level_id: this.current_level_id,
+            level_id: this.current_level.id,
             grade: grade,
         });
     }

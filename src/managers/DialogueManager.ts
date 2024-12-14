@@ -25,8 +25,6 @@ export default class DialogueManager {
 
         this.scene.events.emit(`dialogue-${this.current_dialogue.id}-start`);
 
-        console.log("Displaying dialogue");
-
         this.dialogueDimmer = this.scene.add.rectangle(
             0,
             0,
@@ -87,8 +85,6 @@ export default class DialogueManager {
             }
         );
         this.nameText.setOrigin(0, 0.5);
-
-        console.log("Dialogue displayed with icon:", dialogue.icon);
 
         this.scene.input.once("pointerdown", this.closeDialogue, this);
     }

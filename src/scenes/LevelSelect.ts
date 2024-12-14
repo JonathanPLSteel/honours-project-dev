@@ -12,8 +12,13 @@ export class LevelSelect extends Scene {
         super("LevelSelect");
     }
 
+    preload() {
+        this.load.json("levels", "data/levels.json");
+    }
+
     create() {
-        this.level_manager = new LevelManager();
+        const levels: Level[] = this.cache.json.get("levels");
+        this.level_manager = new LevelManager(levels);
 
         if (this.isNewPlayer()) {
             let dialogue_manager = new DialogueManager(this);
@@ -45,40 +50,51 @@ export class LevelSelect extends Scene {
         this.addLevelButtons();
     }
 
-    private addLevelButton(x: number, y: number, level: Level) {
-        let hoverTween: Phaser.Tweens.Tween | null = null;
-        const levelButton = this.add
-            .text(x, y, `${level.name}`, {
-                fontFamily: "WorkSansBold, Arial, sans-serif",
-                fontSize: 32,
-                color: "#000000",
-                align: "center",
-            })
-            .setInteractive()
-            .on("pointerdown", () => {
-                this.scene.start("Game", { level_id: level.id });
-            })
-            .on("pointerover", () => {
-                // Stop any existing tweens
-                if (hoverTween) {
-                    hoverTween.stop();
-                    hoverTween = null;
-                }
+    private addLevelButton(x: number, y: number, level: Level, accessible: boolean = true) {
+        if (accessible) {
+            let hoverTween: Phaser.Tweens.Tween | null = null;
+            const levelButton = this.add
+                .text(x, y, `${level.name}`, {
+                    fontFamily: "WorkSansBold, Arial, sans-serif",
+                    fontSize: 32,
+                    color: "#000000",
+                    align: "center",
+                })
+                .setInteractive()
+                .on("pointerdown", () => {
+                    this.scene.start("Game", { level: level });
+                })
+                .on("pointerover", () => {
+                    // Stop any existing tweens
+                    if (hoverTween) {
+                        hoverTween.stop();
+                        hoverTween = null;
+                    }
 
-                hoverTween = this.add.tween({
-                    targets: levelButton,
-                    ease: "Sine.easeInOut",
-                    duration: 100,
-                    alpha: 0.5,
+                    hoverTween = this.add.tween({
+                        targets: levelButton,
+                        ease: "Sine.easeInOut",
+                        duration: 100,
+                        alpha: 0.5,
+                    });
+                })
+                .on("pointerout", () => {
+                    if (hoverTween) {
+                        hoverTween.stop();
+                        hoverTween = null;
+                    }
+                    levelButton.setAlpha(1);
                 });
-            })
-            .on("pointerout", () => {
-                if (hoverTween) {
-                    hoverTween.stop();
-                    hoverTween = null;
-                }
-                levelButton.setAlpha(1);
-            });
+        } else {
+            this.add
+                .text(x, y, `${level.name}`, {
+                    fontFamily: "WorkSansBold, Arial, sans-serif",
+                    fontSize: 32,
+                    color: "#777777",
+                    align: "center",
+                });
+        }
+
     }
 
     private addLevelButtons() {
@@ -86,7 +102,15 @@ export class LevelSelect extends Scene {
         let x = 100;
         let y = 200;
         for (let level of levels) {
-            this.addLevelButton(x, y, level);
+            if (level.id != 1) {
+                if (this.loadGrade(level.id - 1)) {
+                    this.addLevelButton(x, y, level, true);
+                } else {
+                    this.addLevelButton(x, y, level, false);
+                }
+            } else {
+                this.addLevelButton(x, y, level, true);
+            }
             this.addStars(this.scale.width - 100, y+15, this.loadGrade(level.id));
             y += 50;
         }
