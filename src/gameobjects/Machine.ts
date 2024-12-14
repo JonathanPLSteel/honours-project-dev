@@ -85,7 +85,7 @@ export default class Machine extends Phaser.GameObjects.Container {
         this.icon = this.scene.add.image(
             0,
             -(this.displayHeight * 0.33),
-            "chef-jonathan"
+            "chef"
         );
         this.icon.setDisplaySize(70, 70);
         this.icon.setOrigin(0.5, 0.5);

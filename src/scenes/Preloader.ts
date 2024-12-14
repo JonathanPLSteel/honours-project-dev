@@ -45,6 +45,12 @@ export class Preloader extends Scene
 
         this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansRegular', fontSize: '1px' }).setVisible(false);
         this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansBold', fontSize: '1px' }).setVisible(false);
+
+        this.load.setPath('data');
+
+        this.load.json("levels", "levels.json")
+        this.load.json("worlds", "worlds.json");
+        this.load.json("task_types", "task_types.json");
     }
 
     create ()

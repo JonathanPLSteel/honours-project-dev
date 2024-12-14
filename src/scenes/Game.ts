@@ -32,6 +32,7 @@ export class Game extends Scene {
 
         this.task_manager = new TaskManager(
             this,
+            this.cache.json.get("task_types"),
             this.current_level.task_keys,
             this.current_level.machine_names
         );

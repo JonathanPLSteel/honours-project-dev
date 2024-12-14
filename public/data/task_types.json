@@ -1,0 +1,6 @@
+[
+    { "key": "carrots", "name": "Carrots", "duration": 25 },
+    { "key": "roast-chicken", "name": "Roast Chicken", "duration": 40 },
+    { "key": "roast-potatoes", "name": "Roast Potatoes", "duration": 30 },
+    { "key": "green-beans", "name": "Green Beans", "duration": 25 }
+]

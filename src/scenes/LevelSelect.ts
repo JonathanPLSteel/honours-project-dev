@@ -16,11 +16,6 @@ export class LevelSelect extends Scene {
         super("LevelSelect");
     }
 
-    preload() {
-        this.load.json("levels", "data/levels.json");
-        this.load.json("worlds", "data/worlds.json");
-    }
-
     create() {
         const levels: Level[] = this.cache.json.get("levels");
         const worlds: World[] = this.cache.json.get("worlds");

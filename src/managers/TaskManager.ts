@@ -24,12 +24,7 @@ export default class TaskManager {
     private scene: Phaser.Scene;
     private total_duration: number;
 
-    private task_types: { key: string; name: string; duration: number }[] = [
-        { key: "carrots", name: "Carrots", duration: 25 },
-        { key: "roast-chicken", name: "Roast Chicken", duration: 40 },
-        { key: "roast-potatoes", name: "Roast Potatoes", duration: 30 },
-        { key: "green-beans", name: "Green Beans", duration: 25 },
-    ];
+    private task_types: { key: string; name: string; duration: number }[];
 
     private task_med_dims = {
         width: 150,
@@ -53,10 +48,12 @@ export default class TaskManager {
 
     constructor(
         scene: Phaser.Scene,
+        task_types: { key: string; name: string; duration: number }[],
         task_keys: string[],
         machine_names: string[]
     ) {
         this.scene = scene;
+        this.task_types = task_types;
 
         // Validate Tasks
         if (task_keys.length > this.maxNumTasks) {
