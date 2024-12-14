@@ -1,8 +1,8 @@
 [
     {
-        "id": 1,
+        "id": 0,
         "name": "Level 1",
-        "world": 1,
+        "world": 0,
         "task_keys": ["carrots", "roast-chicken", "roast-potatoes"],
         "machine_names": ["Chef Jonathan", "Chef Julian"],
         "scoreChart": {
@@ -18,9 +18,9 @@
         }
     },
     {
-        "id": 2,
+        "id": 1,
         "name": "Level 2",
-        "world": 1,
+        "world": 0,
         "task_keys": ["carrots", "roast-chicken", "roast-potatoes", "green-beans"],
         "machine_names": ["Chef Jonathan", "Chef Julian"],
         "scoreChart": {
@@ -30,9 +30,9 @@
         }
     },
     {
-        "id": 3,
+        "id": 2,
         "name": "Level 3",
-        "world": 1,
+        "world": 0,
         "task_keys": ["carrots", "roast-chicken", "roast-potatoes", "green-beans", "green-beans"],
         "machine_names": ["Chef Jonathan", "Chef Julian"],
         "scoreChart": {
@@ -42,15 +42,33 @@
         }
     },
     {
-        "id": 4,
+        "id": 3,
         "name": "Level 4",
-        "world": 1,
+        "world": 0,
         "task_keys": ["carrots", "roast-chicken", "roast-potatoes", "green-beans", "green-beans"],
         "machine_names": ["Chef Jonathan", "Chef Julian", "Chef Jacob"],
         "scoreChart": {
             "75": 1,
             "65": 2,
             "55": 3
+        }
+    },
+    {
+        "id": 4,
+        "name": "Level 1",
+        "world": 1,
+        "task_keys": ["carrots", "roast-chicken", "roast-potatoes"],
+        "machine_names": ["Chef Jonathan", "Chef Julian"],
+        "scoreChart": {
+            "70": 1,
+            "65": 2,
+            "55": 3
+        },
+        "dialogue": {
+            "id": "world-2-intro",
+            "icon": "chef-jonathan",
+            "text": "Oh no! The heater has broken down. While its being fixed ensure that all ingredients are ready at the same time.",
+            "name": "Head Chef Jonathan"
         }
     }
 ]
