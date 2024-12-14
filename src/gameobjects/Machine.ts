@@ -42,7 +42,7 @@ export default class Machine extends Phaser.GameObjects.Container {
         this.total = 0;
         this.tasks = [];
 
-        this.background = this.scene.add.sprite(0, 0, "machine-bg");
+        this.background = this.scene.add.sprite(0, 0, "machine-bg-1");
         this.background.setDisplaySize(width, height);
         this.add(this.background);
 

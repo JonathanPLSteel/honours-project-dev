@@ -30,7 +30,7 @@ export default class Task extends Phaser.GameObjects.Sprite {
         duration: number,
         icon_key: string
     ) {
-        super(scene, x, y, "task-bg");
+        super(scene, x, y, "task-med-bg");
 
         this.scene = scene;
         this.name = name;
@@ -73,7 +73,7 @@ export default class Task extends Phaser.GameObjects.Sprite {
         this.nameText.setOrigin(0.5, 0.5);
 
         this.icon = this.scene.add.image(this.x, this.y, this.icon_key);
-        this.icon.setDisplaySize(40, 40);
+        this.icon.setDisplaySize(35, 35);
         this.icon.setOrigin(0.5, 0.5);
 
         this.durationText = this.scene.add.text(
@@ -148,8 +148,9 @@ export default class Task extends Phaser.GameObjects.Sprite {
 
     public update() {
         if (this.isAttached()) {
+            this.setTexture("task-small-bg");
             this.setDisplaySize(this.small_width, this.small_height);
-            this.icon.setPosition(this.x - this.displayWidth * 0.4, this.y);
+            this.icon.setPosition(this.x - this.displayWidth * 0.425, this.y);
 
             this.nameText.setOrigin(0, 0.5);
             this.nameText.setPosition(this.icon.x + this.icon.displayWidth * 0.75, this.y);
@@ -162,6 +163,7 @@ export default class Task extends Phaser.GameObjects.Sprite {
             );
         }
         else {
+            this.setTexture("task-med-bg");
             this.setDisplaySize(this.med_width, this.med_height);
             this.nameText.setOrigin(0.5, 0.5);
             this.nameText.setPosition(this.x, this.y - this.displayHeight * 0.3);

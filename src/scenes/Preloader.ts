@@ -33,14 +33,18 @@ export class Preloader extends Scene
         this.load.setPath('assets/images');
 
         // this.load.image('logo', 'logo.png');
-        this.load.image('task-bg', 'task-bg.png');
-        this.load.image('carrots', 'carrots.png');
-        this.load.image('machine-bg', 'machine-bg.png')
-        this.load.image('chef', 'chef.png')
-        this.load.image('chef-jonathan', 'chef-jonathan.png')
-        this.load.image('roast-chicken', 'roast-chicken.png')
-        this.load.image('roast-potatoes', 'roast-potatoes.png')
-        this.load.image('green-beans', 'green-beans.png')
+        this.load.image('task-med-bg', 'backgrounds/task-med-bg.png');
+        this.load.image('task-small-bg', 'backgrounds/task-small-bg.png');
+        this.load.image('machine-bg-1', 'backgrounds/machine-bg-1.png')
+
+        this.load.image('chef', 'chefs/chef.png')
+        this.load.image('chef-jonathan', 'chefs/chef-jonathan.png')
+
+        this.load.image('carrots', 'food/carrots.png');
+        this.load.image('roast-chicken', 'food/roast-chicken.png')
+        this.load.image('roast-potatoes', 'food/roast-potatoes.png')
+        this.load.image('green-beans', 'food/green-beans.png')
+
         this.load.image('star', 'star.png')
 
         this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansRegular', fontSize: '1px' }).setVisible(false);
