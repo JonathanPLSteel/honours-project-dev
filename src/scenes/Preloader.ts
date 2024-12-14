@@ -36,9 +36,15 @@ export class Preloader extends Scene
         this.load.image('task-med-bg', 'backgrounds/task-med-bg.png');
         this.load.image('task-small-bg', 'backgrounds/task-small-bg.png');
         this.load.image('machine-bg-1', 'backgrounds/machine-bg-1.png')
+        this.load.image('machine-bg-2', 'backgrounds/machine-bg-2.png')
+        this.load.image('machine-bg-3', 'backgrounds/machine-bg-3.png')
+        this.load.image('machine-bg-4', 'backgrounds/machine-bg-4.png')
 
         this.load.image('chef', 'chefs/chef.png')
         this.load.image('chef-jonathan', 'chefs/chef-jonathan.png')
+        this.load.image('chef-julian', 'chefs/chef-julian.png')
+        this.load.image('chef-jacob', 'chefs/chef-jacob.png')
+        this.load.image('chef-simar', 'chefs/chef-simar.png')
 
         this.load.image('carrots', 'food/carrots.png');
         this.load.image('roast-chicken', 'food/roast-chicken.png')

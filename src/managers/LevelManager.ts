@@ -1,12 +1,13 @@
 import { Dialogue } from "./DialogueManager";
 import { LocalStorageManager } from "../managers/LocalStorageManager";
+import { MachineProps } from "./TaskManager";
 
 export interface Level {
     id: number;
     name: string;
     world: number;
     task_keys: string[];
-    machine_names: string[];
+    machine_props: MachineProps[];
     scoreChart: { [key: number]: number };
     dialogue?: Dialogue;
 }
