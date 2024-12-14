@@ -45,10 +45,17 @@ export default class TaskManager {
     private minNumMachines = 2;
     private maxNumMachines = 3;
 
+    private paused: boolean = false;
+
+    // Game Objects
     private total_duration_text!: Phaser.GameObjects.Text;
     private submit_button!: Button;
 
-    constructor(scene: Phaser.Scene, task_keys: string[], machine_names: string[]) {
+    constructor(
+        scene: Phaser.Scene,
+        task_keys: string[],
+        machine_names: string[]
+    ) {
         this.scene = scene;
 
         // Validate Tasks
@@ -63,7 +70,10 @@ export default class TaskManager {
 
         // Validate Machines
         this.numMachines = machine_names.length;
-        if (this.numMachines < this.minNumMachines || this.numMachines > this.maxNumMachines) {
+        if (
+            this.numMachines < this.minNumMachines ||
+            this.numMachines > this.maxNumMachines
+        ) {
             throw new Error("Invalid number of machines");
         }
 
@@ -167,16 +177,18 @@ export default class TaskManager {
 
         this.total_duration = 0;
 
-        this.total_duration_text = this.scene.add.text(
-            this.scene.scale.width * 0.5,
-            this.scene.scale.height - this.task_bar.displayHeight * 1.2,
-            `${this.total_duration} minutes`,
-            {
-                fontFamily: "WorkSansBold, Arial, sans-serif",
-                fontSize: "18px",
-                color: "#000000",
-            }
-        ).setOrigin(0.5, 0.5);
+        this.total_duration_text = this.scene.add
+            .text(
+                this.scene.scale.width * 0.5,
+                this.scene.scale.height - this.task_bar.displayHeight * 1.2,
+                `${this.total_duration} minutes`,
+                {
+                    fontFamily: "WorkSansBold, Arial, sans-serif",
+                    fontSize: "18px",
+                    color: "#000000",
+                }
+            )
+            .setOrigin(0.5, 0.5);
 
         this.submit_button = new Button(
             this.scene,
@@ -187,7 +199,9 @@ export default class TaskManager {
             () => {
                 this.scene.events.emit("submit");
             }
-        ).setVisible(false).disableInteractive();
+        )
+            .setVisible(false)
+            .disableInteractive();
     }
 
     private addTask(task: Task) {
@@ -200,11 +214,12 @@ export default class TaskManager {
 
     private updateTotalDuration() {
         // Get max duration from all machines
-
         this.total_duration = this.machines.reduce((max, machine) => {
             return machine.getTotal() > max ? machine.getTotal() : max;
         }, 0);
-        this.total_duration_text.setText(`${this.total_duration} minutes`);
+        if (this.total_duration_text && this.total_duration_text.active) {
+            this.total_duration_text.setText(`${this.total_duration} minutes`);
+        }
     }
 
     private checkSubmittable(): boolean {
@@ -213,6 +228,7 @@ export default class TaskManager {
 
     private displaySubmitButton() {
         // console.log("Displaying submit button");
+        // console.log(this.tasks.map((task) => task.isAttached()));
         this.submit_button.setVisible(true).setInteractive();
         this.task_bar.visible = false;
     }
@@ -235,19 +251,57 @@ export default class TaskManager {
         return this.total_duration;
     }
 
-    update() {
+    public pause() {
+        this.paused = true;
+        this.tasks.forEach((task) => task.pause());
+        this.submit_button.disableInteractive();
+    }
+
+    public resume() {
+        this.paused = false;
+        this.tasks.forEach((task) => task.resume());
+        this.submit_button.setInteractive();
+    }
+
+    public update() {
+        if (this.paused) {
+            return;
+        }
+
         this.tasks.forEach((task) => task.update());
 
         this.machines.forEach((machine) => machine.update());
         this.updateTotalDuration();
 
-        if (this.checkSubmittable()) {
-            // TODO: Emitting events could be worth looking into.
-            // this.scene.events.emit("submittable");
+        if (this.submit_button && this.submit_button.active) {
+            if (this.checkSubmittable()) {
+                // TODO: Emitting events could be worth looking into.
+                this.displaySubmitButton();
+            } else {
+                this.hideSubmitButton();
+            }
+        }
+    }
 
-            this.displaySubmitButton();
-        } else {
-            this.hideSubmitButton();
+    public destroy() {
+        this.tasks.forEach((task) => task.destroy());
+        this.tasks = [];
+        this.machines.forEach((machine) => machine.destroy());
+        this.machines = [];
+
+        // Destroy task bar
+        if (this.task_bar) {
+            this.task_bar.destroy();
+        }
+
+        // Destroy text
+        if (this.total_duration_text) {
+            this.total_duration_text.destroy();
+        }
+
+        // Destroy submit button
+        if (this.submit_button) {
+            this.submit_button.destroy();
         }
     }
 }

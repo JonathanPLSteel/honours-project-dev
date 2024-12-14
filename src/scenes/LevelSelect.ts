@@ -1,6 +1,8 @@
 import { Scene } from "phaser";
 import LevelManager, { Level } from "../managers/LevelManager";
 import { LocalStorageManager } from "../managers/LocalStorageManager";
+import DialogueManager from "../managers/DialogueManager";
+
 
 export class LevelSelect extends Scene {
     private level: number;
@@ -13,6 +15,27 @@ export class LevelSelect extends Scene {
     create() {
         this.level_manager = new LevelManager();
 
+        if (this.isNewPlayer()) {
+            let dialogue_manager = new DialogueManager(this);
+            dialogue_manager.displayDialogue({
+                id: "game-intro",
+                icon: "chef-jonathan",
+                text: "Hello, welcome to the Task Scheduling Game! Click anywhere to continue.",
+                name: "Head Chef Jonathan",
+            });
+            this.events.once(`dialogue-game-intro-end`, () => {
+                this.addLevelSelect();
+            });
+        } else {
+            this.addLevelSelect();
+        }
+    }
+
+    private isNewPlayer(): boolean {
+        return localStorage.length === 0; // Returns true if no keys are present
+    }
+
+    private addLevelSelect() {
         this.add.text(100, 100, "Level Select", {
             fontFamily: "WorkSansBold, Arial, sans-serif",
             fontSize: 64,

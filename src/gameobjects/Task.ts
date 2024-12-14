@@ -138,6 +138,14 @@ export default class Task extends Phaser.GameObjects.Sprite {
         return this.attached;
     }
 
+    public pause() {
+        this.disableInteractive();
+    }
+
+    public resume() {
+        this.setInteractive();
+    }
+
     public update() {
         if (this.isAttached()) {
             this.setDisplaySize(this.small_width, this.small_height);

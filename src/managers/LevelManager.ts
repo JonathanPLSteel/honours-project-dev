@@ -1,9 +1,12 @@
+import { Dialogue } from "./DialogueManager";
+
 export interface Level {
     id: number;
     name: string;
     task_keys: string[];
     machine_names: string[];
     scoreChart: { [key: number]: number };
+    dialogue?: Dialogue;
 }
 
 export default class LevelManager {
@@ -20,6 +23,12 @@ export default class LevelManager {
                     70: 1,
                     65: 2,
                     55: 3,
+                },
+                dialogue: {
+                    id: "level-1-intro",
+                    icon: "chef-jonathan",
+                    text: "Drag each of the ingredients into each chefs' areas. Try to keep the total time as low as possible!",
+                    name: "Head Chef Jonathan",
                 }
             },
             {

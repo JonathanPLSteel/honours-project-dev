@@ -1,42 +1,88 @@
-import { Scene } from 'phaser';
-import TaskManager from '../managers/TaskManager';
-import LevelManager, { Level } from '../managers/LevelManager';
+import { Scene } from "phaser";
+import TaskManager from "../managers/TaskManager";
+import LevelManager, { Level } from "../managers/LevelManager";
+import DialogueManager, { Dialogue } from "../managers/DialogueManager";
 
-export class Game extends Scene
-{
+export class Game extends Scene {
     private task_manager: TaskManager;
     private level_manager: LevelManager;
+    private dialogue_manager: DialogueManager;
     private current_level: Level;
     private current_level_id: number;
 
-    constructor ()
-    {
-        super('Game');
+    constructor() {
+        super("Game");
     }
 
-    create (data: {level_id: number})
-    {
+    create(data: { level_id: number }) {
+        this.events.once("shutdown", this.onShutdown, this);
+
         this.current_level_id = data.level_id;
 
         this.level_manager = new LevelManager();
+        this.dialogue_manager = new DialogueManager(this);
 
-        this.current_level = this.level_manager.loadLevel(this.current_level_id);
-
-        this.task_manager = new TaskManager(this, this.current_level.task_keys, this.current_level.machine_names);
-
-        this.events.on('submit', this.onSubmit, this);
+        this.launchLevel();
     }
 
-    onSubmit() {
+    private launchLevel() {
+        this.events.once("submit", this.onSubmit, this);
+
+        this.current_level = this.level_manager.loadLevel(
+            this.current_level_id
+        );
+
+        // Clean up old TaskManager if it exists
+        if (this.task_manager) {
+            this.task_manager.destroy();
+        }
+
+        this.task_manager = new TaskManager(
+            this,
+            this.current_level.task_keys,
+            this.current_level.machine_names
+        );
+
+        if (this.current_level.dialogue) {
+            this.dialogue_manager.displayDialogue(this.current_level.dialogue);
+
+            this.events.once(`dialogue-${this.current_level.dialogue.id}-start`, () => {
+                this.task_manager.pause();
+            });
+
+            this.events.once(`dialogue-${this.current_level.dialogue.id}-end`, () => {
+                this.task_manager.resume();
+            });
+        }
+    }
+
+    private onShutdown() {
+        console.log("Shutting down Game scene, cleaning up resources");
+
+        if (this.task_manager) {
+            this.task_manager.destroy();
+        }
+
+        // Remove lingering event listeners
+        this.events.off("submit", this.onSubmit, this);
+    }
+
+    private onSubmit() {
         let total_duration = this.task_manager.getTotalDuration();
         let grade = this.current_level.scoreChart[total_duration];
         if (grade === undefined) {
             grade = 1;
         }
-        this.scene.start('SubmitScreen', { level_id: this.current_level_id, grade: grade });
+
+        this.scene.start("SubmitScreen", {
+            level_id: this.current_level_id,
+            grade: grade,
+        });
     }
 
     update(time: number, delta: number): void {
-        this.task_manager.update();
+        if (this.task_manager) {
+            this.task_manager.update();
+        }
     }
 }
