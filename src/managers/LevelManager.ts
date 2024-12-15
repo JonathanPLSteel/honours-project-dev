@@ -2,15 +2,43 @@ import { Dialogue } from "./DialogueManager";
 import { LocalStorageManager } from "../managers/LocalStorageManager";
 import { MachineProps } from "./TaskManager";
 
-export interface Level {
+export interface BaseLevel {
     id: number;
     name: string;
-    world: number;
+    world_id: number;
+    type: "cutscene" | "tutorial" | "puzzle" | "quiz";
+}
+
+export interface CutsceneLevel extends BaseLevel {
+    type: "cutscene";
+    cutscene_key: string;
+}
+
+export interface TutorialLevel extends BaseLevel {
+    type: "tutorial";
+    machine_props: MachineProps[];
+    choices: string[];
+    correct: number;
+    dialogue: Dialogue;
+}
+
+export interface PuzzleLevel extends BaseLevel {
+    type: "puzzle";
     task_keys: string[];
     machine_props: MachineProps[];
     scoreChart: { [key: number]: number };
-    dialogue?: Dialogue;
+    dialogue: Dialogue;
 }
+
+export interface QuizLevel extends BaseLevel {
+    type: "quiz";
+    question: string;
+    choices: string[];
+    correct: number;
+    dialogue: Dialogue;
+}
+
+export type Level = CutsceneLevel | TutorialLevel | PuzzleLevel | QuizLevel;
 
 export interface World {
     id: number;
@@ -18,13 +46,30 @@ export interface World {
 }
 
 export default class LevelManager {
+    scene: Phaser.Scene;
     private levels: Level[];
     private worlds: World[];
 
-    constructor(levels: Level[], worlds: World[]) {
-        this.levels = levels;
-        this.worlds = worlds;
+    constructor(scene: Phaser.Scene, levels: Level[], worlds: World[]) {
+        this.scene = scene;
+        this.levels = [];
+        this.worlds = this.loadWorlds();
     }
+
+    // Loaders
+    private loadLevels(): Level[] {
+        let levels: Level[] = [];
+        let json_levels_map = this.scene.cache.json.get("levels");
+
+        for (let level of json_levels_map) {
+            
+    }
+
+    private loadWorlds(): World[] {
+        return this.scene.cache.json.get("worlds");
+    }
+
+    // Getters
 
     public get length(): number {
         return this.levels.length;
