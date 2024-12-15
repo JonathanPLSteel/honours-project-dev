@@ -53,6 +53,17 @@ export class Preloader extends Scene
 
         this.load.image('star', 'star.png')
 
+        this.load.setPath('assets/audio');
+
+        this.load.audio('card-fan-1', 'card-fan-1.ogg');
+        this.load.audio('card-fan-2', 'card-fan-2.ogg');
+        this.load.audio('card-place-1', 'card-place-1.ogg');
+        this.load.audio('card-place-2', 'card-place-2.ogg');
+        this.load.audio('card-place-3', 'card-place-3.ogg');
+        this.load.audio('card-place-4', 'card-place-4.ogg');
+        this.load.audio('card-place-5', 'card-place-5.ogg');
+        this.load.audio('card-place-6', 'card-place-6.ogg');
+
         this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansRegular', fontSize: '1px' }).setVisible(false);
         this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansBold', fontSize: '1px' }).setVisible(false);
         this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansSemiBold', fontSize: '1px' }).setVisible(false);

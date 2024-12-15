@@ -128,6 +128,9 @@ export default class Task extends Phaser.GameObjects.Sprite {
 
     public attach() {
         this.attached = true;
+ 
+        let random = Math.floor(Math.random() * 6) + 1;
+        this.scene.sound.play(`card-place-${random}`);
     }
 
     public detach() {

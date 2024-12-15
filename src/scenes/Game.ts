@@ -37,6 +37,8 @@ export class Game extends Scene {
             this.current_level.machine_props
         );
 
+        this.sound.play("card-fan-2");
+
         if (this.current_level.dialogue) {
             this.dialogue_manager.displayDialogue(this.current_level.dialogue);
 
@@ -71,6 +73,8 @@ export class Game extends Scene {
         if (grade === undefined) {
             grade = 1;
         }
+
+        this.sound.play("card-fan-1");
 
         this.scene.start("SubmitScreen", {
             level_id: this.current_level.id,

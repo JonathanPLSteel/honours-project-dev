@@ -33,11 +33,15 @@ export class MainMenu extends Scene {
             })
             .setOrigin(0.5);
 
+        // this.input.once("pointerdown", () => {
+        //     this.scene.start("Cutscene", {
+        //         cutscene_key: "test_video",
+        //         next_scene: "LevelSelect",
+        //     });
+        // });
+
         this.input.once("pointerdown", () => {
-            this.scene.start("Cutscene", {
-                cutscene_key: "test_video",
-                next_scene: "LevelSelect",
-            });
+            this.scene.start("LevelSelect");
         });
     }
 }
