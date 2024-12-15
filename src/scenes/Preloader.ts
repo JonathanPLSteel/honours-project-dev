@@ -30,6 +30,22 @@ export class Preloader extends Scene
     preload ()
     {
         //  Load the assets for the game - Replace with your own assets
+        this.preloadImages();
+        this.preloadAudio();
+        this.preloadFonts();
+        this.preloadData();  
+    }
+
+    create ()
+    {
+        //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
+        //  For example, you can define global animations here, so we can use them in other scenes.
+
+        //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
+        this.scene.start('MainMenu');
+    }
+
+    private preloadImages() {
         this.load.setPath('assets/images');
 
         // this.load.image('logo', 'logo.png');
@@ -52,7 +68,9 @@ export class Preloader extends Scene
         this.load.image('green-beans', 'food/green-beans.png')
 
         this.load.image('star', 'star.png')
+    }
 
+    private preloadAudio() {
         this.load.setPath('assets/audio');
 
         this.load.audio('card-fan-1', 'card-fan-1.ogg');
@@ -64,24 +82,23 @@ export class Preloader extends Scene
         this.load.audio('card-place-5', 'card-place-5.ogg');
         this.load.audio('card-place-6', 'card-place-6.ogg');
         this.load.audio('switch', 'switch.ogg');
+    }
 
+    private preloadFonts() {
         this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansRegular', fontSize: '1px' }).setVisible(false);
         this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansBold', fontSize: '1px' }).setVisible(false);
         this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansSemiBold', fontSize: '1px' }).setVisible(false);
-
-        this.load.setPath('data');
-
-        this.load.json("levels", "levels.json")
-        this.load.json("worlds", "worlds.json");
-        this.load.json("task_types", "task_types.json");
     }
 
-    create ()
-    {
-        //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
-        //  For example, you can define global animations here, so we can use them in other scenes.
+    private preloadData() {
+        this.load.setPath('data');
 
-        //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start('MainMenu');
+        this.load.json("levels", "levels.json");
+        this.load.json("cutscenes", "cutscenes.json");
+        this.load.json("tutorial", "tutorial.json");
+        this.load.json("puzzles", "puzzles.json");
+        this.load.json("quizzes", "quizzes.json");
+        this.load.json("worlds", "worlds.json");
+        this.load.json("task_types", "task_types.json");
     }
 }
