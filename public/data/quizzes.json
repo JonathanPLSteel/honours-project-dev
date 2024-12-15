@@ -1,0 +1,28 @@
+[
+    {
+        "id": 0,
+        "name": "Quiz 1",
+        "question": "What is the capital of France?",
+        "choices": ["50", "60", "70", "80"],
+        "correct": 0,
+        "dialogue": {
+            "id": "quiz-1-intro",
+            "icon": "chef-jonathan",
+            "text": "Let's see how well you remember the task scheduling terms we talked about!",
+            "name": "Mr. Steel"
+        }
+    },
+    {
+        "id": 1,
+        "name": "Quiz 2",
+        "question": "What is the capital of France?",
+        "choices": ["50", "60", "70", "80"],
+        "correct": 0,
+        "dialogue": {
+            "id": "quiz-2-intro",
+            "icon": "chef-jonathan",
+            "text": "Ok lets link those puzzles back to the terms we talked about!",
+            "name": "Mr. Steel"
+        }
+    }
+]
