@@ -37,8 +37,6 @@ export class Game extends Scene {
             this.current_level.machine_props
         );
 
-        console.log(this.current_level.machine_props[0]);
-
         if (this.current_level.dialogue) {
             this.dialogue_manager.displayDialogue(this.current_level.dialogue);
 

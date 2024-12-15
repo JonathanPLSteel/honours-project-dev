@@ -16,8 +16,15 @@ export default class Machine extends Phaser.GameObjects.Container {
     private rate_to_background_key: { [key: number]: string } = {
         1: "machine-bg-1",
         1.25: "machine-bg-2",
-        1.5: "machine-bg-3",
-        2: "machine-bg-4",
+        2.5: "machine-bg-3",
+        5: "machine-bg-4",
+    };
+
+    private rate_to_color: { [key: number]: string } = {
+        1: "#000000",
+        1.25: "#4E67C8",
+        2.5: "#81D31A",
+        5: "#FF8021",
     };
 
     private dropZone: Phaser.GameObjects.Zone;
@@ -87,13 +94,11 @@ export default class Machine extends Phaser.GameObjects.Container {
             {
                 fontFamily: "WorkSansBold, Arial, sans-serif",
                 fontSize: "18px",
-                color: "#000000",
+                color: this.rate_to_color[this.rate],
             }
         );
         this.nameText.setOrigin(0.5, 0.5);
         this.add(this.nameText);
-
-        console.log(this.icon_key);
 
         this.icon = this.scene.add.image(
             0,
@@ -109,9 +114,9 @@ export default class Machine extends Phaser.GameObjects.Container {
             this.displayHeight * 0.425,
             `${this.getAdjustedTotal()} minutes`,
             {
-                fontFamily: "WorkSansRegular, Arial, sans-serif",
+                fontFamily: `${this.rate === 1 ? "WorkSansRegular" : "WorkSansSemiBold"}, Arial, sans-serif`,
                 fontSize: "16px",
-                color: "#000000",
+                color: this.rate_to_color[this.rate],
             }
         );
         this.totalText.setOrigin(0.5, 0.5);
@@ -124,7 +129,7 @@ export default class Machine extends Phaser.GameObjects.Container {
             {
                 fontFamily: "WorkSansRegular, Arial, sans-serif",
                 fontSize: "16px",
-                color: "#000000",
+                color: "#444444",
             }
         );
         this.originalTotalText.setOrigin(0.5, 0.5);

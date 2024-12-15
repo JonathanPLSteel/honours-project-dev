@@ -55,6 +55,7 @@ export class Preloader extends Scene
 
         this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansRegular', fontSize: '1px' }).setVisible(false);
         this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansBold', fontSize: '1px' }).setVisible(false);
+        this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansSemiBold', fontSize: '1px' }).setVisible(false);
 
         this.load.setPath('data');
 

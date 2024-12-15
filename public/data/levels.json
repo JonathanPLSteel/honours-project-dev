@@ -114,7 +114,7 @@
                 "rate": 1
             },
             {
-                "name": "Senior Chef Simar",
+                "name": "Sous Chef Simar",
                 "icon_key": "chef-simar",
                 "rate": 1.25
             }
@@ -129,6 +129,80 @@
             "icon": "chef-jonathan",
             "text": "We have hired a new senior chef, Simar. She can cook at a quicker rate than our junior chefs. Make sure to use her wisely!",
             "name": "Head Chef Jonathan"
+        }
+    },
+    {
+        "id": 5,
+        "name": "Level 2",
+        "world": 1,
+        "task_keys": ["carrots", "roast-chicken", "roast-potatoes", "green-beans"],
+        "machine_props": [
+            {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1
+            },
+            {
+                "name": "Head Chef Jonathan",
+                "icon_key": "chef-jonathan",
+                "rate": 2.5
+            }
+        ],
+        "scoreChart": {
+            "56": 1,
+            "55": 2,
+            "44": 3
+        }
+    },
+    {
+        "id": 6,
+        "name": "Level 3",
+        "world": 1,
+        "task_keys": ["carrots", "roast-chicken", "roast-potatoes", "green-beans", "carrots"],
+        "machine_props": [
+            {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1
+            },
+            {
+                "name": "Master Chef Gordon",
+                "icon_key": "chef",
+                "rate": 5
+            }
+        ],
+        "scoreChart": {
+            "56": 1,
+            "55": 2,
+            "44": 3
+        }
+    },
+    {
+        "id": 7,
+        "name": "Level 4",
+        "world": 1,
+        "task_keys": ["carrots", "roast-chicken", "roast-potatoes", "green-beans", "carrots"],
+        "machine_props": [
+            {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1
+            },
+            {
+                "name": "Sous Chef Simar",
+                "icon_key": "chef-simar",
+                "rate": 1.25
+            },
+            {
+                "name": "Master Chef Gordon",
+                "icon_key": "chef",
+                "rate": 5
+            }
+        ],
+        "scoreChart": {
+            "56": 1,
+            "55": 2,
+            "44": 3
         }
     }
 ]
