@@ -41,6 +41,7 @@ export class MainMenu extends Scene {
         // });
 
         this.input.once("pointerdown", () => {
+            this.sound.play("switch");
             this.scene.start("LevelSelect");
         });
     }

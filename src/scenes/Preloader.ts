@@ -63,6 +63,7 @@ export class Preloader extends Scene
         this.load.audio('card-place-4', 'card-place-4.ogg');
         this.load.audio('card-place-5', 'card-place-5.ogg');
         this.load.audio('card-place-6', 'card-place-6.ogg');
+        this.load.audio('switch', 'switch.ogg');
 
         this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansRegular', fontSize: '1px' }).setVisible(false);
         this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansBold', fontSize: '1px' }).setVisible(false);
