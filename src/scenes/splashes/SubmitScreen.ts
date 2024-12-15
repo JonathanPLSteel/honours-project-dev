@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import { LocalStorageManager } from "../managers/LocalStorageManager";
+import { LocalStorageManager } from "../../managers/LocalStorageManager";
 
 export class SubmitScreen extends Scene {
     grading_text: Phaser.GameObjects.Text;

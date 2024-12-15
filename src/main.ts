@@ -1,13 +1,12 @@
 import { Boot } from './scenes/Boot';
 import { Game as MainGame } from './scenes/Game';
-import { GameOver } from './scenes/GameOver';
-import { MainMenu } from './scenes/MainMenu';
+import { MainMenu } from './scenes/menus/MainMenu';
 import { Preloader } from './scenes/Preloader';
 
 import { Game, Types } from "phaser";
-import { SubmitScreen } from './scenes/SubmitScreen';
-import { LevelSelect } from './scenes/LevelSelect';
-import { Cutscene } from './scenes/Cutscene';
+import { SubmitScreen } from './scenes/splashes/SubmitScreen';
+import { LevelSelect } from './scenes/menus/LevelSelect';
+import { Cutscene } from './scenes/levels/Cutscene';
 
 //  Find out more information about the Game Config at:
 //  https://newdocs.phaser.io/docs/3.86.0/Phaser.Types.Core.GameConfig
@@ -26,7 +25,6 @@ const config: Types.Core.GameConfig = {
         Preloader,
         MainMenu,
         MainGame,
-        GameOver,
         SubmitScreen,
         LevelSelect,
         Cutscene

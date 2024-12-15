@@ -1,6 +1,6 @@
 import { Scene } from "phaser";
-import LevelManager, { Level, World } from "../managers/LevelManager";
-import DialogueManager from "../managers/DialogueManager";
+import LevelManager, { Level, World } from "../../managers/LevelManager";
+import DialogueManager from "../../managers/DialogueManager";
 
 export class LevelSelect extends Scene {
     private level_manager: LevelManager;
