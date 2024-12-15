@@ -1,5 +1,5 @@
 import Task from "./Task";
-import TaskManager from "../managers/TaskManager";
+import TaskManager, { MachineProps } from "../managers/TaskManager";
 
 export default class Machine extends Phaser.GameObjects.Container {
     scene: Phaser.Scene;
@@ -8,23 +8,39 @@ export default class Machine extends Phaser.GameObjects.Container {
     id: number;
     total: number;
     background: Phaser.GameObjects.Sprite;
+    private tasks: Task[];
+    private capacity: number;
+    private icon_key: string;
+    private rate: number;
+
+    private rate_to_background_key: { [key: number]: string } = {
+        1: "machine-bg-1",
+        1.25: "machine-bg-2",
+        2.5: "machine-bg-3",
+        5: "machine-bg-4",
+    };
+
+    private rate_to_color: { [key: number]: string } = {
+        1: "#000000",
+        1.25: "#4E67C8",
+        2.5: "#81D31A",
+        5: "#FF8021",
+    };
 
     private dropZone: Phaser.GameObjects.Zone;
 
     private nameText!: Phaser.GameObjects.Text;
     private totalText!: Phaser.GameObjects.Text;
+    private originalTotalText!: Phaser.GameObjects.Text;
     private icon!: Phaser.GameObjects.Image;
-
-    private tasks: Task[];
 
     private slot_coords: { x: number; y: number }[];
     private highlighted_slot: Phaser.GameObjects.Rectangle;
-    private capacity: number;
 
     constructor(
         scene: Phaser.Scene,
         taskManager: TaskManager,
-        name: string,
+        props: MachineProps,
         x: number,
         y: number,
         width: number,
@@ -36,13 +52,15 @@ export default class Machine extends Phaser.GameObjects.Container {
 
         this.scene = scene;
         this.taskManager = taskManager;
-        this.name = name;
+        this.name = props.name;
         this.capacity = capacity;
         this.id = id;
         this.total = 0;
         this.tasks = [];
+        this.icon_key = props.icon_key;
+        this.rate = props.rate;
 
-        this.background = this.scene.add.sprite(0, 0, "machine-bg");
+        this.background = this.scene.add.sprite(0, 0, this.rate_to_background_key[this.rate]);
         this.background.setDisplaySize(width, height);
         this.add(this.background);
 
@@ -76,7 +94,7 @@ export default class Machine extends Phaser.GameObjects.Container {
             {
                 fontFamily: "WorkSansBold, Arial, sans-serif",
                 fontSize: "18px",
-                color: "#000000",
+                color: this.rate_to_color[this.rate],
             }
         );
         this.nameText.setOrigin(0.5, 0.5);
@@ -85,7 +103,7 @@ export default class Machine extends Phaser.GameObjects.Container {
         this.icon = this.scene.add.image(
             0,
             -(this.displayHeight * 0.33),
-            "chef"
+            this.icon_key
         );
         this.icon.setDisplaySize(70, 70);
         this.icon.setOrigin(0.5, 0.5);
@@ -94,15 +112,32 @@ export default class Machine extends Phaser.GameObjects.Container {
         this.totalText = this.scene.add.text(
             0,
             this.displayHeight * 0.425,
-            `${this.total} minutes`,
+            `${this.getAdjustedTotal()} minutes`,
             {
-                fontFamily: "WorkSansRegular, Arial, sans-serif",
+                fontFamily: `${this.rate === 1 ? "WorkSansRegular" : "WorkSansSemiBold"}, Arial, sans-serif`,
                 fontSize: "16px",
-                color: "#000000",
+                color: this.rate_to_color[this.rate],
             }
         );
         this.totalText.setOrigin(0.5, 0.5);
         this.add(this.totalText);
+
+        this.originalTotalText = this.scene.add.text(
+            -this.totalText.displayWidth,
+            this.displayHeight * 0.425,
+            `${this.total}`,
+            {
+                fontFamily: "WorkSansRegular, Arial, sans-serif",
+                fontSize: "16px",
+                color: "#444444",
+            }
+        );
+        this.originalTotalText.setOrigin(0.5, 0.5);
+        this.add(this.originalTotalText)
+
+        if (this.rate === 1) {
+            this.originalTotalText.setVisible(false);
+        }
     }
 
     private addDropZoneListeners() {
@@ -192,7 +227,8 @@ export default class Machine extends Phaser.GameObjects.Container {
     }
 
     private updateTotalText() {
-        this.totalText.setText(`${this.total} minutes`);
+        this.originalTotalText.setText(`${this.total}`);
+        this.totalText.setText(`${this.getAdjustedTotal()} minutes`);
     }
 
     private highlightSlot(coord: { x: number; y: number }) {
@@ -219,6 +255,10 @@ export default class Machine extends Phaser.GameObjects.Container {
 
     public getTotal(): number {
         return this.total;
+    }
+
+    public getAdjustedTotal(): number {
+        return this.total / this.rate;
     }
 
     public update() {}

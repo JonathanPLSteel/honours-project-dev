@@ -33,18 +33,41 @@ export class Preloader extends Scene
         this.load.setPath('assets/images');
 
         // this.load.image('logo', 'logo.png');
-        this.load.image('task-bg', 'task-bg.png');
-        this.load.image('carrots', 'carrots.png');
-        this.load.image('machine-bg', 'machine-bg.png')
-        this.load.image('chef', 'chef.png')
-        this.load.image('chef-jonathan', 'chef-jonathan.png')
-        this.load.image('roast-chicken', 'roast-chicken.png')
-        this.load.image('roast-potatoes', 'roast-potatoes.png')
-        this.load.image('green-beans', 'green-beans.png')
+        this.load.image('task-med-bg', 'backgrounds/task-med-bg.png');
+        this.load.image('task-small-bg', 'backgrounds/task-small-bg.png');
+        this.load.image('machine-bg-1', 'backgrounds/machine-bg-1.png')
+        this.load.image('machine-bg-2', 'backgrounds/machine-bg-2.png')
+        this.load.image('machine-bg-3', 'backgrounds/machine-bg-3.png')
+        this.load.image('machine-bg-4', 'backgrounds/machine-bg-4.png')
+
+        this.load.image('chef', 'chefs/chef.png')
+        this.load.image('chef-jonathan', 'chefs/chef-jonathan.png')
+        this.load.image('chef-julian', 'chefs/chef-julian.png')
+        this.load.image('chef-jacob', 'chefs/chef-jacob.png')
+        this.load.image('chef-simar', 'chefs/chef-simar.png')
+
+        this.load.image('carrots', 'food/carrots.png');
+        this.load.image('roast-chicken', 'food/roast-chicken.png')
+        this.load.image('roast-potatoes', 'food/roast-potatoes.png')
+        this.load.image('green-beans', 'food/green-beans.png')
+
         this.load.image('star', 'star.png')
+
+        this.load.setPath('assets/audio');
+
+        this.load.audio('card-fan-1', 'card-fan-1.ogg');
+        this.load.audio('card-fan-2', 'card-fan-2.ogg');
+        this.load.audio('card-place-1', 'card-place-1.ogg');
+        this.load.audio('card-place-2', 'card-place-2.ogg');
+        this.load.audio('card-place-3', 'card-place-3.ogg');
+        this.load.audio('card-place-4', 'card-place-4.ogg');
+        this.load.audio('card-place-5', 'card-place-5.ogg');
+        this.load.audio('card-place-6', 'card-place-6.ogg');
+        this.load.audio('switch', 'switch.ogg');
 
         this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansRegular', fontSize: '1px' }).setVisible(false);
         this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansBold', fontSize: '1px' }).setVisible(false);
+        this.add.text(0, 0, 'Loading...', { fontFamily: 'WorkSansSemiBold', fontSize: '1px' }).setVisible(false);
 
         this.load.setPath('data');
 

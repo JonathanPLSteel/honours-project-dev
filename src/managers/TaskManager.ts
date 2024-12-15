@@ -11,6 +11,12 @@ interface MachineDimensions {
     capacity: number;
 }
 
+export interface MachineProps {
+    name: string;
+    icon_key: string;
+    rate: number;
+}
+
 type MachineDimsDictionary = {
     [numMachines: number]: {
         [machineNo: number]: MachineDimensions;
@@ -50,7 +56,7 @@ export default class TaskManager {
         scene: Phaser.Scene,
         task_types: { key: string; name: string; duration: number }[],
         task_keys: string[],
-        machine_names: string[]
+        machine_props: MachineProps[]
     ) {
         this.scene = scene;
         this.task_types = task_types;
@@ -66,7 +72,7 @@ export default class TaskManager {
         });
 
         // Validate Machines
-        this.numMachines = machine_names.length;
+        this.numMachines = machine_props.length;
         if (
             this.numMachines < this.minNumMachines ||
             this.numMachines > this.maxNumMachines
@@ -161,7 +167,7 @@ export default class TaskManager {
                 new Machine(
                     this.scene,
                     this,
-                    machine_names[i],
+                    machine_props[i],
                     this.machine_dims[this.numMachines][i].x,
                     this.machine_dims[this.numMachines][i].y,
                     this.machine_dims[this.numMachines][i].width,
@@ -212,7 +218,7 @@ export default class TaskManager {
     private updateTotalDuration() {
         // Get max duration from all machines
         this.total_duration = this.machines.reduce((max, machine) => {
-            return machine.getTotal() > max ? machine.getTotal() : max;
+            return machine.getAdjustedTotal() > max ? machine.getAdjustedTotal() : max;
         }, 0);
         if (this.total_duration_text && this.total_duration_text.active) {
             this.total_duration_text.setText(`${this.total_duration} minutes`);

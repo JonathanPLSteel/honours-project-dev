@@ -185,6 +185,7 @@ export class LevelSelect extends Scene {
                 .setInteractive()
                 .on("pointerdown", () => {
                     this.current_world_id = previousWorldID;
+                    this.sound.play("switch");
                     this.reload();
                 })
                 .on("pointerover", () => {
@@ -228,6 +229,7 @@ export class LevelSelect extends Scene {
                 .setInteractive()
                 .on("pointerdown", () => {
                     this.current_world_id = nextWorldID;
+                    this.sound.play("switch");
                     this.reload();
                 })
                 .on("pointerover", () => {

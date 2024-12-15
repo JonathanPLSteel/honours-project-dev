@@ -34,24 +34,31 @@ export class Game extends Scene {
             this,
             this.cache.json.get("task_types"),
             this.current_level.task_keys,
-            this.current_level.machine_names
+            this.current_level.machine_props
         );
+
+        this.sound.play("card-fan-2");
 
         if (this.current_level.dialogue) {
             this.dialogue_manager.displayDialogue(this.current_level.dialogue);
 
-            this.events.once(`dialogue-${this.current_level.dialogue.id}-start`, () => {
-                this.task_manager.pause();
-            });
+            this.events.once(
+                `dialogue-${this.current_level.dialogue.id}-start`,
+                () => {
+                    this.task_manager.pause();
+                }
+            );
 
-            this.events.once(`dialogue-${this.current_level.dialogue.id}-end`, () => {
-                this.task_manager.resume();
-            });
+            this.events.once(
+                `dialogue-${this.current_level.dialogue.id}-end`,
+                () => {
+                    this.task_manager.resume();
+                }
+            );
         }
     }
 
     private onShutdown() {
-
         if (this.task_manager) {
             this.task_manager.destroy();
         }
@@ -66,6 +73,8 @@ export class Game extends Scene {
         if (grade === undefined) {
             grade = 1;
         }
+
+        this.sound.play("card-fan-1");
 
         this.scene.start("SubmitScreen", {
             level_id: this.current_level.id,

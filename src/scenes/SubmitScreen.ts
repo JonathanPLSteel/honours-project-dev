@@ -59,6 +59,7 @@ export class SubmitScreen extends Scene {
         this.grading_text.setOrigin(0.5);
 
         this.input.once("pointerdown", () => {
+            this.sound.play("switch");
             this.scene.start("LevelSelect", { level_id: this.level_id, grade: this.grade });
         });
     }
