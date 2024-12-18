@@ -66,8 +66,11 @@ export class Puzzle extends Scene {
 
         this.level.completed = true;
 
-        this.level.grade = this.level.scoreChart[total_duration];
-        if (this.level.grade === undefined) {
+        if (total_duration <= this.level.scoreChart[0]) {
+            this.level.grade = 3;
+        } else if (total_duration <= this.level.scoreChart[1]) {
+            this.level.grade = 2;
+        } else {
             this.level.grade = 1;
         }
 

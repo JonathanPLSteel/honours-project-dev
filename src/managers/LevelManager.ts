@@ -27,7 +27,7 @@ export interface PuzzleLevel extends BaseLevel {
     type: "puzzle";
     task_keys: string[];
     machine_props: MachineProps[];
-    scoreChart: { [key: number]: number };
+    scoreChart: number[];
     grade: number;
     dialogue?: Dialogue;
 }

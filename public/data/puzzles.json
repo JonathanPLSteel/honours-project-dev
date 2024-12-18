@@ -15,11 +15,7 @@
                 "rate": 1
             }
         ],
-        "scoreChart": {
-            "70": 1,
-            "65": 2,
-            "55": 3
-        },
+        "scoreChart": [55, 65, 70],
         "dialogue": {
             "id": "level-1-intro",
             "icon": "chef-jonathan",
@@ -43,11 +39,7 @@
                 "rate": 1
             }
         ],
-        "scoreChart": {
-            "90": 1,
-            "80": 2,
-            "75": 3
-        }
+        "scoreChart": [75, 80, 90]
     },
     {
         "id": 2,
@@ -70,11 +62,7 @@
                 "rate": 1
             }
         ],
-        "scoreChart": {
-            "75": 1,
-            "65": 2,
-            "55": 3
-        }
+        "scoreChart": [75, 65, 55]
     },
     {
         "id": 3,
@@ -92,11 +80,7 @@
                 "rate": 1.25
             }
         ],
-        "scoreChart": {
-            "56": 1,
-            "55": 2,
-            "44": 3
-        },
+        "scoreChart": [44, 55, 56],
         "dialogue": {
             "id": "world-2-intro",
             "icon": "chef-jonathan",
@@ -125,10 +109,6 @@
                 "rate": 5
             }
         ],
-        "scoreChart": {
-            "56": 1,
-            "55": 2,
-            "44": 3
-        }
+        "scoreChart": [44, 55, 56]
     }
 ]
