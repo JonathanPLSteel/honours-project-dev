@@ -28,4 +28,8 @@ export class LocalStorageManager {
     static clearAllData(): void {
         localStorage.clear();
     }
+
+    static get empty(): boolean {
+        return localStorage.length === 0;
+    }
 }

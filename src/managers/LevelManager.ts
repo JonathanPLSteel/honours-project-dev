@@ -6,6 +6,7 @@ export interface BaseLevel {
     id: number;
     name: string;
     world_id: number;
+    completed: boolean;
     type: "cutscene" | "tutorial" | "puzzle" | "quiz";
 }
 
@@ -19,7 +20,7 @@ export interface TutorialLevel extends BaseLevel {
     machine_props: MachineProps[];
     choices: string[];
     correct: number;
-    dialogue: Dialogue;
+    dialogue?: Dialogue;
 }
 
 export interface PuzzleLevel extends BaseLevel {
@@ -27,7 +28,8 @@ export interface PuzzleLevel extends BaseLevel {
     task_keys: string[];
     machine_props: MachineProps[];
     scoreChart: { [key: number]: number };
-    dialogue: Dialogue;
+    grade: number;
+    dialogue?: Dialogue;
 }
 
 export interface QuizLevel extends BaseLevel {
@@ -35,7 +37,7 @@ export interface QuizLevel extends BaseLevel {
     question: string;
     choices: string[];
     correct: number;
-    dialogue: Dialogue;
+    dialogue?: Dialogue;
 }
 
 export type Level = CutsceneLevel | TutorialLevel | PuzzleLevel | QuizLevel;
@@ -50,9 +52,9 @@ export default class LevelManager {
     private levels: Level[];
     private worlds: World[];
 
-    constructor(scene: Phaser.Scene, levels: Level[], worlds: World[]) {
+    constructor(scene: Phaser.Scene) {
         this.scene = scene;
-        this.levels = [];
+        this.levels = this.loadLevels();
         this.worlds = this.loadWorlds();
     }
 
@@ -60,14 +62,94 @@ export default class LevelManager {
     private loadLevels(): Level[] {
         let levels: Level[] = [];
         let json_levels_map = this.scene.cache.json.get("levels");
+        let cutscenes = this.scene.cache.json.get("cutscenes");
+        let tutorials = this.scene.cache.json.get("tutorials");
+        let puzzles = this.scene.cache.json.get("puzzles");
+        let quizzes = this.scene.cache.json.get("quizzes");
 
-        for (let level of json_levels_map) {
-            
+        for (let level_map of json_levels_map) {
+            let level: Level;
+            let progress = this.loadLevelProgress(level_map.id);
+            switch (level_map.level_type) {
+                case "cutscene":
+                    level = {
+                        id: level_map.id,
+                        name: cutscenes[level_map.level_id].name,
+                        world_id: level_map.world_id,
+                        completed: progress.completed,
+                        type: "cutscene",
+                        cutscene_key: cutscenes[level_map.level_id].key,
+                    };
+                    break;
+                case "tutorial":
+                    level = {
+                        id: level_map.id,
+                        name: tutorials[level_map.level_id].name,
+                        world_id: level_map.world_id,
+                        completed: progress.completed,
+                        type: "tutorial",
+                        machine_props: tutorials[level_map.level_id].machine_props,
+                        choices: tutorials[level_map.level_id].choices,
+                        correct: tutorials[level_map.level_id].correct,
+                        dialogue: tutorials[level_map.level_id].dialogue ?? null,
+                    };
+                    break;
+                case "puzzle":
+                    level = {
+                        id: level_map.id,
+                        name: puzzles[level_map.level_id].name,
+                        world_id: level_map.world_id,
+                        completed: progress.completed,
+                        type: "puzzle",
+                        task_keys: puzzles[level_map.level_id].task_keys,
+                        machine_props: puzzles[level_map.level_id].machine_props,
+                        scoreChart: puzzles[level_map.level_id].scoreChart,
+                        grade: progress.grade,
+                        dialogue: puzzles[level_map.level_id].dialogue ?? null,
+                    };
+                    break;
+                case "quiz":
+                    level = {
+                        id: level_map.id,
+                        name: quizzes[level_map.level_id].name,
+                        world_id: level_map.world_id,
+                        completed: progress.completed,
+                        type: "quiz",
+                        question: quizzes[level_map.level_id].question,
+                        choices: quizzes[level_map.level_id].choices,
+                        correct: quizzes[level_map.level_id].correct,
+                        dialogue: quizzes[level_map.level_id].dialogue ?? null,
+                    };
+                    break;
+                default:
+                    throw new Error("Invalid level type");
+
+            }
+
+            levels.push(level);
+
+        }
+
+        return levels;
     }
 
     private loadWorlds(): World[] {
         return this.scene.cache.json.get("worlds");
     }
+
+    private loadLevelProgress(level_id: number): {completed: boolean, grade: number} {
+        return LocalStorageManager.loadData<{completed: boolean, grade: number}>(level_id.toString()) ?? {completed: false, grade: 0};
+    }
+
+    public saveLevelProgress(level_id: number, completed: boolean, grade: number): void {
+        LocalStorageManager.saveData(level_id.toString(), {completed, grade});
+
+        this.levels[level_id].completed = completed;
+        if (this.levels[level_id].type === "puzzle") {
+            this.levels[level_id].grade = grade;
+        }
+    }
+
 
     // Getters
 
@@ -75,8 +157,11 @@ export default class LevelManager {
         return this.levels.length;
     }
 
-    public isNewPlayer(): boolean {
-        return localStorage.length === 0; // Returns true if no keys are present
+    public getLevelByID(level_id: number): Level {
+        if (level_id < 0 || level_id >= this.levels.length ) {
+            throw new Error("Invalid level");
+        }
+        return this.levels[level_id];
     }
 
     public getLastUnlockedLevelID(): number {
@@ -89,22 +174,15 @@ export default class LevelManager {
     }
 
     public getLastUnlockedWorldID(): number {
-        return this.loadLevel(this.getLastUnlockedLevelID()).world;
+        return this.getLevelByID(this.getLastUnlockedLevelID()).world_id;
     }
 
-    public getWorldLevelIDs(world: number): number[] {
-        return this.levels.filter((level) => level.world === world).map((level) => level.id);
+    public getLevelsIDsByWorldID(world: number): number[] {
+        return this.levels.filter((level) => level.world_id === world).map((level) => level.id);
     }
 
     public getAllLevels(): Level[] {
         return this.levels;
-    }
-
-    public loadLevel(level_id: number): Level {
-        if (level_id < 0 || level_id >= this.levels.length ) {
-            throw new Error("Invalid level");
-        }
-        return this.levels[level_id];
     }
 
     public getWorld(world_id: number): World {  
@@ -112,14 +190,6 @@ export default class LevelManager {
             throw new Error("Invalid world");
         }
         return this.worlds[world_id];
-    }
-
-    public loadGrade(level_id: number): number {
-        let grade = LocalStorageManager.loadData<number>(level_id.toString());
-        if (grade === null) {
-            return 0;
-        }
-        return grade;
     }
 
     public getPreviousWorldID(world_id: number): number {
@@ -134,5 +204,17 @@ export default class LevelManager {
             return -1;
         }
         return world_id + 1;
+    }
+
+    public loadGrade(level_id: number): number {
+        let grade = LocalStorageManager.loadData<number>(level_id.toString());
+        if (grade === null) {
+            return 0;
+        }
+        return grade;
+    }
+
+    public isNewPlayer(): boolean {
+        return localStorage.length === 0; // Returns true if no keys are present
     }
 }

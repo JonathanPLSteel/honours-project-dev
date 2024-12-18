@@ -1,11 +1,16 @@
 import { Scene } from "phaser";
+import { PuzzleLevel } from "../../managers/LevelManager";
 
 export class Puzzle extends Scene {
+    private level: PuzzleLevel;
+
     constructor() {
         super("Puzzle");
     }
 
-    create() {
+    create(data: { level: PuzzleLevel }) {
+        this.level = data.level;
+
         this.add.text(512, 384, "Puzzle", {
             fontFamily: "WorkSansBold, Arial, sans-serif",
             fontSize: 52,
@@ -22,7 +27,7 @@ export class Puzzle extends Scene {
 
         this.input.once("pointerdown", () => {
             this.sound.play("switch");
-            this.scene.start("LevelSelect");
+            this.scene.start("LevelSelect", { level: this.level });
         });
     }
 }

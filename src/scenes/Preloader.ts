@@ -67,6 +67,13 @@ export class Preloader extends Scene
         this.load.image('roast-potatoes', 'food/roast-potatoes.png')
         this.load.image('green-beans', 'food/green-beans.png')
 
+        this.load.image('completed', 'levels/completed.png')
+        this.load.image('locked', 'levels/locked.png')
+        this.load.image('cutscene', 'levels/cutscene.png')
+        this.load.image('puzzle', 'levels/puzzle.png')
+        this.load.image('tutorial', 'levels/tutorial.png')
+        this.load.image('quiz', 'levels/quiz.png')
+
         this.load.image('star', 'star.png')
     }
 
@@ -95,7 +102,7 @@ export class Preloader extends Scene
 
         this.load.json("levels", "levels.json");
         this.load.json("cutscenes", "cutscenes.json");
-        this.load.json("tutorial", "tutorial.json");
+        this.load.json("tutorials", "tutorials.json");
         this.load.json("puzzles", "puzzles.json");
         this.load.json("quizzes", "quizzes.json");
         this.load.json("worlds", "worlds.json");
