@@ -166,7 +166,7 @@ export default class LevelManager {
 
     public getLastUnlockedLevelID(): number {
         for (let level of this.levels) {
-            if (!(this.loadGrade(level.id))) {
+            if (!(level.completed)) {
                 return level.id;
             }
         }
@@ -204,14 +204,6 @@ export default class LevelManager {
             return -1;
         }
         return world_id + 1;
-    }
-
-    public loadGrade(level_id: number): number {
-        let grade = LocalStorageManager.loadData<number>(level_id.toString());
-        if (grade === null) {
-            return 0;
-        }
-        return grade;
     }
 
     public isNewPlayer(): boolean {

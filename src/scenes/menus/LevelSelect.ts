@@ -133,7 +133,15 @@ export class LevelSelect extends Scene {
         level_button.add(level_background);
 
         let level_icon = this.add
-            .image(-width / 2 + 25, 0, accessible ? level.type : "locked")
+            .image(
+                -width / 2 + 25,
+                0,
+                level.completed
+                    ? "completed"
+                    : accessible
+                    ? level.type
+                    : "locked"
+            )
             .setDisplaySize(40, 40);
         level_button.add(level_icon);
 
@@ -151,8 +159,7 @@ export class LevelSelect extends Scene {
         level_button.add(text);
 
         if (level.type === "puzzle" && accessible) {
-            let grade = this.level_manager.loadGrade(level.id);
-            this.addStars(grade, level_button);
+            this.addStars(level.grade, level_button);
         }
 
         this.level_buttons.push(level_button);
