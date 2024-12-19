@@ -7,6 +7,7 @@ export default class Task extends Phaser.GameObjects.Sprite {
     med_height: number;
     small_width: number;
     small_height: number;
+    dynamic: boolean;
 
     private nameText!: Phaser.GameObjects.Text;
     private durationText!: Phaser.GameObjects.Text;
@@ -28,7 +29,8 @@ export default class Task extends Phaser.GameObjects.Sprite {
         small_height: number,
         id: number,
         duration: number,
-        icon_key: string
+        icon_key: string,
+        dynamic: boolean
     ) {
         super(scene, x, y, "task-med-bg");
 
@@ -41,6 +43,7 @@ export default class Task extends Phaser.GameObjects.Sprite {
         this.id = id;
         this.duration = duration;
         this.icon_key = icon_key;
+        this.dynamic = dynamic;
         this.attached = false;
         this.original_coords = { x, y };
 
@@ -50,13 +53,22 @@ export default class Task extends Phaser.GameObjects.Sprite {
         // Configure the sprite
         this.setOrigin(0.5, 0.5);
         this.setDisplaySize(this.med_width, this.med_height);
-        this.setInteractive();
+
+        if (this.dynamic) {
+            this.setInteractive();
+        }
 
         // Adding additional components
         this.addComponents();
 
         // Enable dragging
-        this.enableDrag();
+        if (this.dynamic) {
+            this.enableDrag();
+        }
+
+        if (!this.dynamic) {
+            this.setSmallSize();
+        }
     }
 
     private addComponents() {
@@ -111,12 +123,7 @@ export default class Task extends Phaser.GameObjects.Sprite {
             (pointer: Phaser.Input.Pointer, dropped: boolean) => {
                 this.setAlpha(1);
 
-                this.setDepth(2);
-
-                // FIXME: Works but creates a slight bug when overlapping with other tasks.
-                this.nameText.setDepth(3);
-                this.icon.setDepth(3);
-                this.durationText.setDepth(3);
+                this.updateDepth();
 
                 if (!this.attached) {
                     this.x = this.original_coords.x;
@@ -126,9 +133,18 @@ export default class Task extends Phaser.GameObjects.Sprite {
         );
     }
 
+    public updateDepth() {
+        this.setDepth(2);
+
+        // FIXME: Works but creates a slight bug when overlapping with other tasks.
+        this.nameText.setDepth(3);
+        this.icon.setDepth(3);
+        this.durationText.setDepth(3);
+    }
+
     public attach() {
         this.attached = true;
- 
+
         let random = Math.floor(Math.random() * 6) + 1;
         this.scene.sound.play(`card-place-${random}`);
     }
@@ -149,35 +165,45 @@ export default class Task extends Phaser.GameObjects.Sprite {
         this.setInteractive();
     }
 
+    private setSmallSize() {
+        this.setTexture("task-small-bg");
+        this.setDisplaySize(this.small_width, this.small_height);
+        this.icon.setPosition(this.x - this.displayWidth * 0.425, this.y);
+
+        this.nameText.setOrigin(0, 0.5);
+        this.nameText.setPosition(
+            this.icon.x + this.icon.displayWidth * 0.75,
+            this.y
+        );
+
+        this.durationText.setText(`${this.duration}`);
+        this.durationText.setOrigin(1, 0.5);
+        this.durationText.setPosition(
+            this.x + this.displayWidth * 0.45,
+            this.y
+        );
+    }
+
+    private setMedSize() {
+        this.setTexture("task-med-bg");
+        this.setDisplaySize(this.med_width, this.med_height);
+        this.nameText.setOrigin(0.5, 0.5);
+        this.nameText.setPosition(this.x, this.y - this.displayHeight * 0.3);
+        this.icon.setPosition(this.x, this.y);
+
+        this.durationText.setText(`${this.duration} minutes`);
+        this.durationText.setOrigin(0.5, 0.5);
+        this.durationText.setPosition(
+            this.x,
+            this.y + this.displayHeight * 0.3
+        );
+    }
+
     public update() {
         if (this.isAttached()) {
-            this.setTexture("task-small-bg");
-            this.setDisplaySize(this.small_width, this.small_height);
-            this.icon.setPosition(this.x - this.displayWidth * 0.425, this.y);
-
-            this.nameText.setOrigin(0, 0.5);
-            this.nameText.setPosition(this.icon.x + this.icon.displayWidth * 0.75, this.y);
-
-            this.durationText.setText(`${this.duration}`);
-            this.durationText.setOrigin(1, 0.5);
-            this.durationText.setPosition(
-                this.x + this.displayWidth * 0.45,
-                this.y
-            );
-        }
-        else {
-            this.setTexture("task-med-bg");
-            this.setDisplaySize(this.med_width, this.med_height);
-            this.nameText.setOrigin(0.5, 0.5);
-            this.nameText.setPosition(this.x, this.y - this.displayHeight * 0.3);
-            this.icon.setPosition(this.x, this.y);
-
-            this.durationText.setText(`${this.duration} minutes`);
-            this.durationText.setOrigin(0.5, 0.5);
-            this.durationText.setPosition(
-                this.x,
-                this.y + this.displayHeight * 0.3
-            );
+            this.setSmallSize();
+        } else {
+            this.setMedSize();
         }
     }
 }

@@ -33,8 +33,7 @@ export class Puzzle extends Scene {
         this.task_manager = new TaskManager(
             this,
             this.cache.json.get("task_types"),
-            this.level.task_keys,
-            this.level.machine_props
+            this.level
         );
 
         this.sound.play("card-fan-2");
