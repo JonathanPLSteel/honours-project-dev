@@ -18,8 +18,10 @@ export interface CutsceneLevel extends BaseLevel {
 export interface TutorialLevel extends BaseLevel {
     type: "tutorial";
     machine_props: MachineProps[];
+    hidden_elements: string[];
     choices: string[];
     correct: number;
+    objective: string;
     dialogue?: Dialogue;
 }
 
@@ -29,6 +31,7 @@ export interface PuzzleLevel extends BaseLevel {
     machine_props: MachineProps[];
     scoreChart: number[];
     grade: number;
+    objective: string;
     dialogue?: Dialogue;
 }
 
@@ -88,10 +91,15 @@ export default class LevelManager {
                         world_id: level_map.world_id,
                         completed: progress.completed,
                         type: "tutorial",
-                        machine_props: tutorials[level_map.level_id].machine_props,
+                        machine_props:
+                            tutorials[level_map.level_id].machine_props,
+                        hidden_elements:
+                            tutorials[level_map.level_id].hidden_elements,
                         choices: tutorials[level_map.level_id].choices,
                         correct: tutorials[level_map.level_id].correct,
-                        dialogue: tutorials[level_map.level_id].dialogue ?? null,
+                        objective: tutorials[level_map.level_id].objective,
+                        dialogue:
+                            tutorials[level_map.level_id].dialogue ?? null,
                     };
                     break;
                 case "puzzle":
@@ -102,9 +110,13 @@ export default class LevelManager {
                         completed: progress.completed,
                         type: "puzzle",
                         task_keys: puzzles[level_map.level_id].task_keys,
-                        machine_props: puzzles[level_map.level_id].machine_props,
+                        machine_props:
+                            puzzles[level_map.level_id].machine_props,
                         scoreChart: puzzles[level_map.level_id].scoreChart,
                         grade: progress.grade,
+                        objective: puzzles[level_map.level_id].objective
+                            ? puzzles[level_map.level_id].objective
+                            : "Assign tasks to achieve the lowest total time.",
                         dialogue: puzzles[level_map.level_id].dialogue ?? null,
                     };
                     break;
@@ -123,11 +135,9 @@ export default class LevelManager {
                     break;
                 default:
                     throw new Error("Invalid level type");
-
             }
 
             levels.push(level);
-
         }
 
         return levels;
@@ -137,19 +147,29 @@ export default class LevelManager {
         return this.scene.cache.json.get("worlds");
     }
 
-    private loadLevelProgress(level_id: number): {completed: boolean, grade: number} {
-        return LocalStorageManager.loadData<{completed: boolean, grade: number}>(level_id.toString()) ?? {completed: false, grade: 0};
+    private loadLevelProgress(level_id: number): {
+        completed: boolean;
+        grade: number;
+    } {
+        return (
+            LocalStorageManager.loadData<{ completed: boolean; grade: number }>(
+                level_id.toString()
+            ) ?? { completed: false, grade: 0 }
+        );
     }
 
-    public saveLevelProgress(level_id: number, completed: boolean, grade: number): void {
-        LocalStorageManager.saveData(level_id.toString(), {completed, grade});
+    public saveLevelProgress(
+        level_id: number,
+        completed: boolean,
+        grade: number
+    ): void {
+        LocalStorageManager.saveData(level_id.toString(), { completed, grade });
 
         this.levels[level_id].completed = completed;
         if (this.levels[level_id].type === "puzzle") {
             this.levels[level_id].grade = grade;
         }
     }
-
 
     // Getters
 
@@ -158,7 +178,7 @@ export default class LevelManager {
     }
 
     public getLevelByID(level_id: number): Level {
-        if (level_id < 0 || level_id >= this.levels.length ) {
+        if (level_id < 0 || level_id >= this.levels.length) {
             throw new Error("Invalid level");
         }
         return this.levels[level_id];
@@ -166,7 +186,7 @@ export default class LevelManager {
 
     public getLastUnlockedLevelID(): number {
         for (let level of this.levels) {
-            if (!(level.completed)) {
+            if (!level.completed) {
                 return level.id;
             }
         }
@@ -178,14 +198,16 @@ export default class LevelManager {
     }
 
     public getLevelsIDsByWorldID(world: number): number[] {
-        return this.levels.filter((level) => level.world_id === world).map((level) => level.id);
+        return this.levels
+            .filter((level) => level.world_id === world)
+            .map((level) => level.id);
     }
 
     public getAllLevels(): Level[] {
         return this.levels;
     }
 
-    public getWorld(world_id: number): World {  
+    public getWorld(world_id: number): World {
         if (world_id < 0 || world_id >= this.worlds.length) {
             throw new Error("Invalid world");
         }

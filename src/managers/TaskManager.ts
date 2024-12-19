@@ -49,6 +49,7 @@ export default class TaskManager {
     private paused: boolean = false;
 
     // Game Objects
+    private objective_text!: Phaser.GameObjects.Text;
     private total_duration_text!: Phaser.GameObjects.Text;
     private submit_button!: Button;
 
@@ -87,14 +88,14 @@ export default class TaskManager {
                     width: this.scene.scale.width * 0.45,
                     height: this.scene.scale.height * 0.75,
                     x: this.scene.scale.width * 0.25,
-                    y: this.scene.scale.height * 0.4,
+                    y: this.scene.scale.height * 0.42,
                     capacity: 7,
                 },
                 1: {
                     width: this.scene.scale.width * 0.45,
                     height: this.scene.scale.height * 0.75,
                     x: this.scene.scale.width * 0.75,
-                    y: this.scene.scale.height * 0.4,
+                    y: this.scene.scale.height * 0.42,
                     capacity: 7,
                 },
             },
@@ -128,6 +129,17 @@ export default class TaskManager {
             width: this.machine_dims[this.numMachines][0].width * 0.9,
             height: 40,
         };
+
+        this.objective_text = this.scene.add.text(
+            10,
+            10,
+            `Objective: ${this.level.objective}`,
+            {
+                fontFamily: "WorkSansBold, Arial, sans-serif",
+                fontSize: "15px",
+                color: "#000000",
+            }
+        )
 
         if (this.level.type === "puzzle") {
             this.setupPuzzle(this.level.task_keys, this.level.machine_props);
@@ -221,6 +233,10 @@ export default class TaskManager {
     }
 
     private setupTutorial(machine_props: MachineProps[]) {
+        if (this.level.type != "tutorial") {
+            throw new Error("Invalid level type");
+        }
+
         // Adding all machines
         for (let i = 0; i < this.numMachines; i++) {
             const current_machine_props = machine_props[i];
@@ -284,6 +300,10 @@ export default class TaskManager {
                 }
             )
             .setOrigin(0.5, 0.5);
+
+        if (this.level.hidden_elements.includes("total_duration")) {
+            this.total_duration_text.setVisible(false);
+        }
     }
 
     private addTask(task: Task) {
@@ -336,13 +356,15 @@ export default class TaskManager {
     public pause() {
         this.paused = true;
         this.tasks.forEach((task) => task.pause());
-        this.submit_button.disableInteractive();
+
+        if (this.level.type === "puzzle") this.submit_button.disableInteractive();
     }
 
     public resume() {
         this.paused = false;
         this.tasks.forEach((task) => task.resume());
-        this.submit_button.setInteractive();
+
+        if (this.level.type === "puzzle") this.submit_button.setInteractive();
     }
 
     public update() {
@@ -355,7 +377,6 @@ export default class TaskManager {
         this.machines.forEach((machine) => machine.update());
 
         if (this.level.type === "puzzle") {
-            
             this.updateTotalDuration();
 
             if (this.submit_button && this.submit_button.active) {
@@ -375,19 +396,20 @@ export default class TaskManager {
         this.machines.forEach((machine) => machine.destroy());
         this.machines = [];
 
-        // Destroy task bar
-        if (this.task_bar) {
-            this.task_bar.destroy();
-        }
-
         // Destroy text
         if (this.total_duration_text) {
             this.total_duration_text.destroy();
         }
 
-        // Destroy submit button
-        if (this.submit_button) {
-            this.submit_button.destroy();
+        if (this.level.type === "puzzle") {
+            // Destroy task bar
+            if (this.task_bar) {
+                this.task_bar.destroy();
+            }
+            // Destroy submit button
+            if (this.submit_button) {
+                this.submit_button.destroy();
+            }
         }
     }
 }
