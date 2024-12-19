@@ -75,6 +75,8 @@ export class Puzzle extends Scene {
 
         this.sound.play("card-fan-1");
 
+        this.task_manager.triggerTaskExits(700);
+
         this.time.delayedCall(700, () => {
             this.scene.start("SubmitScreen", {
                 level: this.level,

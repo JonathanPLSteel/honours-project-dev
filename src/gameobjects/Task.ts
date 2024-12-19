@@ -18,6 +18,8 @@ export default class Task extends Phaser.GameObjects.Sprite {
     private attached: boolean;
     private original_coords: { x: number; y: number };
 
+    private animating: boolean;
+
     constructor(
         scene: Phaser.Scene,
         name: string,
@@ -46,6 +48,7 @@ export default class Task extends Phaser.GameObjects.Sprite {
         this.dynamic = dynamic;
         this.attached = false;
         this.original_coords = { x, y };
+        this.animating = false;
 
         // Add the sprite to the scene
         this.scene.add.existing(this);
@@ -146,7 +149,7 @@ export default class Task extends Phaser.GameObjects.Sprite {
         this.attached = true;
 
         let random = Math.floor(Math.random() * 6) + 1;
-        
+
         if (this.dynamic) this.scene.sound.play(`card-place-${random}`);
     }
 
@@ -200,7 +203,41 @@ export default class Task extends Phaser.GameObjects.Sprite {
         );
     }
 
+    public exitAnimation(duration: number) {
+        this.animating = true;
+        this.scene.tweens.add({
+            targets: this,
+            displayWidth: 0,
+            displayHeight: 0,
+            ease: "Power2",
+            duration: duration,
+        });
+        this.scene.tweens.add({
+            targets: this.nameText,
+            scaleX: 0,
+            scaleY: 0,
+            ease: "Power2",
+            duration: duration,
+        });
+        this.scene.tweens.add({
+            targets: this.icon,
+            scaleX: 0,
+            scaleY: 0,
+            ease: "Power2",
+            duration: duration,
+        });
+        this.scene.tweens.add({
+            targets: this.durationText,
+            scaleX: 0,
+            scaleY: 0,
+            ease: "Power2",
+            duration: duration,
+        });
+    }
+
     public update() {
+        if (this.animating) return;
+        
         if (this.isAttached()) {
             this.setSmallSize();
         } else {
