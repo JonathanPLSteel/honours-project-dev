@@ -104,21 +104,21 @@ export default class TaskManager {
                     width: this.scene.scale.width * 0.3,
                     height: this.scene.scale.height * 0.75,
                     x: this.scene.scale.width * 0.175,
-                    y: this.scene.scale.height * 0.4,
+                    y: this.scene.scale.height * 0.42,
                     capacity: 7,
                 },
                 1: {
                     width: this.scene.scale.width * 0.3,
                     height: this.scene.scale.height * 0.75,
                     x: this.scene.scale.width * 0.5,
-                    y: this.scene.scale.height * 0.4,
+                    y: this.scene.scale.height * 0.42,
                     capacity: 7,
                 },
                 2: {
                     width: this.scene.scale.width * 0.3,
                     height: this.scene.scale.height * 0.75,
                     x: this.scene.scale.width * 0.825,
-                    y: this.scene.scale.height * 0.4,
+                    y: this.scene.scale.height * 0.42,
                     capacity: 7,
                 },
             },
@@ -391,6 +391,8 @@ export default class TaskManager {
     }
 
     public destroy() {
+        this.objective_text.destroy();
+
         this.tasks.forEach((task) => task.destroy());
         this.tasks = [];
         this.machines.forEach((machine) => machine.destroy());

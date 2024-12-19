@@ -146,7 +146,8 @@ export default class Task extends Phaser.GameObjects.Sprite {
         this.attached = true;
 
         let random = Math.floor(Math.random() * 6) + 1;
-        this.scene.sound.play(`card-place-${random}`);
+        
+        if (this.dynamic) this.scene.sound.play(`card-place-${random}`);
     }
 
     public detach() {
@@ -205,5 +206,13 @@ export default class Task extends Phaser.GameObjects.Sprite {
         } else {
             this.setMedSize();
         }
+    }
+
+    public destroy() {
+        this.nameText.destroy();
+        this.icon.destroy();
+        this.durationText.destroy();
+
+        super.destroy();
     }
 }

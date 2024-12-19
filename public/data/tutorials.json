@@ -17,7 +17,7 @@
             }
         ],
         "hidden_elements": ["total_duration"],
-        "choices": ["50", "60", "70", "80"],
+        "choices": ["True", "False", "I don't know", "I don't care"],
         "correct": 0,
         "objective": "Estimate the total time based on the ingredients",
         "dialogue": {

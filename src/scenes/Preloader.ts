@@ -89,6 +89,7 @@ export class Preloader extends Scene
         this.load.audio('card-place-5', 'card-place-5.ogg');
         this.load.audio('card-place-6', 'card-place-6.ogg');
         this.load.audio('switch', 'switch.ogg');
+        this.load.audio('success', 'success.ogg');
     }
 
     private preloadFonts() {
