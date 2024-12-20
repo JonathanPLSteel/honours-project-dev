@@ -1,0 +1,30 @@
+[
+    {
+        "id": 0,
+        "name": "Tutorial 1",
+        "machine_props": [
+            {
+                "name": "Chef Jonathan",
+                "icon_key": "chef-jonathan",
+                "rate": 1,
+                "task_keys": ["carrots", "roast-chicken", "roast-potatoes"]
+            },
+            {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1,
+                "task_keys": ["green-beans"]
+            }
+        ],
+        "hidden_elements": ["total_duration"],
+        "choices": ["True", "False", "I don't know", "I don't care"],
+        "correct": 0,
+        "objective": "Estimate the total time based on the ingredients",
+        "dialogue": {
+            "id": "tutorial-1-intro",
+            "icon": "chef-jonathan",
+            "text": "Ok so based on these ingredients, what do you think the total time will be?",
+            "name": "Head Chef Jonathan"
+        }
+    }
+]
