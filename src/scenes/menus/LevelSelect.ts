@@ -1,14 +1,13 @@
 import { Scene } from "phaser";
-import LevelManager, { Level, World } from "../managers/LevelManager";
-import DialogueManager from "../managers/DialogueManager";
+import LevelManager, { Level, World } from "../../managers/LevelManager";
+import DialogueManager from "../../managers/DialogueManager";
 
 export class LevelSelect extends Scene {
     private level_manager: LevelManager;
     private current_world_id: number;
 
     private world_text: Phaser.GameObjects.Text;
-    private level_buttons: Phaser.GameObjects.Text[] = [];
-    private stars: Phaser.GameObjects.Image[] = [];
+    private level_buttons: Phaser.GameObjects.Container[] = [];
     private previousWorldButton: Phaser.GameObjects.Text;
     private nextWorldButton: Phaser.GameObjects.Text;
 
@@ -16,11 +15,21 @@ export class LevelSelect extends Scene {
         super("LevelSelect");
     }
 
-    create() {
-        const levels: Level[] = this.cache.json.get("levels");
-        const worlds: World[] = this.cache.json.get("worlds");
-        this.level_manager = new LevelManager(levels, worlds);
+    create(data: { level: Level }) {
+        this.level_manager = new LevelManager(this);
         this.current_world_id = 0;
+
+        if (data.level) {
+            if (data.level.type === "puzzle") {
+                this.level_manager.saveLevelProgress(
+                    data.level.id,
+                    true,
+                    data.level.grade
+                );
+            } else {
+                this.level_manager.saveLevelProgress(data.level.id, true, 0);
+            }
+        }
 
         if (this.level_manager.isNewPlayer()) {
             let dialogue_manager = new DialogueManager(this);
@@ -55,7 +64,7 @@ export class LevelSelect extends Scene {
         );
 
         this.addLevelButtons(
-            this.level_manager.getWorldLevelIDs(this.current_world_id)
+            this.level_manager.getLevelsIDsByWorldID(this.current_world_id)
         );
 
         this.addWorldButtons();
@@ -64,86 +73,138 @@ export class LevelSelect extends Scene {
     private addLevelButton(
         x: number,
         y: number,
+        width: number,
+        height: number,
         level: Level,
         accessible: boolean = true
     ) {
+        const level_button = new Phaser.GameObjects.Container(this, x, y);
+        level_button.setSize(width, height);
+
+        let level_background = this.add.rectangle(
+            0,
+            0,
+            width,
+            height,
+            accessible ? 0xeeeeee : 0xffffff
+        );
+
         if (accessible) {
             let hoverTween: Phaser.Tweens.Tween | null = null;
-            const level_button = this.add
-                .text(x, y, `${level.name}`, {
-                    fontFamily: "WorkSansBold, Arial, sans-serif",
-                    fontSize: 32,
-                    color: "#000000",
-                    align: "center",
-                })
-                .setInteractive()
-                .on("pointerdown", () => {
-                    this.scene.start("Game", { level: level });
-                })
-                .on("pointerover", () => {
-                    // Stop any existing tweens
-                    if (hoverTween) {
-                        hoverTween.stop();
-                        hoverTween = null;
-                    }
 
-                    hoverTween = this.add.tween({
-                        targets: level_button,
-                        ease: "Sine.easeInOut",
-                        duration: 100,
-                        alpha: 0.5,
-                    });
-                })
-                .on("pointerout", () => {
-                    if (hoverTween) {
-                        hoverTween.stop();
-                        hoverTween = null;
-                    }
-                    level_button.setAlpha(1);
+            level_background.setInteractive();
+
+            level_background.on("pointerdown", () => {
+                this.sound.play("switch");
+                this.launchLevel(level);
+            });
+
+            level_background.on("pointerover", () => {
+                // Stop any existing tweens
+                if (hoverTween) {
+                    hoverTween.stop();
+                    hoverTween = null;
+                }
+
+                hoverTween = this.add.tween({
+                    targets: level_background,
+                    ease: "Sine.easeInOut",
+                    duration: 100,
+                    scaleX: 1.025,
+                    scaleY: 1.1,
                 });
-            this.level_buttons.push(level_button);
-        } else {
-            const level_button = this.add.text(x, y, `${level.name}`, {
+            });
+
+            level_background.on("pointerout", () => {
+                if (hoverTween) {
+                    hoverTween.stop();
+                    hoverTween = null;
+                }
+                hoverTween = this.add.tween({
+                    targets: level_background,
+                    ease: "Sine.easeInOut",
+                    duration: 100,
+                    scaleX: 1,
+                    scaleY: 1,
+                });
+            });
+        }
+
+        level_button.add(level_background);
+
+        let level_icon = this.add
+            .image(
+                -width / 2 + 25,
+                0,
+                level.completed
+                    ? "completed"
+                    : accessible
+                    ? level.type
+                    : "locked"
+            )
+            .setDisplaySize(40, 40);
+        level_button.add(level_icon);
+
+        let text = this.add.text(
+            -width / 2 + 25 + level_icon.displayWidth,
+            -height / 2 + 5,
+            `${level.name}`,
+            {
                 fontFamily: "WorkSansBold, Arial, sans-serif",
                 fontSize: 32,
-                color: "#777777",
-                align: "center",
-            });
-            this.level_buttons.push(level_button);
+                color: accessible ? "#000000" : "#777777",
+                align: "left",
+            }
+        );
+        level_button.add(text);
+
+        if (level.type === "puzzle" && accessible) {
+            this.addStars(level.grade, level_button);
         }
+
+        this.level_buttons.push(level_button);
+        this.add.existing(level_button);
     }
 
     private addLevelButtons(level_ids: number[]) {
-        let x = 100;
-        let y = 200;
+        let x = this.scale.width / 2;
+        let y = this.world_text.y + this.world_text.displayHeight + 50;
         for (let i of level_ids) {
-            const level = this.level_manager.loadLevel(i);
+            const level = this.level_manager.getLevelByID(i);
+
             if (i != 0) {
-                if (this.level_manager.loadGrade(i - 1)) {
-                    this.addLevelButton(x, y, level, true);
-                } else {
-                    this.addLevelButton(x, y, level, false);
-                }
+                this.addLevelButton(
+                    x,
+                    y,
+                    this.scale.width * 0.8,
+                    50,
+                    level,
+                    this.level_manager.getLevelByID(i - 1).completed
+                );
             } else {
-                this.addLevelButton(x, y, level, true);
+                this.addLevelButton(
+                    x,
+                    y,
+                    this.scale.width * 0.8,
+                    50,
+                    level,
+                    true
+                );
             }
-            this.addStars(
-                this.scale.width - 100,
-                y + 15,
-                this.level_manager.loadGrade(i)
-            );
-            y += 50;
+            y += 75;
         }
     }
 
-    private addStars(x: number, y: number, grade: number) {
+    private addStars(grade: number, container: Phaser.GameObjects.Container) {
         let first_star = this.add
-            .image(x - 120, y, "star")
+            .image(container.width / 2 - 125, container.height / 2 - 25, "star")
             .setDisplaySize(40, 40);
         let second_star = this.add
-            .image(x - 60, y, "star")
+            .image(container.width / 2 - 75, container.height / 2 - 25, "star")
             .setDisplaySize(40, 40);
-        let third_star = this.add.image(x, y, "star").setDisplaySize(40, 40);
+        let third_star = this.add
+            .image(container.width / 2 - 25, container.height / 2 - 25, "star")
+            .setDisplaySize(40, 40);
 
         if (grade === 0) {
             first_star.setTint(0x777777);
@@ -156,9 +217,28 @@ export class LevelSelect extends Scene {
             third_star.setTint(0x777777);
         }
 
-        this.stars.push(first_star);
-        this.stars.push(second_star);
-        this.stars.push(third_star);
+        container.add(first_star);
+        container.add(second_star);
+        container.add(third_star);
+    }
+
+    private launchLevel(level: Level) {
+        switch (level.type) {
+            case "cutscene":
+                this.scene.start("Cutscene", { level: level });
+                break;
+            case "tutorial":
+                this.scene.start("Tutorial", { level: level });
+                break;
+            case "quiz":
+                this.scene.start("Quiz", { level: level });
+                break;
+            case "puzzle":
+                this.scene.start("Puzzle", { level: level });
+                break;
+            default:
+                throw new Error("Invalid level type");
+        }
     }
 
     private addWorldButtons() {
@@ -211,7 +291,10 @@ export class LevelSelect extends Scene {
                 });
         }
 
-        if (nextWorldID != -1 && nextWorldID <= this.level_manager.getLastUnlockedWorldID()) {
+        if (
+            nextWorldID != -1 &&
+            nextWorldID <= this.level_manager.getLastUnlockedWorldID()
+        ) {
             let hoverTween: Phaser.Tweens.Tween | null = null;
             this.nextWorldButton = this.add
                 .text(
@@ -268,11 +351,6 @@ export class LevelSelect extends Scene {
             button.destroy();
         }
         this.level_buttons = [];
-
-        for (let star of this.stars) {
-            star.destroy();
-        }
-        this.stars = [];
 
         if (this.previousWorldButton) this.previousWorldButton.destroy();
         if (this.nextWorldButton) this.nextWorldButton.destroy();

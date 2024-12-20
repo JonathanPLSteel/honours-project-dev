@@ -189,19 +189,23 @@ export default class Machine extends Phaser.GameObjects.Container {
                         console.error("Invalid object dropped into machine!");
                     }
 
-                    // Snap the task to the center of the machine
-                    gameObject.x = this.slot_coords[this.tasks.length - 1].x;
-                    gameObject.y = this.slot_coords[this.tasks.length - 1].y;
-
                     this.background.clearTint();
                 }
             }
         );
     }
 
-    private addTask(task: Task) {
+    public addTask(task: Task) {
         task.attach();
+
         this.tasks.push(task);
+
+        // Snap the task to the center of the machine
+        task.x = this.slot_coords[this.tasks.length - 1].x;
+        task.y = this.slot_coords[this.tasks.length - 1].y;
+
+        task.updateDepth();
+
         this.total += task.duration;
         this.updateTotalText();
     }

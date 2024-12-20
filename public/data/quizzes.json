@@ -1,0 +1,52 @@
+[
+    {
+        "id": 0,
+        "name": "Quiz 1",
+        "questions": [
+            "Chefs in this game are used as a metaphor for which task scheduling concept",
+            "What is the term in task scheduling for the total duration of all tasks across the machines?",
+            "Get out a pen and paper. If I have 2 machines and 5 tasks of durations 8, 6, 5, 5, and 5 minutes, what is the optimal makespan?"
+        ],
+        "choices": [
+            ["Task", "Schedule", "Machine", "Scheduler"],
+            ["Makespan", "Span", "Range", "Maketime"],
+            ["14", "15", "16", "18"]
+        ],
+        "correct": [
+            2,
+            0,
+            1
+        ],
+        "dialogue": {
+            "id": "quiz-1-intro",
+            "icon": "chef-jonathan",
+            "text": "Let's see how well you remember the task scheduling terms we talked about!",
+            "name": "Mr. Steel"
+        }
+    },
+    {
+        "id": 1,
+        "name": "Quiz 2",
+        "questions": [
+            "What is the term for when every machine completes tasks at the SAME rate?",
+            "_",
+            "_"
+        ],
+        "choices": [
+            ["homogeneous", "heterogeneous", "zygogeneous", "simogeneous"],
+            ["_", "_", "_", "_"],
+            ["_", "_", "_", "_"]
+        ],
+        "correct": [
+            0,
+            2,
+            3
+        ],
+        "dialogue": {
+            "id": "quiz-2-intro",
+            "icon": "chef-jonathan",
+            "text": "Time to test you on some new terms. Good luck!",
+            "name": "Mr. Steel"
+        }
+    }
+]
