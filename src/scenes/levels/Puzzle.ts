@@ -36,6 +36,8 @@ export class Puzzle extends Scene {
             this.level
         );
 
+        this.task_manager.triggerEntrances(1200)
+
         if (this.level.dialogue) {
             this.dialogue_manager.displayDialogue(this.level.dialogue);
 
@@ -75,7 +77,7 @@ export class Puzzle extends Scene {
 
         this.sound.play("card-fan-1");
 
-        this.task_manager.triggerTaskExits(700);
+        this.task_manager.triggerExits(700);
 
         this.time.delayedCall(700, () => {
             this.scene.start("SubmitScreen", {

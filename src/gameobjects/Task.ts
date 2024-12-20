@@ -67,6 +67,11 @@ export default class Task extends Phaser.GameObjects.Sprite {
         // Enable dragging
         if (this.dynamic) {
             this.enableDrag();
+
+            this.setAlpha(0);
+            this.nameText.setAlpha(0);
+            this.icon.setAlpha(0);
+            this.durationText.setAlpha(0);
         }
 
         if (!this.dynamic) {
@@ -203,6 +208,68 @@ export default class Task extends Phaser.GameObjects.Sprite {
         );
     }
 
+    public enterAnimation(duration: number) {
+        this.animating = true;
+
+        // Animate the sprite's size based on displayWidth and displayHeight
+        const originalWidth = this.displayWidth;
+        const originalHeight = this.displayHeight;
+
+        this.scene.tweens.add({
+            targets: this,
+            displayWidth: originalWidth * 1.5, // Scale up by 1.5x
+            displayHeight: originalHeight * 1.5,
+            ease: "Bounce.easeOut", // Smooth animation
+            yoyo: true, // Snap back to original size
+            duration: duration,
+            onComplete: () => {
+                this.animating = false; // Reset animation flag
+            },
+        });
+
+        this.scene.tweens.add({
+            targets: this,
+            alpha: 1,
+            ease: "Bounce.easeOut",
+            duration: duration,
+        });
+
+        this.scene.tweens.add({
+            targets: this.nameText,
+            alpha: 1,
+            ease: "Bounce.easeOut",
+            duration: duration,
+        });
+
+        // Animate the icon size using displayWidth and displayHeight
+        const iconOriginalWidth = this.icon.displayWidth;
+        const iconOriginalHeight = this.icon.displayHeight;
+
+        this.scene.tweens.add({
+            targets: this.icon,
+            displayWidth: iconOriginalWidth * 1.5,
+            displayHeight: iconOriginalHeight * 1.5,
+            ease: "Bounce.easeOut",
+            yoyo: true,
+            duration: duration,
+        });
+
+        this.scene.tweens.add({
+            targets: this.icon,
+            alpha: 1,
+            ease: "Bounce.easeOut",
+            duration: duration,
+        });
+
+        // Animate the durationText size
+        this.scene.tweens.add({
+            targets: this.durationText,
+            alpha: 1,
+            ease: "Bounce.easeOut",
+            duration: duration,
+        });
+    }
+
     public exitAnimation(duration: number) {
         this.animating = true;
         this.scene.tweens.add({
@@ -237,7 +304,7 @@ export default class Task extends Phaser.GameObjects.Sprite {
 
     public update() {
         if (this.animating) return;
-        
+
         if (this.isAttached()) {
             this.setSmallSize();
         } else {

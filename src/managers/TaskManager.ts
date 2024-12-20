@@ -367,7 +367,15 @@ export default class TaskManager {
         if (this.level.type === "puzzle") this.submit_button.setInteractive();
     }
 
-    public triggerTaskExits(total_duration: number) {
+    public triggerEntrances(total_duration: number) {
+        this.tasks.forEach((task, index) => {
+            this.scene.time.delayedCall((total_duration / this.tasks.length) * index, () => {
+                task.enterAnimation(total_duration / this.tasks.length);
+            });
+        });
+    }
+
+    public triggerExits(total_duration: number) {
         this.tasks.forEach((task, index) => {
             console.log()
             this.scene.time.delayedCall((total_duration / this.tasks.length) * index, () => {
