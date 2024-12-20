@@ -8,6 +8,11 @@
     src: url('assets/fonts/work_sans_bold.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: WorkSansSemiBold;
+    src: url('assets/fonts/work_sans_semi_bold.ttf') format('truetype');
+}
+
 body {
     margin: 0;
     padding: 0;
