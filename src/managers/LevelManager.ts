@@ -37,9 +37,10 @@ export interface PuzzleLevel extends BaseLevel {
 
 export interface QuizLevel extends BaseLevel {
     type: "quiz";
-    question: string;
-    choices: string[];
-    correct: number;
+    questions: string[];
+    choices: string[][];
+    correct: number[];
+    grade: number;
     dialogue?: Dialogue;
 }
 
@@ -127,9 +128,10 @@ export default class LevelManager {
                         world_id: level_map.world_id,
                         completed: progress.completed,
                         type: "quiz",
-                        question: quizzes[level_map.level_id].question,
+                        questions: quizzes[level_map.level_id].questions,
                         choices: quizzes[level_map.level_id].choices,
                         correct: quizzes[level_map.level_id].correct,
+                        grade: progress.grade,
                         dialogue: quizzes[level_map.level_id].dialogue ?? null,
                     };
                     break;
@@ -166,7 +168,10 @@ export default class LevelManager {
         LocalStorageManager.saveData(level_id.toString(), { completed, grade });
 
         this.levels[level_id].completed = completed;
-        if (this.levels[level_id].type === "puzzle") {
+        if (
+            this.levels[level_id].type === "puzzle" ||
+            this.levels[level_id].type === "quiz"
+        ) {
             this.levels[level_id].grade = grade;
         }
     }
