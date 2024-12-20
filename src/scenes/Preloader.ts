@@ -99,7 +99,7 @@ export class Preloader extends Scene
     }
 
     private preloadData() {
-        this.load.setPath('data');
+        this.load.setPath('assets/data');
 
         this.load.json("levels", "levels.json");
         this.load.json("cutscenes", "cutscenes.json");
