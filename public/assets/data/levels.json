@@ -31,30 +31,24 @@
     },
     {
         "id": 5,
+        "level_type": "puzzle",
+        "level_id": 3,
+        "world_id": 0
+    },
+    {
+        "id": 6,
         "level_type": "quiz",
         "level_id": 0,
         "world_id": 0
     },
     {
-        "id": 6,
+        "id": 7,
         "level_type": "cutscene",
         "level_id": 1,
         "world_id": 1
     },
     {
-        "id": 7,
-        "level_type": "puzzle",
-        "level_id": 3,
-        "world_id": 1
-    },
-    {
         "id": 8,
-        "level_type": "puzzle",
-        "level_id": 4,
-        "world_id": 1
-    },
-    {
-        "id": 9,
         "level_type": "quiz",
         "level_id": 1,
         "world_id": 1
