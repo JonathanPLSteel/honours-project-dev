@@ -17,32 +17,29 @@ export class Quiz extends Scene {
         this.level = data.level;
         this.currentQuestionIndex = 0;
 
-        console.log(this.level.questions);
         this.startQuiz();
     }
 
     private startQuiz() {
-        this.startQuestion(this.currentQuestionIndex);
+        this.displayQuestion(this.level.questions[this.currentQuestionIndex]);
+        this.answersManager = new AnswersManager(
+            this,
+            this.level.choices[this.currentQuestionIndex],
+            this.level.correct[this.currentQuestionIndex]
+        );
+
         this.events.on("correctAnswer", () => {
+            this.events.off("correctAnswer");
             this.currentQuestionIndex++;
             this.answersManager.destroy();
             this.questionText.destroy();
             if (this.currentQuestionIndex < this.level.questions.length) {
-                this.startQuestion(this.currentQuestionIndex);
+                this.startQuiz();
             } else {
-                this.scene.start("LevelSelect", { grade: this.level.grade });
+                this.currentQuestionIndex = 0;
+                this.scene.start("LevelSelect", { level: this.level });
             }
         });
-    }
-
-    private startQuestion(index: number) {
-        console.log(this.level.questions[index]);
-        this.displayQuestion(this.level.questions[index]);
-        this.answersManager = new AnswersManager(
-            this,
-            this.level.choices[index],
-            this.level.correct[index]
-        );
     }
 
     private displayQuestion(text: string) {
