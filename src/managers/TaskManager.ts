@@ -52,6 +52,7 @@ export default class TaskManager {
     private objective_text!: Phaser.GameObjects.Text;
     private total_duration_text!: Phaser.GameObjects.Text;
     private submit_button!: Button;
+    private greedyButton!: Button;
 
     constructor(
         scene: Phaser.Scene,
@@ -221,7 +222,7 @@ export default class TaskManager {
         this.total_duration_text = this.scene.add
             .text(
                 this.scene.scale.width * 0.5,
-                this.scene.scale.height - this.task_bar.displayHeight * 1.2,
+                this.scene.scale.height - this.task_bar.displayHeight * 1.3,
                 `${this.total_duration} minutes`,
                 {
                     fontFamily: "WorkSansBold, Arial, sans-serif",
@@ -230,6 +231,23 @@ export default class TaskManager {
                 }
             )
             .setOrigin(0.5, 0.5);
+
+        if (this.level.type === "puzzle") {
+            if (this.level.greedy) {
+                this.greedyButton = new Button(
+                    this.scene,
+                    this.machine_dims[this.numMachines][0].x,
+                    this.total_duration_text.y,
+                    0,
+                    "Greedy Algorithm",
+                    () => {
+                        this.scene.events.emit("greedy");
+                    }
+                )
+                    .setVisible(true)
+                    .setInteractive();
+            }
+        }
     }
 
     private setupTutorial(machine_props: MachineProps[]) {

@@ -52,5 +52,11 @@
         "level_type": "quiz",
         "level_id": 1,
         "world_id": 1
+    },
+    {
+        "id": 9,
+        "level_type": "puzzle",
+        "level_id": 4,
+        "world_id": 2
     }
 ]

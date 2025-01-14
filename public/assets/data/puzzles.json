@@ -76,5 +76,24 @@
             }
         ],
         "scoreChart": [75, 80, 90]
+    },
+    {
+        "id": 4,
+        "name": "Level 1",
+        "task_keys": ["roast-chicken", "roast-potatoes", "green-beans"],
+        "machine_props": [
+            {
+                "name": "Chef Jonathan",
+                "icon_key": "chef-jonathan",
+                "rate": 1
+            },
+            {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1
+            }
+        ],
+        "scoreChart": [55, 65, 70],
+        "greedy": true
     }
 ]
