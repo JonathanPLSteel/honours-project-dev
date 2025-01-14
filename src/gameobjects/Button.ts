@@ -31,7 +31,7 @@ export default class Button extends Phaser.GameObjects.Container {
             color: '#000000',
         }).setOrigin(0.5);
 
-        this.background = this.scene.add.rectangle(0, 0, this.textObject.width * 1.5, this.textObject.height * 1.5, 0xffffff);
+        this.background = this.scene.add.rectangle(0, 0, this.textObject.width * 1.25, this.textObject.height * 1.5, 0xffffff);
         this.background.setStrokeStyle(2, 0x000000);
 
         // Add background and text to container

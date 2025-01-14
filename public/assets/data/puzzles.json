@@ -95,5 +95,44 @@
         ],
         "scoreChart": [55, 65, 70],
         "greedy": true
+    },
+    {
+        "id": 5,
+        "name": "Level 2",
+        "task_keys": ["roast-chicken", "roast-potatoes", "carrots", "green-beans", "carrots"],
+        "machine_props": [
+            {
+                "name": "Chef Jonathan",
+                "icon_key": "chef-jonathan",
+                "rate": 1
+            },
+            {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1
+            }
+        ],
+        "scoreChart": [75, 80, 90],
+        "greedy": true
+    },
+    {
+        "id": 6,
+        "name": "Level 3",
+        "task_keys": ["roast-chicken", "roast-potatoes", "carrots", "green-beans", "carrots"],
+        "machine_props": [
+            {
+                "name": "Chef Jonathan",
+                "icon_key": "chef-jonathan",
+                "rate": 1
+            },
+            {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1
+            }
+        ],
+        "scoreChart": [75, 80, 90],
+        "greedy": true,
+        "complete_greedy": true
     }
 ]

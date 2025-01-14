@@ -58,5 +58,17 @@
         "level_type": "puzzle",
         "level_id": 4,
         "world_id": 2
+    },
+    {
+        "id": 10,
+        "level_type": "puzzle",
+        "level_id": 5,
+        "world_id": 2
+    },
+    {
+        "id": 11,
+        "level_type": "puzzle",
+        "level_id": 6,
+        "world_id": 2
     }
 ]

@@ -53,7 +53,8 @@ export default class TaskManager {
     private objective_text!: Phaser.GameObjects.Text;
     private total_duration_text!: Phaser.GameObjects.Text;
     private submit_button!: Button;
-    private greedyButton!: Button;
+    private greedy_button!: Button;
+    private complete_greedy_button!: Button;
 
     constructor(
         scene: Phaser.Scene,
@@ -235,7 +236,7 @@ export default class TaskManager {
 
         if (this.level.type === "puzzle") {
             if (this.level.greedy) {
-                this.greedyButton = new Button(
+                this.greedy_button = new Button(
                     this.scene,
                     this.machine_dims[this.numMachines][0].x,
                     this.total_duration_text.y,
@@ -243,6 +244,20 @@ export default class TaskManager {
                     "Greedy Algorithm",
                     () => {
                         this.greedyAlgorithm();
+                    }
+                )
+                    .setVisible(true)
+                    .setInteractive();
+            }
+            if (this.level.complete_greedy) {
+                this.complete_greedy_button = new Button(
+                    this.scene,
+                    this.machine_dims[this.numMachines][this.numMachines - 1].x,
+                    this.total_duration_text.y,
+                    0,
+                    "Complete Greedy Algorithm",
+                    () => {
+                        this.completeGreedyAlgorithm();
                     }
                 )
                     .setVisible(true)
@@ -433,6 +448,15 @@ export default class TaskManager {
     }
 
     private completeGreedyAlgorithm() {
+        let algoTasks = this.tasksToAlgoTasks();
+
+        let greedyResult = complete_greedy(algoTasks, this.numMachines);
+
+        let partition = greedyResult.partition;
+
+        console.log(partition);
+
+        this.partitionTasks(partition);
     }
 
     public update() {
@@ -456,11 +480,19 @@ export default class TaskManager {
                 }
             }
 
-            if (this.level.greedy && this.greedyButton.active) {
+            if (this.level.greedy && this.greedy_button.active) {
                 if (this.machines.every((machine) => machine.tasksCount === 0)) {
-                    this.greedyButton.setVisible(true).setInteractive();
+                    this.greedy_button.setVisible(true).setInteractive();
                 } else {
-                    this.greedyButton.setVisible(false).disableInteractive();
+                    this.greedy_button.setVisible(false).disableInteractive();
+                }
+            }
+
+            if (this.level.complete_greedy && this.complete_greedy_button.active) {
+                if (this.machines.every((machine) => machine.tasksCount === 0)) {
+                    this.complete_greedy_button.setVisible(true).setInteractive();
+                } else {
+                    this.complete_greedy_button.setVisible(false).disableInteractive();
                 }
             }
         }
