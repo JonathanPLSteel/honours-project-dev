@@ -195,6 +195,10 @@ export default class Machine extends Phaser.GameObjects.Container {
         );
     }
 
+    public get tasksCount() {
+        return this.tasks.length;
+    }
+
     public addTask(task: Task) {
         task.attach();
 

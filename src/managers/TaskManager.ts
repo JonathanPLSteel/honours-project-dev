@@ -3,6 +3,7 @@ import Machine from "../gameobjects/Machine";
 import Task from "../gameobjects/Task";
 import TaskBar from "../gameobjects/TaskBar";
 import { Level, PuzzleLevel, TutorialLevel } from "./LevelManager";
+import { AlgoTask, greedy, complete_greedy } from "../algorithms/Algorithms";
 
 interface MachineDimensions {
     width: number;
@@ -241,7 +242,7 @@ export default class TaskManager {
                     0,
                     "Greedy Algorithm",
                     () => {
-                        this.scene.events.emit("greedy");
+                        this.greedyAlgorithm();
                     }
                 )
                     .setVisible(true)
@@ -402,6 +403,38 @@ export default class TaskManager {
         });
     }
 
+    private tasksToAlgoTasks(): AlgoTask[] {
+        return this.tasks.map((task) => {
+            return {
+                id: task.id,
+                duration: task.duration,
+            };
+        });
+    }
+
+    private partitionTasks(partition: AlgoTask[][]) {
+        partition.forEach((machine, i) => {
+            machine.forEach((task) => {
+                this.machines[i].addTask(this.tasks[task.id]);
+            });
+        });
+    }
+
+    private greedyAlgorithm() {
+        let algoTasks = this.tasksToAlgoTasks();
+
+        let greedyResult = greedy(algoTasks, this.numMachines);
+
+        let partition = greedyResult.partition;
+
+        console.log(partition);
+
+        this.partitionTasks(partition);
+    }
+
+    private completeGreedyAlgorithm() {
+    }
+
     public update() {
         if (this.paused) {
             return;
@@ -420,6 +453,14 @@ export default class TaskManager {
                     this.displaySubmitButton();
                 } else {
                     this.hideSubmitButton();
+                }
+            }
+
+            if (this.level.greedy && this.greedyButton.active) {
+                if (this.machines.every((machine) => machine.tasksCount === 0)) {
+                    this.greedyButton.setVisible(true).setInteractive();
+                } else {
+                    this.greedyButton.setVisible(false).disableInteractive();
                 }
             }
         }
