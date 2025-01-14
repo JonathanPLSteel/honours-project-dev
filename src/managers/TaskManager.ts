@@ -3,6 +3,7 @@ import Machine from "../gameobjects/Machine";
 import Task from "../gameobjects/Task";
 import TaskBar from "../gameobjects/TaskBar";
 import { Level, PuzzleLevel, TutorialLevel } from "./LevelManager";
+import { AlgoTask, greedy, complete_greedy } from "../algorithms/Algorithms";
 
 interface MachineDimensions {
     width: number;
@@ -52,6 +53,8 @@ export default class TaskManager {
     private objective_text!: Phaser.GameObjects.Text;
     private total_duration_text!: Phaser.GameObjects.Text;
     private submit_button!: Button;
+    private greedy_button!: Button;
+    private complete_greedy_button!: Button;
 
     constructor(
         scene: Phaser.Scene,
@@ -221,7 +224,7 @@ export default class TaskManager {
         this.total_duration_text = this.scene.add
             .text(
                 this.scene.scale.width * 0.5,
-                this.scene.scale.height - this.task_bar.displayHeight * 1.2,
+                this.scene.scale.height - this.task_bar.displayHeight * 1.3,
                 `${this.total_duration} minutes`,
                 {
                     fontFamily: "WorkSansBold, Arial, sans-serif",
@@ -230,6 +233,39 @@ export default class TaskManager {
                 }
             )
             .setOrigin(0.5, 0.5);
+
+        if (this.level.type === "puzzle") {
+            if (this.level.greedy) {
+                this.greedy_button = new Button(
+                    this.scene,
+                    this.machine_dims[this.numMachines][0].x,
+                    this.total_duration_text.y,
+                    0,
+                    "Greedy Algorithm",
+                    () => {
+                        this.greedyAlgorithm();
+                    },
+                    0xF0AE4C
+                )
+                    .setVisible(true)
+                    .setInteractive();
+            }
+            if (this.level.complete_greedy) {
+                this.complete_greedy_button = new Button(
+                    this.scene,
+                    this.machine_dims[this.numMachines][this.numMachines - 1].x,
+                    this.total_duration_text.y,
+                    0,
+                    "Complete Greedy Algorithm",
+                    () => {
+                        this.completeGreedyAlgorithm();
+                    },
+                    0xD69EFF
+                )
+                    .setVisible(true)
+                    .setInteractive();
+            }
+        }
     }
 
     private setupTutorial(machine_props: MachineProps[]) {
@@ -384,6 +420,47 @@ export default class TaskManager {
         });
     }
 
+    private tasksToAlgoTasks(): AlgoTask[] {
+        return this.tasks.map((task) => {
+            return {
+                id: task.id,
+                duration: task.duration,
+            };
+        });
+    }
+
+    private partitionTasks(partition: AlgoTask[][]) {
+        partition.forEach((machine, i) => {
+            machine.forEach((task) => {
+                this.machines[i].addTask(this.tasks[task.id]);
+            });
+        });
+    }
+
+    private greedyAlgorithm() {
+        let algoTasks = this.tasksToAlgoTasks();
+
+        let greedyResult = greedy(algoTasks, this.numMachines);
+
+        let partition = greedyResult.partition;
+
+        console.log(partition);
+
+        this.partitionTasks(partition);
+    }
+
+    private completeGreedyAlgorithm() {
+        let algoTasks = this.tasksToAlgoTasks();
+
+        let greedyResult = complete_greedy(algoTasks, this.numMachines);
+
+        let partition = greedyResult.partition;
+
+        console.log(partition);
+
+        this.partitionTasks(partition);
+    }
+
     public update() {
         if (this.paused) {
             return;
@@ -393,8 +470,9 @@ export default class TaskManager {
 
         this.machines.forEach((machine) => machine.update());
 
+        this.updateTotalDuration();
+
         if (this.level.type === "puzzle") {
-            this.updateTotalDuration();
 
             if (this.submit_button && this.submit_button.active) {
                 if (this.checkSubmittable()) {
@@ -402,6 +480,22 @@ export default class TaskManager {
                     this.displaySubmitButton();
                 } else {
                     this.hideSubmitButton();
+                }
+            }
+
+            if (this.level.greedy && this.greedy_button.active) {
+                if (this.machines.every((machine) => machine.tasksCount === 0)) {
+                    this.greedy_button.setVisible(true).setInteractive();
+                } else {
+                    this.greedy_button.setVisible(false).disableInteractive();
+                }
+            }
+
+            if (this.level.complete_greedy && this.complete_greedy_button.active) {
+                if (this.machines.every((machine) => machine.tasksCount === 0)) {
+                    this.complete_greedy_button.setVisible(true).setInteractive();
+                } else {
+                    this.complete_greedy_button.setVisible(false).disableInteractive();
                 }
             }
         }

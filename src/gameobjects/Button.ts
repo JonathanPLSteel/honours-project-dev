@@ -15,7 +15,8 @@ export default class Button extends Phaser.GameObjects.Container {
         y: number,
         id: number,
         text: string,
-        callback: Function
+        callback: Function,
+        hoverColour: number = 0xdddddd,
     ) {
         super(scene, x, y);
 
@@ -31,7 +32,7 @@ export default class Button extends Phaser.GameObjects.Container {
             color: '#000000',
         }).setOrigin(0.5);
 
-        this.background = this.scene.add.rectangle(0, 0, this.textObject.width * 1.5, this.textObject.height * 1.5, 0xffffff);
+        this.background = this.scene.add.rectangle(0, 0, this.textObject.width * 1.25, this.textObject.height * 1.5, 0xffffff);
         this.background.setStrokeStyle(2, 0x000000);
 
         // Add background and text to container
@@ -43,11 +44,11 @@ export default class Button extends Phaser.GameObjects.Container {
         this.setSize(this.width, this.height);
 
         this.setInteractive(new Phaser.Geom.Rectangle(0, 0, this.width, this.height), Phaser.Geom.Rectangle.Contains)
-            .on('pointerover', () => this.background.setFillStyle(0x44ff44))
+            .on('pointerover', () => this.background.setFillStyle(hoverColour))
             .on('pointerout', () => this.background.setFillStyle(0xffffff))
             .on('pointerdown', () => this.background.setFillStyle(0x999999))
             .on('pointerup', () => {
-                this.background.setFillStyle(0x44ff44);
+                this.background.setFillStyle(hoverColour);
                 this.callback();
             });
 

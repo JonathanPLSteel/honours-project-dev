@@ -1,14 +1,14 @@
 [
     {
         "id": 0,
-        "name": "World 1"
+        "name": "World 1: Introduction"
     },
     {
         "id": 1,
-        "name": "World 2"
+        "name": "World 2: Heterogeneous"
     },
     {
         "id": 2,
-        "name": "World 3"
+        "name": "World 3: Algorithms"
     } 
 ]
