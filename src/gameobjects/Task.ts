@@ -70,6 +70,7 @@ export default class Task extends Phaser.GameObjects.Sprite {
 
             this.setAlpha(0);
             this.nameText.setAlpha(0);
+            this.nameText.setVisible(false);
             this.icon.setAlpha(0);
             this.durationText.setAlpha(0);
         }
@@ -92,8 +93,8 @@ export default class Task extends Phaser.GameObjects.Sprite {
         );
         this.nameText.setOrigin(0.5, 0.5);
 
-        this.icon = this.scene.add.image(this.x, this.y, this.icon_key);
-        this.icon.setDisplaySize(35, 35);
+        this.icon = this.scene.add.image(this.x, this.y - 10, this.icon_key);
+        this.icon.setDisplaySize(50, 50);
         this.icon.setOrigin(0.5, 0.5);
 
         this.durationText = this.scene.add.text(
@@ -177,13 +178,16 @@ export default class Task extends Phaser.GameObjects.Sprite {
     private setSmallSize() {
         this.setTexture("task-small-bg");
         this.setDisplaySize(this.small_width, this.small_height);
+
         this.icon.setPosition(this.x - this.displayWidth * 0.425, this.y);
+        this.icon.setDisplaySize(35, 35);
 
         this.nameText.setOrigin(0, 0.5);
         this.nameText.setPosition(
             this.icon.x + this.icon.displayWidth * 0.75,
             this.y
         );
+        this.nameText.setVisible(true);
 
         this.durationText.setText(`${this.duration}`);
         this.durationText.setOrigin(1, 0.5);
@@ -196,9 +200,13 @@ export default class Task extends Phaser.GameObjects.Sprite {
     private setMedSize() {
         this.setTexture("task-med-bg");
         this.setDisplaySize(this.med_width, this.med_height);
+
         this.nameText.setOrigin(0.5, 0.5);
         this.nameText.setPosition(this.x, this.y - this.displayHeight * 0.3);
-        this.icon.setPosition(this.x, this.y);
+        this.nameText.setVisible(false);
+
+        this.icon.setPosition(this.x, this.y - 10);
+        this.icon.setDisplaySize(50, 50);
 
         this.durationText.setText(`${this.duration} minutes`);
         this.durationText.setOrigin(0.5, 0.5);
