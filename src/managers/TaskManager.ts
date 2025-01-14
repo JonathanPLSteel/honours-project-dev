@@ -36,8 +36,8 @@ export default class TaskManager {
     private task_types: { key: string; name: string; duration: number }[];
 
     private task_med_dims = {
-        width: 150,
-        height: 100,
+        width: 125,
+        height: 80,
     };
     private task_small_dims: { width: number; height: number };
 
@@ -151,7 +151,7 @@ export default class TaskManager {
             this.scene,
             this.scene.scale.width / 2,
             this.machine_dims[this.numMachines][0].y +
-                this.machine_dims[this.numMachines][0].height * 0.6,
+                this.machine_dims[this.numMachines][0].height * 0.7,
             0,
             "Submit",
             () => {
