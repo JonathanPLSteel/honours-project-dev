@@ -132,6 +132,12 @@
             }
         ],
         "scoreChart": [75, 80, 90],
+        "dialogue": {
+            "id": "level-3-intro",
+            "icon": "chef-jonathan",
+            "text": "So the greedy algorithm didn't get it perfect on this level. Thankfully, we have a new algorithm to try out...",
+            "name": "Head Chef Jonathan"
+        },
         "greedy": true,
         "complete_greedy": true
     }

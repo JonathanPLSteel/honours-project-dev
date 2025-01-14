@@ -470,8 +470,9 @@ export default class TaskManager {
 
         this.machines.forEach((machine) => machine.update());
 
+        this.updateTotalDuration();
+
         if (this.level.type === "puzzle") {
-            this.updateTotalDuration();
 
             if (this.submit_button && this.submit_button.active) {
                 if (this.checkSubmittable()) {

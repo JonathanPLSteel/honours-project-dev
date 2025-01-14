@@ -26,5 +26,33 @@
             "text": "Ok so based on these ingredients, what do you think the total time will be?",
             "name": "Head Chef Jonathan"
         }
+    },
+    {
+        "id": 1,
+        "name": "Tutorial 2",
+        "machine_props": [
+            {
+                "name": "Chef Jonathan",
+                "icon_key": "chef-jonathan",
+                "rate": 1,
+                "task_keys": ["roast-chicken"]
+            },
+            {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1,
+                "task_keys": ["roast-potatoes", "green-beans"]
+            }
+        ],
+        "hidden_elements": [],
+        "choices": ["Chef Jonathan", "Chef Julian"],
+        "correct": 0,
+        "objective": "Where would the Greedy Algorithm place the Carrots?",
+        "dialogue": {
+            "id": "tutorial-2-intro",
+            "icon": "chef-jonathan",
+            "text": "The greedy algorithm is nearly finished. Where do you think it will put the last Carrots?",
+            "name": "Head Chef Jonathan"
+        }
     }
 ]
