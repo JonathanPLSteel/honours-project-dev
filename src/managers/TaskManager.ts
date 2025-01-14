@@ -244,7 +244,8 @@ export default class TaskManager {
                     "Greedy Algorithm",
                     () => {
                         this.greedyAlgorithm();
-                    }
+                    },
+                    0xF0AE4C
                 )
                     .setVisible(true)
                     .setInteractive();
@@ -258,7 +259,8 @@ export default class TaskManager {
                     "Complete Greedy Algorithm",
                     () => {
                         this.completeGreedyAlgorithm();
-                    }
+                    },
+                    0xD69EFF
                 )
                     .setVisible(true)
                     .setInteractive();
