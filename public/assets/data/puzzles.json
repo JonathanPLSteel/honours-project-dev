@@ -80,6 +80,65 @@
     {
         "id": 4,
         "name": "Level 1",
+        "task_keys": ["roast-chicken", "roast-potatoes", "carrots", "green-beans", "carrots"],
+        "machine_props": [
+            {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1
+            },
+            {
+                "name": "Sous Chef Simar",
+                "icon_key": "chef-simar",
+                "rate": 1.25
+            }
+        ],
+        "scoreChart": [75, 75, 84]
+    },
+    {
+        "id": 5,
+        "name": "Level 2",
+        "task_keys": ["leg-of-lamb", "roast-chicken", "yorkshire-puddings", "green-beans", "carrots"],
+        "machine_props": [
+            {
+                "name": "Head Chef George",
+                "icon_key": "head-chef-george",
+                "rate": 2.5
+            },
+            {
+                "name": "Sous Chef Simar",
+                "icon_key": "chef-simar",
+                "rate": 1.25
+            },
+            {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1
+            }
+        ],
+        "scoreChart": [48, 50, 58]
+    },
+    {
+        "id": 6,
+        "name": "Level 3",
+        "task_keys": ["leg-of-lamb", "roast-chicken", "roast-chicken", "roast-potatoes", "yorkshire-puddings"],
+        "machine_props": [
+            {
+                "name": "Master Chef Gordon",
+                "icon_key": "chef",
+                "rate": 5
+            },
+            {
+                "name": "Sous Chef Simar",
+                "icon_key": "chef-simar",
+                "rate": 1.25
+            }
+        ],
+        "scoreChart": [37, 38, 39]
+    },
+    {
+        "id": 7,
+        "name": "Level 1",
         "task_keys": ["roast-chicken", "roast-potatoes", "green-beans"],
         "machine_props": [
             {
@@ -97,7 +156,7 @@
         "greedy": true
     },
     {
-        "id": 5,
+        "id": 8,
         "name": "Level 2",
         "task_keys": ["roast-chicken", "roast-potatoes", "carrots", "green-beans", "carrots"],
         "machine_props": [
@@ -116,7 +175,7 @@
         "greedy": true
     },
     {
-        "id": 6,
+        "id": 9,
         "name": "Level 3",
         "task_keys": ["roast-chicken", "roast-potatoes", "carrots", "green-beans", "carrots"],
         "machine_props": [

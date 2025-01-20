@@ -49,32 +49,62 @@
     },
     {
         "id": 8,
-        "level_type": "quiz",
-        "level_id": 1,
+        "level_type": "puzzle",
+        "level_id": 4,
         "world_id": 1
     },
     {
         "id": 9,
-        "level_type": "puzzle",
-        "level_id": 4,
-        "world_id": 2
+        "level_type": "tutorial",
+        "level_id": 1,
+        "world_id": 1
     },
     {
         "id": 10,
-        "level_type": "tutorial",
-        "level_id": 1,
-        "world_id": 2
+        "level_type": "puzzle",
+        "level_id": 5,
+        "world_id": 1
     },
     {
         "id": 11,
-        "level_type": "puzzle",
-        "level_id": 5,
-        "world_id": 2
+        "level_type": "tutorial",
+        "level_id": 2,
+        "world_id": 1
     },
     {
         "id": 12,
         "level_type": "puzzle",
         "level_id": 6,
+        "world_id": 1
+    },
+    {
+        "id": 13,
+        "level_type": "quiz",
+        "level_id": 1,
+        "world_id": 1
+    },
+    {
+        "id": 14,
+        "level_type": "puzzle",
+        "level_id": 7,
+        "world_id": 2
+    },
+    {
+        "id": 15,
+        "level_type": "tutorial",
+        "level_id": 3,
+        "world_id": 2
+    },
+    {
+        "id": 16,
+        "level_type": "puzzle",
+        "level_id": 8,
+        "world_id": 2
+    },
+    {
+        "id": 17,
+        "level_type": "puzzle",
+        "level_id": 9,
         "world_id": 2
     }
 ]

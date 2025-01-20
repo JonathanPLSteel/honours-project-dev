@@ -61,6 +61,7 @@ export class Preloader extends Scene
         this.load.image('chef-julian', 'chefs/chef-julian.png')
         this.load.image('chef-jacob', 'chefs/chef-jacob.png')
         this.load.image('chef-simar', 'chefs/chef-simar.png')
+        this.load.image('head-chef-george', 'chefs/head-chef-george.png')
 
         this.load.image('carrots', 'food/carrots.png');
         this.load.image('roast-chicken', 'food/roast-chicken.png')
