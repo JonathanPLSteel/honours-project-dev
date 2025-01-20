@@ -93,7 +93,13 @@
                 "rate": 1.25
             }
         ],
-        "scoreChart": [75, 75, 84]
+        "scoreChart": [75, 75, 84],
+        "dialogue": {
+            "id": "tutorial-2-intro",
+            "icon": "chef-jonathan",
+            "text": "We have hired a new Sous Chef. She cooks faster than our normal chefs. Let's make good use of her skills!",
+            "name": "Head Chef Jonathan"
+        }
     },
     {
         "id": 5,
@@ -153,7 +159,13 @@
             }
         ],
         "scoreChart": [55, 65, 70],
-        "greedy": true
+        "greedy": true,
+        "dialogue": {
+            "id": "world-3-intro",
+            "icon": "chef-jonathan",
+            "text": "We have installed the greedy algorithm into our kitchen scheduling system. Why don't we give it a try?",
+            "name": "Head Chef Jonathan"
+        }
     },
     {
         "id": 8,

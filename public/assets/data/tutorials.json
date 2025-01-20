@@ -17,7 +17,7 @@
             }
         ],
         "hidden_elements": ["total_duration"],
-        "choices": ["True", "False", "I don't know", "I don't care"],
+        "choices": ["95", "25", "120", "70"],
         "correct": 0,
         "objective": "Estimate the total time based on the ingredients",
         "dialogue": {
@@ -79,7 +79,7 @@
     },
     {
         "id": 3,
-        "name": "Tutorial 3",
+        "name": "Tutorial 1",
         "machine_props": [
             {
                 "name": "Chef Jonathan",
