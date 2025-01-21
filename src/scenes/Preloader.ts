@@ -61,11 +61,14 @@ export class Preloader extends Scene
         this.load.image('chef-julian', 'chefs/chef-julian.png')
         this.load.image('chef-jacob', 'chefs/chef-jacob.png')
         this.load.image('chef-simar', 'chefs/chef-simar.png')
+        this.load.image('head-chef-george', 'chefs/head-chef-george.png')
 
         this.load.image('carrots', 'food/carrots.png');
         this.load.image('roast-chicken', 'food/roast-chicken.png')
         this.load.image('roast-potatoes', 'food/roast-potatoes.png')
         this.load.image('green-beans', 'food/green-beans.png')
+        this.load.image('leg-of-lamb', 'food/leg-of-lamb.png')
+        this.load.image('yorkshire-puddings', 'food/yorkshire-puddings.png')
 
         this.load.image('completed', 'levels/completed.png')
         this.load.image('locked', 'levels/locked.png')

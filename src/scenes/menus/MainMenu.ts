@@ -6,15 +6,14 @@ export class MainMenu extends Scene {
     logo: GameObjects.Image;
     title: GameObjects.Text;
     subtitle: GameObjects.Text;
+    versionText: GameObjects.Text;
 
     constructor() {
         super("MainMenu");
     }
 
     create() {
-        // this.background = this.add.image(512, 384, 'background');
-
-        // this.logo = this.add.image(512, 300, 'logo');
+        let version = "v3.0 (Alpha)";
 
         this.title = this.add
             .text(512, 300, "Task Scheduling Game", {
@@ -34,12 +33,12 @@ export class MainMenu extends Scene {
             })
             .setOrigin(0.5);
 
-        // this.input.once("pointerdown", () => {
-        //     this.scene.start("Cutscene", {
-        //         cutscene_key: "test_video",
-        //         next_scene: "LevelSelect",
-        //     });
-        // });
+        this.versionText = this.add
+            .text(10, 10, version, {
+                fontFamily: "WorkSansRegular, Arial, sans-serif",
+                fontSize: 20,
+                color: "#000000",
+            })
 
         this.input.once("pointerdown", () => {
             this.sound.play("switch");
