@@ -84,7 +84,7 @@ export default class LevelManager {
                         world_id: level_map.world_id,
                         completed: progress.completed,
                         type: "cutscene",
-                        cutscene_key: cutscenes[level_map.level_id].key,
+                        cutscene_key: cutscenes[level_map.level_id].cutscene_key,
                     };
                     break;
                 case "tutorial":

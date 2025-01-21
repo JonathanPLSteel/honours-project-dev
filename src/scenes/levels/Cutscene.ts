@@ -13,12 +13,16 @@ export class Cutscene extends Scene {
         this.level = data.level;
         // Dynamically load and play the video
         const cutscene = this.add.video(this.scale.width / 2, this.scale.height / 2);
-        cutscene.setDisplaySize(cutscene.displayWidth * 1, cutscene.displayHeight * 1);
+        cutscene.setDisplaySize(cutscene.displayWidth * 0.5, cutscene.displayHeight * 0.5);
         cutscene.setOrigin(0.5, 0.5); // Center the video
 
         cutscene.loadURL(`assets/videos/${this.level.cutscene_key}.webm`, true);
         cutscene.setMute(false);
         cutscene.play();
+
+        // console.log(cutscene.getDuration());
+        cutscene.setPlaybackRate(1.25);
+        // console.log(cutscene.getDuration());
 
         const cutscene_text = this.add.text(
             this.scale.width / 2,
