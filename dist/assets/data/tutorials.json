@@ -17,13 +17,91 @@
             }
         ],
         "hidden_elements": ["total_duration"],
-        "choices": ["True", "False", "I don't know", "I don't care"],
+        "choices": ["95", "25", "120", "70"],
         "correct": 0,
         "objective": "Estimate the total time based on the ingredients",
         "dialogue": {
             "id": "tutorial-1-intro",
             "icon": "chef-jonathan",
             "text": "Ok so based on these ingredients, what do you think the total time will be?",
+            "name": "Head Chef Jonathan"
+        }
+    },
+    {
+        "id": 1,
+        "name": "Tutorial 1",
+        "machine_props": [
+            {
+                "name": "Chef Jonathan",
+                "icon_key": "chef-jonathan",
+                "rate": 1,
+                "task_keys": ["roast-chicken"]
+            },
+            {
+                "name": "Sous Chef Simar",
+                "icon_key": "chef-simar",
+                "rate": 1.25,
+                "task_keys": ["roast-potatoes", "green-beans"]
+            }
+        ],
+        "hidden_elements": [],
+        "choices": ["1.2x", "1.25x", "1.4x", "1.5x"],
+        "correct": 1,
+        "objective": "At what rate does Sous Chef Simar complete tasks?",
+        "dialogue": {
+            "id": "tutorial-2-intro",
+            "icon": "chef-jonathan",
+            "text": "Our new Sous Chef completes tasks faster than our normal lot. How much faster do you think she is?",
+            "name": "Head Chef Jonathan"
+        }
+    },
+    {
+        "id": 2,
+        "name": "Tutorial 2",
+        "machine_props": [
+            {
+                "name": "Head Chef George",
+                "icon_key": "head-chef-george",
+                "rate": 2.5,
+                "task_keys": ["leg-of-lamb", "roast-chicken"]
+            },
+            {
+                "name": "Sous Chef Simar",
+                "icon_key": "chef-simar",
+                "rate": 1.25,
+                "task_keys": ["roast-potatoes", "green-beans", "carrots"]
+            }
+        ],
+        "hidden_elements": [],
+        "choices": ["Leg of Lamb", "Roast Chicken", "Roast Potatoes", "Green Beans"],
+        "correct": 2,
+        "objective": "Which of these ingredients should be swapped to minimise the total time."
+    },
+    {
+        "id": 3,
+        "name": "Tutorial 1",
+        "machine_props": [
+            {
+                "name": "Chef Jonathan",
+                "icon_key": "chef-jonathan",
+                "rate": 1,
+                "task_keys": ["roast-chicken"]
+            },
+            {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1,
+                "task_keys": ["roast-potatoes", "green-beans"]
+            }
+        ],
+        "hidden_elements": [],
+        "choices": ["Chef Jonathan", "Chef Julian"],
+        "correct": 0,
+        "objective": "Where would the Greedy Algorithm place the Carrots?",
+        "dialogue": {
+            "id": "tutorial-2-intro",
+            "icon": "chef-jonathan",
+            "text": "The greedy algorithm is nearly finished. Where do you think it will put the last Carrots?",
             "name": "Head Chef Jonathan"
         }
     }

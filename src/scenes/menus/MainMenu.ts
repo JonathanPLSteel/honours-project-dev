@@ -13,7 +13,7 @@ export class MainMenu extends Scene {
     }
 
     create() {
-        let version = "v3.0 (Alpha)";
+        let version = "v3.0 (Beta)";
 
         this.title = this.add
             .text(512, 300, "Task Scheduling Game", {

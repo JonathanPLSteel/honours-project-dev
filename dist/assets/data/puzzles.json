@@ -2,7 +2,7 @@
     {
         "id": 0,
         "name": "Level 1",
-        "task_keys": ["carrots", "roast-chicken", "roast-potatoes"],
+        "task_keys": ["carrots", "green-beans"],
         "machine_props": [
             {
                 "name": "Chef Jonathan",
@@ -15,7 +15,7 @@
                 "rate": 1
             }
         ],
-        "scoreChart": [55, 65, 70],
+        "scoreChart": [25, 50, 50],
         "dialogue": {
             "id": "level-1-intro",
             "icon": "chef-jonathan",
@@ -26,7 +26,43 @@
     {
         "id": 1,
         "name": "Level 2",
-        "task_keys": ["carrots", "roast-chicken", "roast-potatoes", "green-beans", "green-beans"],
+        "task_keys": ["roast-chicken", "roast-potatoes", "green-beans"],
+        "machine_props": [
+            {
+                "name": "Chef Jonathan",
+                "icon_key": "chef-jonathan",
+                "rate": 1
+            },
+            {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1
+            }
+        ],
+        "scoreChart": [55, 65, 70]
+    },
+    {
+        "id": 2,
+        "name": "Level 3",
+        "task_keys": ["roast-chicken", "roast-potatoes", "roast-potatoes", "roast-potatoes", "green-beans"],
+        "machine_props": [
+            {
+                "name": "Chef Jonathan",
+                "icon_key": "chef-jonathan",
+                "rate": 1
+            },
+            {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1
+            }
+        ],
+        "scoreChart": [85, 90, 100]
+    },
+    {
+        "id": 3,
+        "name": "Level 4",
+        "task_keys": ["roast-chicken", "roast-potatoes", "carrots", "green-beans", "carrots"],
         "machine_props": [
             {
                 "name": "Chef Jonathan",
@@ -42,36 +78,13 @@
         "scoreChart": [75, 80, 90]
     },
     {
-        "id": 2,
-        "name": "Level 3",
-        "task_keys": ["carrots", "roast-chicken", "roast-potatoes", "green-beans", "green-beans"],
+        "id": 4,
+        "name": "Level 1",
+        "task_keys": ["roast-chicken", "roast-potatoes", "carrots", "green-beans", "carrots"],
         "machine_props": [
-            {
-                "name": "Chef Jonathan",
-                "icon_key": "chef-jonathan",
-                "rate": 1
-            },
             {
                 "name": "Chef Julian",
                 "icon_key": "chef-julian",
-                "rate": 1
-            },
-            {
-                "name": "Chef Jacob",
-                "icon_key": "chef-jacob",
-                "rate": 1
-            }
-        ],
-        "scoreChart": [75, 65, 55]
-    },
-    {
-        "id": 3,
-        "name": "Level 1",
-        "task_keys": ["carrots", "roast-chicken", "roast-potatoes"],
-        "machine_props": [
-            {
-                "name": "Chef Jonathan",
-                "icon_key": "chef-jonathan",
                 "rate": 1
             },
             {
@@ -80,23 +93,23 @@
                 "rate": 1.25
             }
         ],
-        "scoreChart": [44, 55, 56],
+        "scoreChart": [75, 75, 84],
         "dialogue": {
-            "id": "world-2-intro",
+            "id": "tutorial-2-intro",
             "icon": "chef-jonathan",
-            "text": "We have hired a new senior chef, Simar. She can cook at a quicker rate than our junior chefs. Make sure to use her wisely!",
+            "text": "We have hired a new Sous Chef. She cooks faster than our normal chefs. Let's make good use of her skills!",
             "name": "Head Chef Jonathan"
         }
     },
     {
-        "id": 4,
+        "id": 5,
         "name": "Level 2",
-        "task_keys": ["carrots", "roast-chicken", "roast-potatoes", "green-beans", "carrots"],
+        "task_keys": ["leg-of-lamb", "roast-chicken", "yorkshire-puddings", "green-beans", "carrots"],
         "machine_props": [
             {
-                "name": "Chef Julian",
-                "icon_key": "chef-julian",
-                "rate": 1
+                "name": "Head Chef George",
+                "icon_key": "head-chef-george",
+                "rate": 2.5
             },
             {
                 "name": "Sous Chef Simar",
@@ -104,11 +117,99 @@
                 "rate": 1.25
             },
             {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1
+            }
+        ],
+        "scoreChart": [48, 50, 58]
+    },
+    {
+        "id": 6,
+        "name": "Level 3",
+        "task_keys": ["leg-of-lamb", "roast-chicken", "roast-chicken", "roast-potatoes", "yorkshire-puddings"],
+        "machine_props": [
+            {
                 "name": "Master Chef Gordon",
                 "icon_key": "chef",
                 "rate": 5
+            },
+            {
+                "name": "Sous Chef Simar",
+                "icon_key": "chef-simar",
+                "rate": 1.25
             }
         ],
-        "scoreChart": [44, 55, 56]
+        "scoreChart": [37, 38, 39]
+    },
+    {
+        "id": 7,
+        "name": "Level 1",
+        "task_keys": ["roast-chicken", "roast-potatoes", "green-beans"],
+        "machine_props": [
+            {
+                "name": "Chef Jonathan",
+                "icon_key": "chef-jonathan",
+                "rate": 1
+            },
+            {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1
+            }
+        ],
+        "scoreChart": [55, 65, 70],
+        "greedy": true,
+        "dialogue": {
+            "id": "world-3-intro",
+            "icon": "chef-jonathan",
+            "text": "We have installed the greedy algorithm into our kitchen scheduling system. Why don't we give it a try?",
+            "name": "Head Chef Jonathan"
+        }
+    },
+    {
+        "id": 8,
+        "name": "Level 2",
+        "task_keys": ["roast-chicken", "roast-potatoes", "carrots", "green-beans", "carrots"],
+        "machine_props": [
+            {
+                "name": "Chef Jonathan",
+                "icon_key": "chef-jonathan",
+                "rate": 1
+            },
+            {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1
+            }
+        ],
+        "scoreChart": [75, 80, 90],
+        "greedy": true
+    },
+    {
+        "id": 9,
+        "name": "Level 3",
+        "task_keys": ["roast-chicken", "roast-potatoes", "carrots", "green-beans", "carrots"],
+        "machine_props": [
+            {
+                "name": "Chef Jonathan",
+                "icon_key": "chef-jonathan",
+                "rate": 1
+            },
+            {
+                "name": "Chef Julian",
+                "icon_key": "chef-julian",
+                "rate": 1
+            }
+        ],
+        "scoreChart": [75, 80, 90],
+        "dialogue": {
+            "id": "level-3-intro",
+            "icon": "chef-jonathan",
+            "text": "So the greedy algorithm didn't get it perfect on this level. Thankfully, we have a new algorithm to try out...",
+            "name": "Head Chef Jonathan"
+        },
+        "greedy": true,
+        "complete_greedy": true
     }
 ]
