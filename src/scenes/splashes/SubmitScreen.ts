@@ -34,17 +34,17 @@ export class SubmitScreen extends Scene {
             .setDisplaySize(200, 200)
             .setOrigin(0.5);
 
-        if (this.level.grade === 1) {
+        if (this.level.latest_grade === 1) {
             second_star.setTint(0x777777);
             third_star.setTint(0x777777);
-        } else if (this.level.grade === 2) {
+        } else if (this.level.latest_grade === 2) {
             third_star.setTint(0x777777);
         }
 
         this.grading_text = this.add.text(
             this.scale.width / 2,
             this.scale.height / 2 + 100,
-            `${this.grade_to_text(this.level.grade)}!`,
+            `${this.grade_to_text(this.level.latest_grade)}!`,
             {
                 fontFamily: "WorkSansBold, Arial, sans-serif",
                 fontSize: 64,

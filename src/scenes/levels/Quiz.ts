@@ -6,6 +6,7 @@ export class Quiz extends Scene {
     private level: QuizLevel;
     private answersManager: AnswersManager;
     private currentQuestionIndex: number;
+    private start_time: number;
 
     private questionText!: Phaser.GameObjects.Text;
 
@@ -16,6 +17,8 @@ export class Quiz extends Scene {
     create(data: { level: QuizLevel }) {
         this.level = data.level;
         this.currentQuestionIndex = 0;
+
+        this.start_time = Date.now();
 
         this.startQuiz();
     }
@@ -37,6 +40,10 @@ export class Quiz extends Scene {
                 this.startQuiz();
             } else {
                 this.currentQuestionIndex = 0;
+
+                let end_time = Date.now();
+                this.level.time_taken = end_time - this.start_time;
+
                 this.scene.start("LevelSelect", { level: this.level });
             }
         });

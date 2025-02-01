@@ -23,11 +23,16 @@ export class LevelSelect extends Scene {
             if (data.level.type === "puzzle") {
                 this.level_manager.saveLevelProgress(
                     data.level.id,
-                    true,
-                    data.level.grade
+                    data.level.latest_grade,
+                    data.level.time_taken,
+                    data.level.num_attempts
                 );
             } else {
-                this.level_manager.saveLevelProgress(data.level.id, true, 0);
+                this.level_manager.saveLevelProgress(
+                    data.level.id, 
+                    0,
+                    data.level.time_taken,
+                    data.level.num_attempts);
             }
         }
 
@@ -159,7 +164,7 @@ export class LevelSelect extends Scene {
         level_button.add(text);
 
         if (level.type === "puzzle" && accessible) {
-            this.addStars(level.grade, level_button);
+            this.addStars(level.latest_grade, level_button);
         }
 
         this.level_buttons.push(level_button);

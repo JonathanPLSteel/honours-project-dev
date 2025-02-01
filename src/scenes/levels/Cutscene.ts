@@ -10,6 +10,8 @@ export class Cutscene extends Scene {
 
     create(data: { level: CutsceneLevel }) {
 
+        let startTime = Date.now();
+
         this.level = data.level;
         // Dynamically load and play the video
         const cutscene = this.add.video(this.scale.width / 2, this.scale.height / 2);
@@ -39,12 +41,20 @@ export class Cutscene extends Scene {
 
         // Transition to the next scene when the video finishes
         cutscene.on("complete", () => {
+
+            let endTime = Date.now();
+            this.level.time_taken = endTime - startTime;
+
             cutscene.destroy();
-            this.scene.start("LevelSelect"); // Replace with your next scene
+            this.scene.start("LevelSelect", { level: this.level }); // Replace with your next scene
         });
 
         // Allow the user to skip the cutscene by clicking
         this.input.once("pointerdown", () => {
+
+            let endTime = Date.now();
+            this.level.time_taken = endTime - startTime;
+
             cutscene.stop();
             cutscene.destroy();
 

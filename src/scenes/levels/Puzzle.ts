@@ -7,17 +7,21 @@ export class Puzzle extends Scene {
     private level: PuzzleLevel;
     private task_manager: TaskManager;
     private dialogue_manager: DialogueManager;
+    private start_time: number;
 
     constructor() {
         super("Puzzle");
     }
 
     create(data: { level: PuzzleLevel }) {
+
         this.level = data.level;
 
         this.events.once("shutdown", this.onShutdown, this);
 
         this.dialogue_manager = new DialogueManager(this);
+
+        this.start_time = Date.now();
 
         this.launchLevel();
     }
@@ -65,14 +69,17 @@ export class Puzzle extends Scene {
     private onSubmit() {
         let total_duration = this.task_manager.getTotalDuration();
 
+        let end_time = Date.now();
+        this.level.time_taken = end_time - this.start_time;
+
         this.level.completed = true;
 
         if (total_duration <= this.level.scoreChart[0]) {
-            this.level.grade = 3;
+            this.level.latest_grade = 3;
         } else if (total_duration <= this.level.scoreChart[1]) {
-            this.level.grade = 2;
+            this.level.latest_grade = 2;
         } else {
-            this.level.grade = 1;
+            this.level.latest_grade = 1;
         }
 
         this.sound.play("card-fan-1");
