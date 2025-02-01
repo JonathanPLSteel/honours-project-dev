@@ -55,4 +55,18 @@ export default class Button extends Phaser.GameObjects.Container {
         // Add this container to the scene
         this.scene.add.existing(this);
     }
+
+    public shake() {
+        this.scene.tweens.add({
+            targets: this,
+            x: this.x + 5,
+            duration: 50,
+            ease: 'Power1',
+            yoyo: true,
+            repeat: 5,
+            onComplete: () => {
+            this.scene.time.delayedCall(3000, () => this.shake(), [], this);
+            }
+        });
+    }
 }

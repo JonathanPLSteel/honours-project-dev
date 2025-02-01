@@ -292,4 +292,13 @@ export default class LevelManager {
     public isNewPlayer(): boolean {
         return localStorage.length === 0; // Returns true if no keys are present
     }
+
+    public allLevelsCompleted(): boolean { 
+        for (let level of this.levels) {
+            if (!level.completed) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
