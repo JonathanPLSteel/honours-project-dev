@@ -7,6 +7,10 @@ export interface BaseLevel {
     name: string;
     world_id: number;
     completed: boolean;
+    initial_grade: number;
+    latest_grade: number;
+    time_taken: number;
+    num_attempts: number;
     type: "cutscene" | "tutorial" | "puzzle" | "quiz";
 }
 
@@ -30,7 +34,6 @@ export interface PuzzleLevel extends BaseLevel {
     task_keys: string[];
     machine_props: MachineProps[];
     scoreChart: number[];
-    grade: number;
     objective: string;
     greedy?: boolean;
     complete_greedy?: boolean;
@@ -42,7 +45,6 @@ export interface QuizLevel extends BaseLevel {
     questions: string[];
     choices: string[][];
     correct: number[];
-    grade: number;
     dialogue?: Dialogue;
 }
 
@@ -62,6 +64,10 @@ export default class LevelManager {
         this.scene = scene;
         this.levels = this.loadLevels();
         this.worlds = this.loadWorlds();
+
+        if (this.isNewPlayer()) {
+            this.initialiseProgress();
+        }
     }
 
     // Loaders
@@ -83,6 +89,10 @@ export default class LevelManager {
                         name: cutscenes[level_map.level_id].name,
                         world_id: level_map.world_id,
                         completed: progress.completed,
+                        initial_grade: progress.initial_grade,
+                        latest_grade: progress.latest_grade,
+                        time_taken: progress.time_taken,
+                        num_attempts: progress.num_attempts,
                         type: "cutscene",
                         cutscene_key: cutscenes[level_map.level_id].cutscene_key,
                     };
@@ -93,6 +103,10 @@ export default class LevelManager {
                         name: tutorials[level_map.level_id].name,
                         world_id: level_map.world_id,
                         completed: progress.completed,
+                        initial_grade: progress.initial_grade,
+                        latest_grade: progress.latest_grade,
+                        time_taken: progress.time_taken,
+                        num_attempts: progress.num_attempts,
                         type: "tutorial",
                         machine_props:
                             tutorials[level_map.level_id].machine_props,
@@ -111,12 +125,15 @@ export default class LevelManager {
                         name: puzzles[level_map.level_id].name,
                         world_id: level_map.world_id,
                         completed: progress.completed,
+                        initial_grade: progress.initial_grade,
+                        latest_grade: progress.latest_grade,
+                        time_taken: progress.time_taken,
+                        num_attempts: progress.num_attempts,
                         type: "puzzle",
                         task_keys: puzzles[level_map.level_id].task_keys,
                         machine_props:
                             puzzles[level_map.level_id].machine_props,
                         scoreChart: puzzles[level_map.level_id].scoreChart,
-                        grade: progress.grade,
                         objective: puzzles[level_map.level_id].objective
                             ? puzzles[level_map.level_id].objective
                             : "Assign tasks to achieve the lowest total time.",
@@ -132,11 +149,14 @@ export default class LevelManager {
                         name: quizzes[level_map.level_id].name,
                         world_id: level_map.world_id,
                         completed: progress.completed,
+                        initial_grade: progress.initial_grade,
+                        latest_grade: progress.latest_grade,
+                        time_taken: progress.time_taken,
+                        num_attempts: progress.num_attempts,
                         type: "quiz",
                         questions: quizzes[level_map.level_id].questions,
                         choices: quizzes[level_map.level_id].choices,
                         correct: quizzes[level_map.level_id].correct,
-                        grade: progress.grade,
                         dialogue: quizzes[level_map.level_id].dialogue ?? null,
                     };
                     break;
@@ -154,31 +174,81 @@ export default class LevelManager {
         return this.scene.cache.json.get("worlds");
     }
 
-    private loadLevelProgress(level_id: number): {
-        completed: boolean;
-        grade: number;
+    private loadLevelProgress(level_id: number): { 
+        world_id: number;
+        type: string;
+        completed: boolean; 
+        initial_grade: number;
+        latest_grade: number;
+        time_taken: number;
+        num_attempts: number;
     } {
         return (
-            LocalStorageManager.loadData<{ completed: boolean; grade: number }>(
+            LocalStorageManager.loadData<{ 
+                world_id: number;
+                type: string;
+                completed: boolean; 
+                initial_grade: number;
+                latest_grade: number;
+                time_taken: number;
+                num_attempts: number;
+            }>(
                 level_id.toString()
-            ) ?? { completed: false, grade: 0 }
+            ) ?? { 
+                world_id: -1,
+                type: "none",
+                completed: false,
+                initial_grade: 0,
+                latest_grade: 0,
+                time_taken: 0,
+                num_attempts: 0
+            }
         );
+    }
+
+    public initialiseProgress(): void {
+        for (let level of this.levels) {
+            LocalStorageManager.saveData(level.id.toString(), {
+                world_id: level.world_id,
+                type: level.type,
+                completed: false,
+                initial_grade: 0,
+                latest_grade: 0,
+                time_taken: 0,
+                num_attempts: 0,
+            });
+        }
     }
 
     public saveLevelProgress(
         level_id: number,
-        completed: boolean,
-        grade: number
+        grade: number,
+        time_taken: number = 0,
     ): void {
-        LocalStorageManager.saveData(level_id.toString(), { completed, grade });
+        let level = this.levels[level_id];
 
-        this.levels[level_id].completed = completed;
-        if (
-            this.levels[level_id].type === "puzzle" ||
-            this.levels[level_id].type === "quiz"
-        ) {
-            this.levels[level_id].grade = grade;
+        level.completed = true;
+        
+        if (level.initial_grade === 0) {
+            level.initial_grade = grade;
         }
+        if (grade > level.latest_grade) {
+            level.latest_grade = grade;
+        }
+
+        level.num_attempts++;
+
+        LocalStorageManager.saveData(level_id.toString(), { 
+            world_id: level.world_id,
+            type: level.type, 
+            completed: level.completed, 
+            initial_grade: level.initial_grade,
+            latest_grade: level.latest_grade,
+            time_taken: level.time_taken + time_taken / 1000,
+            num_attempts: level.num_attempts
+        });
+
+        // console.log(LocalStorageManager.loadData(level_id.toString()));
     }
 
     // Getters
@@ -240,5 +310,14 @@ export default class LevelManager {
 
     public isNewPlayer(): boolean {
         return localStorage.length === 0; // Returns true if no keys are present
+    }
+
+    public allLevelsCompleted(): boolean { 
+        for (let level of this.levels) {
+            if (!level.completed) {
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -73,6 +73,9 @@ export default class TaskManager {
                     throw new Error(`Invalid task key: ${key}`);
                 }
             });
+
+            // Shuffle the task order
+            this.level.task_keys = this.level.task_keys.sort(() => Math.random() - 0.5);
         }
 
         // Validate Machines

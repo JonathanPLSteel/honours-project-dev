@@ -9,6 +9,7 @@ export class Tutorial extends Scene {
     private task_manager: TaskManager;
     private dialogue_manager: DialogueManager;
     private answers_manager: AnswersManager;
+    private start_time: number;
 
     constructor() {
         super("Tutorial");
@@ -20,6 +21,8 @@ export class Tutorial extends Scene {
         this.events.once("shutdown", this.onShutdown, this);
 
         this.dialogue_manager = new DialogueManager(this);
+
+        this.start_time = Date.now();
 
         this.launchLevel();
     }
@@ -67,6 +70,9 @@ export class Tutorial extends Scene {
     private onSubmit() {
         this.task_manager.destroy();
         this.answers_manager.destroy();
+
+        let end_time = Date.now();
+        this.level.time_taken = end_time - this.start_time;
 
         this.add.text(
             this.scale.width / 2,

@@ -1,6 +1,7 @@
 import { Scene } from "phaser";
 import LevelManager, { Level, World } from "../../managers/LevelManager";
 import DialogueManager from "../../managers/DialogueManager";
+import Button from "../../gameobjects/Button";
 
 export class LevelSelect extends Scene {
     private level_manager: LevelManager;
@@ -10,6 +11,7 @@ export class LevelSelect extends Scene {
     private level_buttons: Phaser.GameObjects.Container[] = [];
     private previousWorldButton: Phaser.GameObjects.Text;
     private nextWorldButton: Phaser.GameObjects.Text;
+    private finish_playthrough_button: Button;
 
     constructor() {
         super("LevelSelect");
@@ -19,15 +21,41 @@ export class LevelSelect extends Scene {
         this.level_manager = new LevelManager(this);
         this.current_world_id = 0;
 
+        this.finish_playthrough_button = new Button(
+            this,
+            this.scale.width / 2,
+            50,
+            0,
+            "Finish Playthrough",
+            async () => {
+                if (!this.level_manager.allLevelsCompleted()) {
+                    let confirmation = await this.confirmFinishPlaythrough();
+                    if (confirmation) {
+                        this.scene.start("EndScreen");
+                    }
+                } else {
+                    this.scene.start("EndScreen");
+                }
+            }
+        );
+
+        if (this.level_manager.allLevelsCompleted()) {
+            this.finish_playthrough_button.shake();
+        }
+
         if (data.level) {
             if (data.level.type === "puzzle") {
                 this.level_manager.saveLevelProgress(
                     data.level.id,
-                    true,
-                    data.level.grade
+                    data.level.latest_grade,
+                    data.level.time_taken,
                 );
             } else {
-                this.level_manager.saveLevelProgress(data.level.id, true, 0);
+                this.level_manager.saveLevelProgress(
+                    data.level.id, 
+                    0,
+                    data.level.time_taken,
+                );
             }
         }
 
@@ -159,7 +187,7 @@ export class LevelSelect extends Scene {
         level_button.add(text);
 
         if (level.type === "puzzle" && accessible) {
-            this.addStars(level.grade, level_button);
+            this.addStars(level.latest_grade, level_button);
         }
 
         this.level_buttons.push(level_button);
@@ -337,6 +365,62 @@ export class LevelSelect extends Scene {
                     this.nextWorldButton.setAlpha(1);
                 });
         }
+    }
+
+    private async confirmFinishPlaythrough(): Promise<boolean> {
+        return new Promise((resolve) => {
+            let confirm_box = this.add.rectangle(
+                this.scale.width / 2,
+                this.scale.height / 2,
+                this.scale.width * 0.7,
+                this.scale.height * 0.7,
+                0xffffff,
+                0.975
+            ).setOrigin(0.5);
+
+            let confirm_text = this.add.text(
+                this.scale.width / 2,
+                this.scale.height / 2 - 100,
+                "You haven't finished all the levels.\n\nAre you sure you want to finish the playthrough?",
+                {
+                    fontFamily: "WorkSansBold, Arial, sans-serif",
+                    fontSize: 32,
+                    color: "#000000",
+                    align: "center",
+                    wordWrap: { width: this.scale.width * 0.7 - 50 },
+                }
+            ).setOrigin(0.5);
+
+            let yes_button = new Button(
+                this,
+                this.scale.width / 2 - 150,
+                this.scale.height / 2 + 100,
+                0,
+                "Yes",
+                () => {
+                    confirm_box.destroy();
+                    confirm_text.destroy();
+                    yes_button.destroy();
+                    no_button.destroy();
+                    resolve(true);
+                }
+            );
+
+            let no_button = new Button(
+                this,
+                this.scale.width / 2 + 150,
+                this.scale.height / 2 + 100,
+                0,
+                "No",
+                () => {
+                    confirm_box.destroy();
+                    confirm_text.destroy();
+                    yes_button.destroy();
+                    no_button.destroy();
+                    resolve(false);
+                }
+            );
+        });
     }
 
     private reload() {
