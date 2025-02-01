@@ -6,6 +6,9 @@ export default class Button extends Phaser.GameObjects.Container {
     width: number;
     height: number;
 
+    min_width: number = 200;
+    min_height: number = 25;
+
     private background: Phaser.GameObjects.Rectangle;
     private textObject: Phaser.GameObjects.Text;
 
@@ -32,7 +35,12 @@ export default class Button extends Phaser.GameObjects.Container {
             color: '#000000',
         }).setOrigin(0.5);
 
-        this.background = this.scene.add.rectangle(0, 0, this.textObject.width * 1.25, this.textObject.height * 1.5, 0xffffff);
+        this.background = this.scene.add.rectangle(
+            0,
+            0, 
+            this.textObject.width * 1.25 < this.min_width ? this.min_width : this.textObject.width * 1.25, 
+            this.textObject.height * 1.5 < this.min_height ? this.min_height : this.textObject.height * 1.5, 
+            0xffffff);
         this.background.setStrokeStyle(2, 0x000000);
 
         // Add background and text to container
@@ -41,6 +49,7 @@ export default class Button extends Phaser.GameObjects.Container {
         // Make interactive
         this.width = this.background.width;
         this.height = this.background.height;
+
         this.setSize(this.width, this.height);
 
         this.setInteractive(new Phaser.Geom.Rectangle(0, 0, this.width, this.height), Phaser.Geom.Rectangle.Contains)

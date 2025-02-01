@@ -64,6 +64,10 @@ export default class LevelManager {
         this.scene = scene;
         this.levels = this.loadLevels();
         this.worlds = this.loadWorlds();
+
+        if (this.isNewPlayer()) {
+            this.initialiseProgress();
+        }
     }
 
     // Loaders
@@ -202,11 +206,24 @@ export default class LevelManager {
         );
     }
 
+    public initialiseProgress(): void {
+        for (let level of this.levels) {
+            LocalStorageManager.saveData(level.id.toString(), {
+                world_id: level.world_id,
+                type: level.type,
+                completed: false,
+                initial_grade: 0,
+                latest_grade: 0,
+                time_taken: 0,
+                num_attempts: 0,
+            });
+        }
+    }
+
     public saveLevelProgress(
         level_id: number,
         grade: number,
         time_taken: number = 0,
-        num_attempts: number = 0
     ): void {
         let level = this.levels[level_id];
 
@@ -219,6 +236,8 @@ export default class LevelManager {
             level.latest_grade = grade;
         }
 
+        level.num_attempts++;
+
         LocalStorageManager.saveData(level_id.toString(), { 
             world_id: level.world_id,
             type: level.type, 
@@ -226,7 +245,7 @@ export default class LevelManager {
             initial_grade: level.initial_grade,
             latest_grade: level.latest_grade,
             time_taken: level.time_taken + time_taken / 1000,
-            num_attempts: num_attempts++
+            num_attempts: level.num_attempts
         });
 
         // console.log(LocalStorageManager.loadData(level_id.toString()));

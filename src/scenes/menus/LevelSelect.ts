@@ -31,7 +31,6 @@ export class LevelSelect extends Scene {
                 if (!this.level_manager.allLevelsCompleted()) {
                     let confirmation = await this.confirmFinishPlaythrough();
                     if (confirmation) {
-                        console.log("Finish playthrough");
                         this.scene.start("EndScreen");
                     }
                 } else {
@@ -50,14 +49,12 @@ export class LevelSelect extends Scene {
                     data.level.id,
                     data.level.latest_grade,
                     data.level.time_taken,
-                    data.level.num_attempts
                 );
             } else {
                 this.level_manager.saveLevelProgress(
                     data.level.id, 
                     0,
                     data.level.time_taken,
-                    data.level.num_attempts
                 );
             }
         }
@@ -405,7 +402,6 @@ export class LevelSelect extends Scene {
                     confirm_text.destroy();
                     yes_button.destroy();
                     no_button.destroy();
-                    console.log("Finish playthrough");
                     resolve(true);
                 }
             );
