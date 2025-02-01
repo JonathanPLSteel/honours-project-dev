@@ -4,7 +4,6 @@ import LevelManager from "../../managers/LevelManager";
 export const version = "v3.0 (Beta)";
 
 export class MainMenu extends Scene {
-
     background: GameObjects.Image;
     logo: GameObjects.Image;
     title: GameObjects.Text;
@@ -16,7 +15,6 @@ export class MainMenu extends Scene {
     }
 
     create() {
-
         this.title = this.add
             .text(512, 300, "Task Scheduling Game", {
                 fontFamily: "WorkSansBold, Arial, sans-serif",
@@ -35,12 +33,15 @@ export class MainMenu extends Scene {
             })
             .setOrigin(0.5);
 
-        this.versionText = this.add
-            .text(10, 10, version, {
-                fontFamily: "WorkSansRegular, Arial, sans-serif",
-                fontSize: 20,
-                color: "#000000",
-            })
+        this.versionText = this.add.text(10, 10, version, {
+            fontFamily: "WorkSansRegular, Arial, sans-serif",
+            fontSize: 20,
+            color: "#000000",
+        });
+
+        let edi_logo = this.add.image(10, this.scale.height - 10, "edi-logo").setOrigin(0, 1);
+        
+        edi_logo.setDisplaySize(edi_logo.displayWidth * 0.25, edi_logo.displayHeight * 0.25);
 
         this.input.once("pointerdown", () => {
             this.sound.play("switch");

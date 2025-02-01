@@ -48,7 +48,9 @@ export class Preloader extends Scene
     private preloadImages() {
         this.load.setPath('assets/images');
 
-        // this.load.image('logo', 'logo.png');
+        this.load.image('edi-logo', 'edi-logo.png');
+
+
         this.load.image('task-med-bg', 'backgrounds/task-med-bg.png');
         this.load.image('task-small-bg', 'backgrounds/task-small-bg.png');
         this.load.image('machine-bg-1', 'backgrounds/machine-bg-1.png')
