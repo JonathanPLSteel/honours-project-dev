@@ -44,7 +44,7 @@ export class LevelSelect extends Scene {
         }
 
         if (data.level) {
-            if (data.level.type === "puzzle") {
+            if (data.level.type === "puzzle" || data.level.type === "quiz") {
                 this.level_manager.saveLevelProgress(
                     data.level.id,
                     data.level.latest_grade,
@@ -186,7 +186,7 @@ export class LevelSelect extends Scene {
         );
         level_button.add(text);
 
-        if (level.type === "puzzle" && accessible) {
+        if ((level.type === "puzzle" || level.type === "quiz") && accessible) {
             this.addStars(level.latest_grade, level_button);
         }
 

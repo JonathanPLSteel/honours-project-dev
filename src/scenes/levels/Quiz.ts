@@ -6,6 +6,8 @@ export class Quiz extends Scene {
     private level: QuizLevel;
     private answersManager: AnswersManager;
     private currentQuestionIndex: number;
+    private number_of_questions: number;
+    private question_scores: number[];
     private start_time: number;
 
     private questionText!: Phaser.GameObjects.Text;
@@ -17,6 +19,8 @@ export class Quiz extends Scene {
     create(data: { level: QuizLevel }) {
         this.level = data.level;
         this.currentQuestionIndex = 0;
+        this.number_of_questions = this.level.questions.length;
+        this.question_scores = Array(this.number_of_questions).fill(1);
 
         this.start_time = Date.now();
 
@@ -24,12 +28,19 @@ export class Quiz extends Scene {
     }
 
     private startQuiz() {
+
         this.displayQuestion(this.level.questions[this.currentQuestionIndex]);
         this.answersManager = new AnswersManager(
             this,
             this.level.choices[this.currentQuestionIndex],
             this.level.correct[this.currentQuestionIndex]
         );
+
+        this.events.on("wrongAnswer", () => {
+            // console.log("Received Wrong answer");
+            this.question_scores[this.currentQuestionIndex] = 0;
+            // console.log(`Index: ${this.currentQuestionIndex}, Scores: ${this.question_scores}`);
+        });
 
         this.events.on("correctAnswer", () => {
             this.events.off("correctAnswer");
@@ -43,6 +54,19 @@ export class Quiz extends Scene {
 
                 let end_time = Date.now();
                 this.level.time_taken = end_time - this.start_time;
+
+                let score = this.question_scores.reduce((a, b) => a + b, 0);
+                let scaled_score = score / this.number_of_questions;
+
+                if (scaled_score < 0.5) {
+                    this.level.latest_grade = 1;
+                } else if (scaled_score < 1) {
+                    this.level.latest_grade = 2;
+                } else {
+                    this.level.latest_grade = 3;
+                }
+
+                console.log(`Score: ${score} / ${this.number_of_questions} = ${scaled_score} -> ${this.level.latest_grade}`);
 
                 this.scene.start("LevelSelect", { level: this.level });
             }

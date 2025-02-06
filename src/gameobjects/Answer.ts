@@ -40,6 +40,7 @@ export default class Answer extends Phaser.GameObjects.Sprite {
                 this.scene.events.emit("correctAnswer");
             } else {
                 this.scene.sound.play("switch");
+                this.scene.events.emit("wrongAnswer");
                 this.setInteractive(false);
 
                 this.setTint(0xff0000);
