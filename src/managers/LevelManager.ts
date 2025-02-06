@@ -320,4 +320,16 @@ export default class LevelManager {
         }
         return true;
     }
+
+    public getStarCount(): {stars: number, total: number} {
+        let stars = 0;
+        let total = 0;
+        for (let level of this.levels) {
+            if (level.type === "puzzle" || level.type === "quiz") {
+                total += 3;
+                stars += level.latest_grade;
+            }
+        }
+        return {stars, total};
+    }
 }

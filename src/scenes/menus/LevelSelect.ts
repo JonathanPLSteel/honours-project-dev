@@ -76,6 +76,18 @@ export class LevelSelect extends Scene {
             this.current_world_id = last_unlocked_world_id;
             this.addLevelSelect();
         }
+
+        this.add.text(
+            this.scale.width - 10,
+            10,
+            `${this.level_manager.getStarCount().stars} / ${this.level_manager.getStarCount().total} ⭐️`,
+            {
+                fontFamily: "WorkSansBold, Arial, sans-serif",
+                fontSize: 32,
+                color: this.level_manager.getStarCount().stars === this.level_manager.getStarCount().total ? "#fcd22c" : "#000000",
+                align: "center",
+            }
+        ).setOrigin(1, 0);
     }
 
     private addLevelSelect() {
