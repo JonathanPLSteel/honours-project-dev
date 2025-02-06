@@ -41,10 +41,12 @@ export class SubmitScreen extends Scene {
             third_star.setTint(0x777777);
         }
 
+        let feedback = this.grade_to_text(this.level.latest_grade);
+
         this.grading_text = this.add.text(
             this.scale.width / 2,
             this.scale.height / 2 + 100,
-            `${this.grade_to_text(this.level.latest_grade)}!`,
+            `${feedback.word}!`,
             {
                 fontFamily: "WorkSansBold, Arial, sans-serif",
                 fontSize: 64,
@@ -54,19 +56,33 @@ export class SubmitScreen extends Scene {
         );
         this.grading_text.setOrigin(0.5);
 
+
+        let feedback_text = this.add.text(
+            this.scale.width / 2,
+            this.scale.height / 2 + 200,
+            feedback.feedback,
+            {
+                fontFamily: "WorkSansRegular, Arial, sans-serif",
+                fontSize: 24,
+                color: "#000000",
+                align: "center",
+                wordWrap: { width: 600 },
+            }
+        ).setOrigin(0.5);
+
         this.input.once("pointerdown", () => {
             this.sound.play("switch");
             this.scene.start("LevelSelect", { level: this.level });
         });
     }
 
-    private grade_to_text(grade: number): string {
+    private grade_to_text(grade: number): { word: string, feedback: string } {
         if (grade === 1) {
-            return "Good";
+            return {word: "Good Start", feedback: "But some tasks weren't placed optimally. The makespan could be lower..."};
         } else if (grade === 2) {
-            return "Excellent";
+            return {word: "Excellent", feedback: "This is almost perfect! A couple of tasks could be switched around to reduce the makespan..."};
         } else {
-            return "Perfect";
+            return {word: "Perfect", feedback: "You've found the optimal solution! Great job!"};
         }
     }
 }
