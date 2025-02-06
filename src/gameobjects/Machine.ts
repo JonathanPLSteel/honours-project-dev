@@ -93,7 +93,7 @@ export default class Machine extends Phaser.GameObjects.Container {
             this.name,
             {
                 fontFamily: "WorkSansBold, Arial, sans-serif",
-                fontSize: "18px",
+                fontSize: "22px",
                 color: this.rate_to_color[this.rate],
             }
         );
@@ -115,7 +115,7 @@ export default class Machine extends Phaser.GameObjects.Container {
             `${this.getAdjustedTotal()} minutes`,
             {
                 fontFamily: `${this.rate === 1 ? "WorkSansRegular" : "WorkSansSemiBold"}, Arial, sans-serif`,
-                fontSize: "16px",
+                fontSize: "24px",
                 color: this.rate_to_color[this.rate],
             }
         );
@@ -128,7 +128,7 @@ export default class Machine extends Phaser.GameObjects.Container {
             `${this.total}`,
             {
                 fontFamily: "WorkSansRegular, Arial, sans-serif",
-                fontSize: "16px",
+                fontSize: "20px",
                 color: "#444444",
             }
         );

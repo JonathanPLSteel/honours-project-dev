@@ -87,7 +87,7 @@ export default class Task extends Phaser.GameObjects.Sprite {
             this.name,
             {
                 fontFamily: "WorkSansBold, Arial, sans-serif",
-                fontSize: "18px",
+                fontSize: "20px",
                 color: "#000000",
             }
         );
@@ -103,7 +103,7 @@ export default class Task extends Phaser.GameObjects.Sprite {
             `${this.duration} minutes`,
             {
                 fontFamily: "WorkSansRegular, Arial, sans-serif",
-                fontSize: "14px",
+                fontSize: "16px",
                 color: "#000000",
             }
         );

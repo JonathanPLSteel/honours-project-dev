@@ -231,7 +231,7 @@ export default class TaskManager {
                 `${this.total_duration} minutes`,
                 {
                     fontFamily: "WorkSansBold, Arial, sans-serif",
-                    fontSize: "18px",
+                    fontSize: "24px",
                     color: "#000000",
                 }
             )

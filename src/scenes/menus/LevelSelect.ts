@@ -282,7 +282,7 @@ export class LevelSelect extends Scene {
                 .text(
                     10,
                     this.scale.height - 40,
-                    `<- ${this.level_manager.getWorld(previousWorldID).name}`,
+                    `⬅️ ${this.level_manager.getWorld(previousWorldID).name}`,
                     {
                         fontFamily: "WorkSansBold, Arial, sans-serif",
                         fontSize: 32,
@@ -328,7 +328,7 @@ export class LevelSelect extends Scene {
                 .text(
                     this.scale.width - 10,
                     this.scale.height - 40,
-                    `${this.level_manager.getWorld(nextWorldID).name} ->`,
+                    `${this.level_manager.getWorld(nextWorldID).name} ➡️`,
                     {
                         fontFamily: "WorkSansBold, Arial, sans-serif",
                         fontSize: 32,
