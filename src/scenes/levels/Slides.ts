@@ -73,6 +73,8 @@ export class Slides extends Scene {
     private nextSlide() {
         this.slide_number++;
 
+        this.sound.play("switch");
+
         if (
             this.textures.exists(
                 `${this.level.world_path}-slide-${this.slide_number}`
