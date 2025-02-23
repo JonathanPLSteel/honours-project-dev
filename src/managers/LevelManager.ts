@@ -11,12 +11,19 @@ export interface BaseLevel {
     latest_grade: number;
     time_taken: number;
     num_attempts: number;
-    type: "cutscene" | "tutorial" | "puzzle" | "quiz";
+    type: "cutscene" | "slides" | "tutorial" | "puzzle" | "quiz";
 }
 
 export interface CutsceneLevel extends BaseLevel {
     type: "cutscene";
     cutscene_key: string;
+}
+
+export interface SlidesLevel extends BaseLevel {
+    type: "slides";
+    world_path: string;
+    number_of_slides: number;
+    subtitles: string[];
 }
 
 export interface TutorialLevel extends BaseLevel {
@@ -48,7 +55,7 @@ export interface QuizLevel extends BaseLevel {
     dialogue?: Dialogue;
 }
 
-export type Level = CutsceneLevel | TutorialLevel | PuzzleLevel | QuizLevel;
+export type Level = CutsceneLevel | SlidesLevel | TutorialLevel | PuzzleLevel | QuizLevel;
 
 export interface World {
     id: number;
@@ -75,13 +82,16 @@ export default class LevelManager {
         let levels: Level[] = [];
         let json_levels_map = this.scene.cache.json.get("levels");
         let cutscenes = this.scene.cache.json.get("cutscenes");
+        let slides = this.scene.cache.json.get("slides");
         let tutorials = this.scene.cache.json.get("tutorials");
         let puzzles = this.scene.cache.json.get("puzzles");
         let quizzes = this.scene.cache.json.get("quizzes");
 
         for (let level_map of json_levels_map) {
             let level: Level;
+
             let progress = this.loadLevelProgress(level_map.id);
+
             switch (level_map.level_type) {
                 case "cutscene":
                     level = {
@@ -95,6 +105,22 @@ export default class LevelManager {
                         num_attempts: progress.num_attempts,
                         type: "cutscene",
                         cutscene_key: cutscenes[level_map.level_id].cutscene_key,
+                    };
+                    break;
+                case "slides":
+                    level = {
+                        id: level_map.id,
+                        name: slides[level_map.level_id].name,
+                        world_id: level_map.world_id,
+                        completed: progress.completed,
+                        initial_grade: progress.initial_grade,
+                        latest_grade: progress.latest_grade,
+                        time_taken: progress.time_taken,
+                        num_attempts: progress.num_attempts,
+                        type: "slides",
+                        world_path: slides[level_map.level_id].world_path,
+                        number_of_slides: slides[level_map.level_id].number_of_slides,
+                        subtitles: slides[level_map.level_id].subtitles,
                     };
                     break;
                 case "tutorial":

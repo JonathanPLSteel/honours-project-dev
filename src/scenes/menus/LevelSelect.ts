@@ -267,6 +267,9 @@ export class LevelSelect extends Scene {
             case "cutscene":
                 this.scene.start("Cutscene", { level: level });
                 break;
+            case "slides":
+                this.scene.start("Slides", { level: level });
+                break;
             case "tutorial":
                 this.scene.start("Tutorial", { level: level });
                 break;

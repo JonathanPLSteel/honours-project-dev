@@ -31,6 +31,7 @@ export class Preloader extends Scene
     {
         //  Load the assets for the game - Replace with your own assets
         this.preloadImages();
+        this.preloadSlides();
         this.preloadAudio();
         this.preloadFonts();
         this.preloadData();  
@@ -82,6 +83,20 @@ export class Preloader extends Scene
         this.load.image('star', 'star.png')
     }
 
+    private preloadSlides() {
+        this.load.setPath('assets/slides');
+
+        let world_paths = ["world-1", "world-2", "world-3"];
+        let number_of_slides = [7, 0, 0];
+
+        for (let world_path of world_paths) {
+            let num_slides = number_of_slides[world_paths.indexOf(world_path)];
+            for (let i = 1; i <= num_slides; i++) {
+                this.load.image(`${world_path}-slide-${i}`, `${world_path}/Slide${i}.jpeg`);
+            }
+        }
+    }
+
     private preloadAudio() {
         this.load.setPath('assets/audio');
 
@@ -108,6 +123,7 @@ export class Preloader extends Scene
 
         this.load.json("levels", "levels.json");
         this.load.json("cutscenes", "cutscenes.json");
+        this.load.json("slides", "slides.json");
         this.load.json("tutorials", "tutorials.json");
         this.load.json("puzzles", "puzzles.json");
         this.load.json("quizzes", "quizzes.json");

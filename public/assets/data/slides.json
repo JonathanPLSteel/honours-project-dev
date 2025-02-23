@@ -1,0 +1,17 @@
+[
+    {
+        "id": 0,
+        "name": "World 1 Introduction",
+        "world_path": "world-1",
+        "number_of_slides": 7,
+        "subtitles": [
+            "Welcome to the world of coding!",
+            "In this world, you will learn the basics of coding.",
+            "You will learn how to write code to solve puzzles.",
+            "You will also learn how to write code to create your own games.",
+            "Let's get started!",
+            "Click the next button to continue.",
+            "Good luck!"
+        ]
+    }
+]

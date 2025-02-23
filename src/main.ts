@@ -11,6 +11,7 @@ import { Tutorial } from './scenes/levels/Tutorial';
 import { Puzzle } from './scenes/levels/Puzzle';
 import { Quiz } from './scenes/levels/Quiz';
 import { EndScreen } from './scenes/splashes/EndScreen';
+import { Slides } from './scenes/levels/Slides';
 
 //  Find out more information about the Game Config at:
 //  https://newdocs.phaser.io/docs/3.86.0/Phaser.Types.Core.GameConfig
@@ -32,6 +33,7 @@ const config: Types.Core.GameConfig = {
         SubmitScreen,
         LevelSelect,
         Cutscene,
+        Slides,
         Tutorial,
         Puzzle,
         Quiz,
