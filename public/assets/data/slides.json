@@ -5,13 +5,13 @@
         "world_path": "world-1",
         "number_of_slides": 7,
         "subtitles": [
-            "Welcome to the world of coding!",
-            "In this world, you will learn the basics of coding.",
-            "You will learn how to write code to solve puzzles.",
-            "You will also learn how to write code to create your own games.",
-            "Let's get started!",
-            "Click the next button to continue.",
-            "Good luck!"
+            "In this example, there are 4 tasks and 2 machines.",
+            "We can schedule a task on to a machine. Here Machine 1 will take 30 mins to complete a 30 mins task.",
+            "If we schedule Machine 2 a 10 mins task... it will take 10 mins to complete it.",
+            "The total time for both machines to complete their tasks is 30 mins, because they work simulatenously, so the machine with the longest time determines the total time. The total time is called the makespan.",
+            "Now if we schedule Machine 1 the 25 mins task, it will take 30 + 25 = 55 mins to complete both tasks. So the makespan is now 55 mins.",
+            "Notice that scheduling Machine 2 the 10 mins task does not change the makespan, because Machine 1 still has the longest duration.",
+            "55 mins is not the minimum makespan... swapping the 25 and 10 mins task will reduce the makespan to 40 mins which is the smallest possible makespan. Check it if you don't believe me!"
         ]
     }
 ]

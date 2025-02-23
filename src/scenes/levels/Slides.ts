@@ -44,7 +44,7 @@ export class Slides extends Scene {
                     color: "#000000",
                     align: "center",
                     wordWrap: {
-                        width: this.scale.width * 0.6,
+                        width: this.scale.width * 0.85,
                         useAdvancedWrap: true,
                     },
                 }
