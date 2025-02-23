@@ -76,6 +76,7 @@ export class Preloader extends Scene
         this.load.image('completed', 'levels/completed.png')
         this.load.image('locked', 'levels/locked.png')
         this.load.image('cutscene', 'levels/cutscene.png')
+        this.load.image('slides', 'levels/slides.png')
         this.load.image('puzzle', 'levels/puzzle.png')
         this.load.image('tutorial', 'levels/tutorial.png')
         this.load.image('quiz', 'levels/quiz.png')
