@@ -54,7 +54,7 @@ export default class TaskManager {
     private total_duration_text!: Phaser.GameObjects.Text;
     private submit_button!: Button;
     private greedy_button!: Button;
-    private complete_greedy_button!: Button;
+    private exhaustive_search_button!: Button;
 
     constructor(
         scene: Phaser.Scene,
@@ -253,15 +253,15 @@ export default class TaskManager {
                     .setVisible(true)
                     .setInteractive();
             }
-            if (this.level.complete_greedy) {
-                this.complete_greedy_button = new Button(
+            if (this.level.exhaustive_search) {
+                this.exhaustive_search_button = new Button(
                     this.scene,
                     this.machine_dims[this.numMachines][this.numMachines - 1].x,
                     this.total_duration_text.y,
                     0,
-                    "Complete Greedy Algorithm",
+                    "Exhaustive Search Algorithm",
                     () => {
-                        this.completeGreedyAlgorithm();
+                        this.exhaustiveSearchAlgorithm();
                     },
                     0xD69EFF
                 )
@@ -452,9 +452,10 @@ export default class TaskManager {
         this.partitionTasks(partition);
     }
 
-    private completeGreedyAlgorithm() {
+    private exhaustiveSearchAlgorithm() {
         let algoTasks = this.tasksToAlgoTasks();
 
+        // This algorithm was initially called "Complete Greedy".
         let greedyResult = complete_greedy(algoTasks, this.numMachines);
 
         let partition = greedyResult.partition;
@@ -494,11 +495,11 @@ export default class TaskManager {
                 }
             }
 
-            if (this.level.complete_greedy && this.complete_greedy_button.active) {
+            if (this.level.exhaustive_search && this.exhaustive_search_button.active) {
                 if (this.machines.every((machine) => machine.tasksCount === 0)) {
-                    this.complete_greedy_button.setVisible(true).setInteractive();
+                    this.exhaustive_search_button.setVisible(true).setInteractive();
                 } else {
-                    this.complete_greedy_button.setVisible(false).disableInteractive();
+                    this.exhaustive_search_button.setVisible(false).disableInteractive();
                 }
             }
         }

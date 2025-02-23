@@ -43,7 +43,7 @@ export interface PuzzleLevel extends BaseLevel {
     scoreChart: number[];
     objective: string;
     greedy?: boolean;
-    complete_greedy?: boolean;
+    exhaustive_search?: boolean;
     dialogue?: Dialogue;
 }
 
@@ -164,7 +164,7 @@ export default class LevelManager {
                             ? puzzles[level_map.level_id].objective
                             : "Assign tasks to achieve the lowest total time.",
                         greedy: puzzles[level_map.level_id].greedy ?? false,
-                        complete_greedy:
+                        exhaustive_search:
                             puzzles[level_map.level_id].complete_greedy ?? false,
                         dialogue: puzzles[level_map.level_id].dialogue ?? null,
                     };
