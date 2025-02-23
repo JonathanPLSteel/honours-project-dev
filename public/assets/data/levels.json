@@ -85,7 +85,7 @@
     },
     {
         "id": 14,
-        "level_type": "cutscene",
+        "level_type": "slides",
         "level_id": 2,
         "world_id": 2
     },
@@ -109,7 +109,7 @@
     },
     {
         "id": 18,
-        "level_type": "cutscene",
+        "level_type": "slides",
         "level_id": 3,
         "world_id": 2
     },
