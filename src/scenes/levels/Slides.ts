@@ -21,17 +21,13 @@ export class Slides extends Scene {
 
         this.slide_number = 1;
 
-        console.log(this.level);
-
         this.slide = this.add
             .image(
                 this.scale.width / 2,
-                this.scale.height / 2 - 75,
+                this.scale.height / 2 - 100,
                 `${this.level.world_path}-slide-${this.slide_number}`
             )
             .setOrigin(0.5);
-
-        console.log(this.level.subtitles);
 
         this.slide_text = this.add
             .text(
@@ -85,7 +81,7 @@ export class Slides extends Scene {
             this.slide = this.add
                 .image(
                     this.scale.width / 2,
-                    this.scale.height / 2 - 75,
+                    this.scale.height / 2 - 100,
                     `${this.level.world_path}-slide-${this.slide_number}`
                 )
                 .setOrigin(0.5);

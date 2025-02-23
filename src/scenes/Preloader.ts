@@ -87,7 +87,7 @@ export class Preloader extends Scene
         this.load.setPath('assets/slides');
 
         let world_paths = ["world-1", "world-2", "world-3"];
-        let number_of_slides = [7, 0, 0];
+        let number_of_slides = [7, 3, 0];
 
         for (let world_path of world_paths) {
             let num_slides = number_of_slides[world_paths.indexOf(world_path)];

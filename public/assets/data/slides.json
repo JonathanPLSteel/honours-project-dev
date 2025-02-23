@@ -13,5 +13,16 @@
             "Notice that scheduling Machine 2 the 10 mins task does not change the makespan, because Machine 1 still has the longest duration.",
             "55 mins is not the minimum makespan... swapping the 25 and 10 mins task will reduce the makespan to 40 mins which is the smallest possible makespan. Check it if you don't believe me!"
         ]
+    },
+    {
+        "id": 1,
+        "name": "World 2 Introduction",
+        "world_path": "world-2",
+        "number_of_slides": 3,
+        "subtitles": [
+            "So far we have done homogeneous task scheduling, where all the machines have the same speed (homo- meaning \"same\" in Ancient Greek).",
+            "Now we move onto heterogeneous task scheduling, where some machines are faster than others (hetero- meaning \"different\" in Ancient Greek). Now Machine 1 completes tasks at 1.25x speed so now takes 32 mins to complete 40 mins of tasks (40 / 1.25 = 32).",
+            "If we move a 10 mins task in to Machine 1 the total duration of the tasks is 50 mins but Machine 1 completes them in 50 / 1.25 = 40 mins."
+        ]
     }
 ]
