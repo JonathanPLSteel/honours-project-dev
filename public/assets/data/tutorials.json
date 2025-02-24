@@ -10,8 +10,8 @@
                 "task_keys": ["carrots", "roast-chicken", "roast-potatoes"]
             },
             {
-                "name": "Chef Julian",
-                "icon_key": "chef-julian",
+                "name": "Chef Elliott",
+                "icon_key": "chef-elliott",
                 "rate": 1,
                 "task_keys": ["green-beans"]
             }
@@ -88,14 +88,14 @@
                 "task_keys": ["roast-chicken"]
             },
             {
-                "name": "Chef Julian",
-                "icon_key": "chef-julian",
+                "name": "Chef Elliott",
+                "icon_key": "chef-elliott",
                 "rate": 1,
                 "task_keys": ["roast-potatoes", "green-beans"]
             }
         ],
         "hidden_elements": [],
-        "choices": ["Chef Jonathan", "Chef Julian"],
+        "choices": ["Chef Jonathan", "Chef Elliott"],
         "correct": 0,
         "objective": "Where would the Greedy Algorithm place the Carrots?",
         "dialogue": {
