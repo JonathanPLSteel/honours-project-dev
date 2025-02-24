@@ -1,17 +1,22 @@
 [
     {
         "id": 0,
-        "name": "World 1 Introduction Video",
+        "name": "World 1 Intro",
         "cutscene_key": "world-1-video"
     },
     {
         "id": 1,
-        "name": "World 2 Introduction Video",
+        "name": "World 2 Intro",
         "cutscene_key": "world-2-video"
     },
     {
         "id": 2,
-        "name": "World 3 Introduction Video",
-        "cutscene_key": "test_video"
+        "name": "World 3 Intro Part 1",
+        "cutscene_key": "world-3-video-part-1"
+    },
+    {
+        "id": 3,
+        "name": "World 3 Intro Part 2",
+        "cutscene_key": "world-3-video-part-2"
     }
 ]

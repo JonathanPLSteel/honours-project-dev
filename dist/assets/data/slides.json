@@ -1,0 +1,61 @@
+[
+    {
+        "id": 0,
+        "name": "World 1 Intro",
+        "world_path": "world-1",
+        "number_of_slides": 7,
+        "subtitles": [
+            "In this example, there are 4 tasks and 2 machines.",
+            "We can schedule a task on to a machine. Here Machine 1 will take 30 mins to complete a 30 mins task.",
+            "If we schedule Machine 2 a 10 mins task... it will take 10 mins to complete it.",
+            "The total time for both machines to complete their tasks is 30 mins, because they work simulatenously, so the machine with the longest time determines the total time. The total time is called the makespan.",
+            "Now if we schedule Machine 1 the 25 mins task, it will take 30 + 25 = 55 mins to complete both tasks. So the makespan is now 55 mins.",
+            "Notice that scheduling Machine 2 the 10 mins task does not change the makespan, because Machine 1 still has the longest duration.",
+            "55 mins is not the minimum makespan... swapping the 25 and 10 mins task will reduce the makespan to 40 mins which is the smallest possible makespan. Check it if you don't believe me!"
+        ]
+    },
+    {
+        "id": 1,
+        "name": "World 2 Intro",
+        "world_path": "world-2",
+        "number_of_slides": 3,
+        "subtitles": [
+            "So far we have done homogeneous task scheduling, where all the machines have the same speed (homo- meaning \"same\" in Ancient Greek).",
+            "Now we move onto heterogeneous task scheduling, where some machines are faster than others (hetero- meaning \"different\" in Ancient Greek). Now Machine 1 completes tasks at 1.25x speed so now takes 32 mins to complete 40 mins of tasks (40 / 1.25 = 32).",
+            "If we move a 10 mins task in to Machine 1 the total duration of the tasks is 50 mins but Machine 1 completes them in 50 / 1.25 = 40 mins."
+        ]
+    },
+    {
+        "id": 2,
+        "name": "World 3 Part 1 Intro",
+        "world_path": "world-3-part-1",
+        "number_of_slides": 9,
+        "subtitles": [
+            "We can use algorithms (sets of instructions) to find the minimum makespan. This is how the Greedy Algorithm works...",
+            "The greedy algorithm simply repeats 2 steps until all tasks are scheduled. Step 1: Find the largest unscheduled task (30 mins)",
+            "Step 2: Allocate that task to the machine with smallest duration (in this case either M1 or M2).",
+            "Now we repeat. Step 1: Find the largest unscheduled task (25 mins)",
+            "Step 2: Allocate that task to the machine with smallest duration (in this case M2).",
+            "Step 1: Find the largest unscheduled task (10 mins)",
+            "Step 2: Allocate that task to the machine with smallest duration (in this case M2).",
+            "Step 1: Only one task left.",
+            "Step 2: Allocate that task to the machine with smallest duration (in this case M1). Now we have found the smallest makespan!"
+        ]
+    },
+    {
+        "id": 3,
+        "name": "World 3 Part 2 Intro",
+        "world_path": "world-3-part-2",
+        "number_of_slides": 8,
+        "subtitles": [
+            "So the greedy algorithm didn't find the smallest makespan in the last puzzle! Let's try a different algorithm called the Exhaustive Search Algorithm.",
+            "This algorithm tries every possible combination of tasks to find the smallest makespan.",
+            "First it tries this combination of tasks...",
+            "As this is the only combination it has tried, it remembers this as the smallest makespan. It does this by storing the makespan (55 mins) and the combination of tasks (30 | 25 & 10 | 10) that made it.",
+            "Now it tries a new combination...",
+            "This combination has a smaller makespan (40 mins) so it updates the smallest makespan to 40 mins and the combination of tasks to (30 | 10 & 25 | 10).",
+            "For these four tasks and these two machines, these are all the possible combinations that the algorithm has to test. This takes a longer time than the greedy approach!",
+            "After it has tested all combinations, it finds that there is no better combination than the one it found earlier. So it stops."
+        ]
+    }
+]

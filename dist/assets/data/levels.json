@@ -1,7 +1,7 @@
 [
     {
         "id": 0,
-        "level_type": "cutscene",
+        "level_type": "slides",
         "level_id": 0,
         "world_id": 0
     },
@@ -43,7 +43,7 @@
     },
     {
         "id": 7,
-        "level_type": "cutscene",
+        "level_type": "slides",
         "level_id": 1,
         "world_id": 1
     },
@@ -85,30 +85,42 @@
     },
     {
         "id": 14,
+        "level_type": "slides",
+        "level_id": 2,
+        "world_id": 2
+    },
+    {
+        "id": 15,
         "level_type": "puzzle",
         "level_id": 7,
         "world_id": 2
     },
     {
-        "id": 15,
+        "id": 16,
         "level_type": "tutorial",
         "level_id": 3,
         "world_id": 2
     },
     {
-        "id": 16,
+        "id": 17,
         "level_type": "puzzle",
         "level_id": 8,
         "world_id": 2
     },
     {
-        "id": 17,
+        "id": 18,
+        "level_type": "slides",
+        "level_id": 3,
+        "world_id": 2
+    },
+    {
+        "id": 19,
         "level_type": "puzzle",
         "level_id": 9,
         "world_id": 2
     },
     {
-        "id": 18,
+        "id": 20,
         "level_type": "quiz",
         "level_id": 2,
         "world_id": 2
