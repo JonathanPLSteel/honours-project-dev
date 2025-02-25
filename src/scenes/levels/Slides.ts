@@ -64,6 +64,14 @@ export class Slides extends Scene {
         this.input.on("pointerdown", () => {
             this.nextSlide();
         });
+
+        this.input.keyboard?.on("keydown-SPACE", () => {
+            this.nextSlide();
+        });
+
+        this.input.keyboard?.on("keydown-RIGHT", () => {
+            this.nextSlide();
+        });
     }
 
     private nextSlide() {
