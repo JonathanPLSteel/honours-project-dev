@@ -23,20 +23,44 @@ export default class Answer extends Phaser.GameObjects.Sprite {
         this.setOrigin(0.5, 0.5);
         this.setDisplaySize(width, height);
 
-        this.answerText = this.scene.add.text(this.x, this.y, text, {
-            fontFamily: "WorkSansBold, Arial, sans-serif",
-            fontSize: 22,
-            color: "#000000",
-            align: "center",
-            wordWrap: { width: this.displayWidth * 0.9 },
-        }).setOrigin(0.5);
+        this.answerText = this.scene.add
+            .text(this.x, this.y, text, {
+                fontFamily: "WorkSansBold, Arial, sans-serif",
+                fontSize: 22,
+                color: "#000000",
+                align: "center",
+                wordWrap: { width: this.displayWidth * 0.9 },
+            })
+            .setOrigin(0.5);
 
         this.setInteractive();
 
         this.on("pointerdown", () => {
-            
             if (this.correct) {
                 this.scene.sound.play("success");
+
+                const flash = this.scene.add
+                    .rectangle(
+                        this.scene.scale.width / 2,
+                        this.scene.scale.height / 2,
+                        this.scene.scale.width,
+                        this.scene.scale.height,
+                        0x00ff00 
+                    )
+                    .setOrigin(0.5)
+                    .setAlpha(0);
+
+                // Animate flash effect
+                this.scene.tweens.add({
+                    targets: flash,
+                    alpha: { from: 0.8, to: 0 },
+                    duration: 300,
+                    ease: "Linear",
+                    onComplete: () => {
+                        flash.destroy();
+                    },
+                });
+
                 this.scene.events.emit("correctAnswer");
             } else {
                 this.scene.sound.play("switch");
@@ -52,7 +76,7 @@ export default class Answer extends Phaser.GameObjects.Sprite {
                     ease: "Linear", // Linear easing for a smooth fade-out
                     onComplete: () => {
                         this.setVisible(false);
-                    }
+                    },
                 });
 
                 this.scene.tweens.add({
@@ -62,7 +86,7 @@ export default class Answer extends Phaser.GameObjects.Sprite {
                     ease: "Linear", // Linear easing for a smooth fade-out
                     onComplete: () => {
                         this.setVisible(false);
-                    }
+                    },
                 });
             }
         });
