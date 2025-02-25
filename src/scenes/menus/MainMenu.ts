@@ -1,7 +1,7 @@
 import { Scene, GameObjects } from "phaser";
 import LevelManager from "../../managers/LevelManager";
 
-export const version = "v3.1 (Edition A) (Beta)";
+export const version = "v3.2 (Edition A) (Beta)";
 
 export class MainMenu extends Scene {
     background: GameObjects.Image;
