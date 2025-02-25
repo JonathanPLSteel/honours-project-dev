@@ -51,14 +51,14 @@
         "name": "Quiz",
         "questions": [
             "How often does the greedy algorithm find the optimal solution?",
-            "How often does the complete greedy algorithm find the optimal solution?",
+            "How often does the exhaustive search algorithm find the optimal solution?",
             "Which of these algorithms runs the fastest?",
-            "Why does the greedy algorithm run faster than the complete greedy algorithm?"
+            "Why does the greedy algorithm run faster than the exhaustive search algorithm?"
         ],
         "choices": [
             ["Always", "Never", "Sometimes"],
             ["Always", "Never", "Sometimes"],
-            ["Greedy", "Complete Greedy", "They run at the same speed"],
+            ["Greedy", "Exhaustive Search", "They run at the same speed"],
             ["It has less lines of code", "It is less complex", "It tests less solutions", "It is more complex"]
         ],
         "correct": [

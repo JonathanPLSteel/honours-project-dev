@@ -252,6 +252,7 @@ export default class TaskManager {
                 )
                     .setVisible(true)
                     .setInteractive();
+                this.greedy_button.shake();
             }
             if (this.level.exhaustive_search) {
                 this.exhaustive_search_button = new Button(
@@ -267,6 +268,7 @@ export default class TaskManager {
                 )
                     .setVisible(true)
                     .setInteractive();
+                this.exhaustive_search_button.shake();
             }
         }
     }
