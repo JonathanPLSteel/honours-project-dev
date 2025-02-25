@@ -128,7 +128,7 @@ export default class Machine extends Phaser.GameObjects.Container {
             `${this.total}`,
             {
                 fontFamily: "WorkSansRegular, Arial, sans-serif",
-                fontSize: "20px",
+                fontSize: "24px",
                 color: "#444444",
             }
         );
