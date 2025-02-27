@@ -13,6 +13,7 @@ export default class DialogueManager {
     private dialogueBox: Phaser.GameObjects.Rectangle;
     private dialogueIcon: Phaser.GameObjects.Image;
     private dialogueText: Phaser.GameObjects.Text;
+    private dialogueGuide: Phaser.GameObjects.Text;
     private nameBox: Phaser.GameObjects.Rectangle;
     private nameText: Phaser.GameObjects.Text;
 
@@ -65,6 +66,17 @@ export default class DialogueManager {
         );
         this.dialogueText.setOrigin(0, 0.5);
 
+        this.dialogueGuide = this.scene.add.text(
+            this.dialogueBox.x + 25,
+            this.dialogueBox.y + this.dialogueBox.height * 0.85,
+            "Click to continue",
+            {
+                fontSize: "16px",
+                fontFamily: "WorkSansRegular, Arial, sans-serif",
+                color: "#000000",
+            }
+        ).setOrigin(0, 0.5);
+
         this.nameBox = this.scene.add.rectangle(
             this.dialogueBox.x + 12.5,
             this.dialogueBox.y - 25,
@@ -94,6 +106,7 @@ export default class DialogueManager {
         if (this.dialogueBox) this.dialogueBox.destroy();
         if (this.dialogueIcon) this.dialogueIcon.destroy();
         if (this.dialogueText) this.dialogueText.destroy();
+        if (this.dialogueGuide) this.dialogueGuide.destroy();
         if (this.nameBox) this.nameBox.destroy();
         if (this.nameText) this.nameText.destroy();
 
