@@ -69,9 +69,34 @@ export class Slides extends Scene {
             this.nextSlide();
         });
 
+        this.input.keyboard?.on("keydown-LEFT", () => {
+            this.previousSlide();
+        });
+
         this.input.keyboard?.on("keydown-RIGHT", () => {
             this.nextSlide();
         });
+    }
+
+    private previousSlide() {
+        this.sound.play("switch");
+
+        if (this.slide_number > 1) {
+            this.slide_number--;
+
+            this.slide.destroy();
+
+            this.slide = this.add
+                .image(
+                    this.scale.width / 2,
+                    this.scale.height / 2 - 100,
+                    `${this.level.world_path}-slide-${this.slide_number}`
+                )
+                .setOrigin(0.5);
+            this.slide_text.text =
+                this.level.subtitles?.[this.slide_number - 1] ?? "...";
+            this.slide_number_text.text = `Slide ${this.slide_number} / ${this.level.number_of_slides}`;
+        }
     }
 
     private nextSlide() {
