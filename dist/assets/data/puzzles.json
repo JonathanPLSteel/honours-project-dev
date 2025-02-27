@@ -169,7 +169,7 @@
     },
     {
         "id": 8,
-        "name": "Level 2",
+        "name": "Level 2 Part 1",
         "task_keys": ["roast-chicken", "roast-potatoes", "carrots", "green-beans", "carrots"],
         "machine_props": [
             {
@@ -188,7 +188,7 @@
     },
     {
         "id": 9,
-        "name": "Level 3",
+        "name": "Level 2 Part 2",
         "task_keys": ["roast-chicken", "roast-potatoes", "carrots", "green-beans", "carrots"],
         "machine_props": [
             {

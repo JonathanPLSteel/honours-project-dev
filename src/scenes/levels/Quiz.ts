@@ -76,14 +76,14 @@ export class Quiz extends Scene {
     private displayQuestion(text: string) {
         this.questionText = this.add.text(
             this.scale.width / 2,
-            100,
+            this.scale.height * 0.4,
             text,
             {
-                fontFamily: "WorkSansBold, Arial, sans-serif",
-                fontSize: 28,
+                fontFamily: "WorkSansRegular, Arial, sans-serif",
+                fontSize: "36px",
                 color: "#000000",
                 align: "center",
-                wordWrap: { width: this.scale.width * 0.9 },
+                wordWrap: { width: this.scale.width * 0.85 },
             }
         ).setOrigin(0.5);
     }

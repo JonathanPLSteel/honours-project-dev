@@ -59,7 +59,7 @@
             ["Always", "Never", "Sometimes"],
             ["Always", "Never", "Sometimes"],
             ["Greedy", "Exhaustive Search", "They run at the same speed"],
-            ["It has less lines of code", "It is less complex", "It tests less solutions", "It is more complex"]
+            ["It has less lines of code", "It is less complex", "It tests fewer solutions", "It is more complex"]
         ],
         "correct": [
             2,

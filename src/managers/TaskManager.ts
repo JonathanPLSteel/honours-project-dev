@@ -332,11 +332,11 @@ export default class TaskManager {
             .text(
                 this.scene.scale.width * 0.5,
                 this.machine_dims[this.numMachines][0].y +
-                    this.machine_dims[this.numMachines][0].height * 0.6,
+                    this.machine_dims[this.numMachines][0].height * 0.55,
                 `${this.total_duration} minutes`,
                 {
                     fontFamily: "WorkSansBold, Arial, sans-serif",
-                    fontSize: "18px",
+                    fontSize: "24px",
                     color: "#000000",
                 }
             )
