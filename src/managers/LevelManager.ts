@@ -262,6 +262,10 @@ export default class LevelManager {
             level.latest_grade = grade;
         }
 
+        if (time_taken != 0) {
+            level.time_taken = time_taken / 1000;
+        }
+
         level.num_attempts++;
 
         LocalStorageManager.saveData(level_id.toString(), { 
@@ -270,7 +274,7 @@ export default class LevelManager {
             completed: level.completed, 
             initial_grade: level.initial_grade,
             latest_grade: level.latest_grade,
-            time_taken: level.time_taken + time_taken / 1000,
+            time_taken: level.time_taken,
             num_attempts: level.num_attempts
         });
 
