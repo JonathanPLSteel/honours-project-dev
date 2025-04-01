@@ -66,7 +66,7 @@ export class Quiz extends Scene {
                     this.level.latest_grade = 3;
                 }
 
-                console.log(`Score: ${score} / ${this.number_of_questions} = ${scaled_score} -> ${this.level.latest_grade}`);
+                // console.log(`Score: ${score} / ${this.number_of_questions} = ${scaled_score} -> ${this.level.latest_grade}`);
 
                 this.scene.start("LevelSelect", { level: this.level });
             }

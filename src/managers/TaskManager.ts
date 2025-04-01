@@ -418,7 +418,6 @@ export default class TaskManager {
 
     public triggerExits(total_duration: number) {
         this.tasks.forEach((task, index) => {
-            console.log()
             this.scene.time.delayedCall((total_duration / this.tasks.length) * index, () => {
                 task.exitAnimation(total_duration / this.tasks.length);
             });
@@ -449,7 +448,7 @@ export default class TaskManager {
 
         let partition = greedyResult.partition;
 
-        console.log(partition);
+        // console.log(partition);
 
         this.partitionTasks(partition);
     }
@@ -462,7 +461,7 @@ export default class TaskManager {
 
         let partition = greedyResult.partition;
 
-        console.log(partition);
+        // console.log(partition);
 
         this.partitionTasks(partition);
     }
