@@ -278,7 +278,6 @@ export default class LevelManager {
             num_attempts: level.num_attempts
         });
 
-        // console.log(LocalStorageManager.loadData(level_id.toString()));
     }
 
     // Getters
@@ -339,7 +338,7 @@ export default class LevelManager {
     }
 
     public isNewPlayer(): boolean {
-        return localStorage.length === 0; // Returns true if no keys are present
+        return localStorage.length === 0;
     }
 
     public allLevelsCompleted(): boolean { 

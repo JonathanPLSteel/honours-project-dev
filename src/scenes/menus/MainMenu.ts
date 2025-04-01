@@ -1,5 +1,4 @@
 import { Scene, GameObjects } from "phaser";
-import LevelManager from "../../managers/LevelManager";
 
 export const version = "v3.2";
 

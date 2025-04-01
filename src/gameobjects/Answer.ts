@@ -70,20 +70,20 @@ export default class Answer extends Phaser.GameObjects.Sprite {
                 this.setTint(0xff0000);
 
                 this.scene.tweens.add({
-                    targets: this, // The sprite to animate
-                    alpha: 0, // Fade out to an alpha value of 0
-                    duration: 500, // Duration of the fade-out in milliseconds
-                    ease: "Linear", // Linear easing for a smooth fade-out
+                    targets: this,
+                    alpha: 0,
+                    duration: 500,
+                    ease: "Linear",
                     onComplete: () => {
                         this.setVisible(false);
                     },
                 });
 
                 this.scene.tweens.add({
-                    targets: this.answerText, // The sprite to animate
-                    alpha: 0, // Fade out to an alpha value of 0
-                    duration: 500, // Duration of the fade-out in milliseconds
-                    ease: "Linear", // Linear easing for a smooth fade-out
+                    targets: this.answerText, 
+                    alpha: 0, 
+                    duration: 500,
+                    ease: "Linear",
                     onComplete: () => {
                         this.setVisible(false);
                     },

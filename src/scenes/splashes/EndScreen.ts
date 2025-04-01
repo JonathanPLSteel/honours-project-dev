@@ -50,7 +50,6 @@ export class EndScreen extends Scene {
             }
         ).setOrigin(0.5);
 
-        // Listen for keyboard input
         this.input.keyboard?.on("keydown", (event: KeyboardEvent) => {
             if (event.key.length === 1) {
                 this.userInput += event.key;
@@ -114,21 +113,18 @@ export class EndScreen extends Scene {
     exportLocalStorageToCSV(filename = "localStorageData.csv") {
         const data: Record<string, any>[] = [];
 
-        // Iterate through localStorage keys
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
 
-            if (!key) continue; // Handle null key case
+            if (!key) continue;
 
             const item = localStorage.getItem(key);
-            if (!item) continue; // Skip if null
+            if (!item) continue;
 
             try {
                 const value = JSON.parse(item);
                 
-                // Ensure the parsed value is an object
                 if (typeof value === "object" && value !== null) {
-                    // Add level_id to the object for reference
                     value.level_id = key;
                     data.push(value);
                 }
@@ -142,30 +138,25 @@ export class EndScreen extends Scene {
             return;
         }
 
-        // Convert all times to 1 decimal place
         data.forEach((row) => {
             if (row.time_taken) {
                 row.time_taken = row.time_taken.toFixed(2);
             }
         });
 
-        // Sort data by level_id
         data.sort((a, b) => a.level_id - b.level_id);
 
         console.log(data);
     
-        // Extract headers (keys from the first object)
         const headers = Object.keys(data[0]);
     
-        // Convert array of objects to CSV string
         const csvRows = [
-            headers.join(","), // Header row
-            ...data.map(row => headers.map(header => JSON.stringify(row[header] ?? "")).join(",")) // Data rows
+            headers.join(","),
+            ...data.map(row => headers.map(header => JSON.stringify(row[header] ?? "")).join(","))
         ];
     
         const csvString = csvRows.join("\n");
     
-        // Create a Blob and trigger download
         const blob = new Blob([csvString], { type: "text/csv" });
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);

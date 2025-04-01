@@ -66,7 +66,6 @@ export default class TaskManager {
         this.task_types = task_types;
 
         // Validate Tasks
-        // TODO: A bit clunky, could be improved
         if (this.level.type === "puzzle") {
             this.level.task_keys.forEach((key) => {
                 if (!this.task_types.find((task) => task.key === key)) {
@@ -169,7 +168,6 @@ export default class TaskManager {
     }
 
     private setupPuzzle(task_keys: string[], machine_props: MachineProps[]) {
-        // Adding task bar
         this.task_bar = new TaskBar(
             this.scene,
             this,
@@ -377,7 +375,6 @@ export default class TaskManager {
     }
 
     private hideSubmitButton() {
-        // console.log("Hiding submit button");
         this.submit_button.setVisible(false).disableInteractive();
         this.task_bar.visible = true;
     }
@@ -461,8 +458,6 @@ export default class TaskManager {
 
         let partition = greedyResult.partition;
 
-        // console.log(partition);
-
         this.partitionTasks(partition);
     }
 
@@ -481,7 +476,6 @@ export default class TaskManager {
 
             if (this.submit_button && this.submit_button.active) {
                 if (this.checkSubmittable()) {
-                    // TODO: Emitting events could be worth looking into.
                     this.displaySubmitButton();
                 } else {
                     this.hideSubmitButton();
@@ -514,17 +508,14 @@ export default class TaskManager {
         this.machines.forEach((machine) => machine.destroy());
         this.machines = [];
 
-        // Destroy text
         if (this.total_duration_text) {
             this.total_duration_text.destroy();
         }
 
         if (this.level.type === "puzzle") {
-            // Destroy task bar
             if (this.task_bar) {
                 this.task_bar.destroy();
             }
-            // Destroy submit button
             if (this.submit_button) {
                 this.submit_button.destroy();
             }

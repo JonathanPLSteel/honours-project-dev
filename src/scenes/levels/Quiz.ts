@@ -37,9 +37,7 @@ export class Quiz extends Scene {
         );
 
         this.events.on("wrongAnswer", () => {
-            // console.log("Received Wrong answer");
             this.question_scores[this.currentQuestionIndex] = 0;
-            // console.log(`Index: ${this.currentQuestionIndex}, Scores: ${this.question_scores}`);
         });
 
         this.events.on("correctAnswer", () => {
@@ -65,8 +63,6 @@ export class Quiz extends Scene {
                 } else {
                     this.level.latest_grade = 3;
                 }
-
-                // console.log(`Score: ${score} / ${this.number_of_questions} = ${scaled_score} -> ${this.level.latest_grade}`);
 
                 this.scene.start("LevelSelect", { level: this.level });
             }

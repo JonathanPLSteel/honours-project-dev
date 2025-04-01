@@ -50,10 +50,8 @@ export default class Task extends Phaser.GameObjects.Sprite {
         this.original_coords = { x, y };
         this.animating = false;
 
-        // Add the sprite to the scene
         this.scene.add.existing(this);
 
-        // Configure the sprite
         this.setOrigin(0.5, 0.5);
         this.setDisplaySize(this.med_width, this.med_height);
 
@@ -61,7 +59,6 @@ export default class Task extends Phaser.GameObjects.Sprite {
             this.setInteractive();
         }
 
-        // Adding additional components
         this.addComponents();
 
         // Enable dragging
@@ -145,7 +142,6 @@ export default class Task extends Phaser.GameObjects.Sprite {
     public updateDepth() {
         this.setDepth(2);
 
-        // FIXME: Works but creates a slight bug when overlapping with other tasks.
         this.nameText.setDepth(3);
         this.icon.setDepth(3);
         this.durationText.setDepth(3);
@@ -225,10 +221,10 @@ export default class Task extends Phaser.GameObjects.Sprite {
 
         this.scene.tweens.add({
             targets: this,
-            displayWidth: originalWidth * 1.5, // Scale up by 1.5x
+            displayWidth: originalWidth * 1.5,
             displayHeight: originalHeight * 1.5,
-            ease: "Bounce.easeOut", // Smooth animation
-            yoyo: true, // Snap back to original size
+            ease: "Bounce.easeOut",
+            yoyo: true,
             duration: duration,
             onComplete: () => {
                 this.animating = false; // Reset animation flag
